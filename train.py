@@ -5,6 +5,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 
+
 #os.chdir("C:\Users\user\Desktop\MNIST")
 def Data_pre_processing():
 
@@ -73,22 +74,131 @@ def Data_pre_processing():
     image_valid1 = image_train[58000:,:]
     image_valid2 = image_test[:4000,:]
     image_valid = np.concatenate((image_valid1, image_valid2), axis=0)
-    print(len(image_valid))
+    image_valid = image_valid.astype('float32')
+    image_valid = image_valid/255
+    #print(len(image_valid))
     image_train = image_train[:58000,:]
-    print(len(image_train))
+    image_train = image_train.astype('float32')
+    image_train = image_train/255
+    #print(len(image_train))
     image_test = image_test[4000:,:]
-    print(len(image_test))
+    image_test = image_test.astype('float32')
+    image_test = image_test/255
+    #print(len(image_test))
 
     one_hot_label_valid1 = one_hot_label_train[58000:,:]
     one_hot_label_valid2 = one_hot_label_test[:4000,:]
     one_hot_label_valid = np.concatenate((one_hot_label_valid1, one_hot_label_valid2), axis=0)
-    print(len(one_hot_label_valid))
+    #print(len(one_hot_label_valid))
     one_hot_label_train = one_hot_label_train[:58000,:]
-    print(len(one_hot_label_train))
+    #print(len(one_hot_label_train))
     one_hot_label_test = one_hot_label_test[4000:,:]
-    print(len(one_hot_label_test))
+    #print(len(one_hot_label_test))
 
     return image_train, one_hot_label_train, image_valid, one_hot_label_valid, image_test, one_hot_label_test
 
 
 a,b,c,d,e,f = Data_pre_processing()
+cost = []
+weights = np.zeros((784,10),dtype = np.float32)
+baises = np.zeros((10,1), dtype = np.float32)
+
+dloss_dweights = np.zeros((784,10),dtype = np.float32)
+dloss_dbaises  = np.zeros((10,1),dtype = np.float32)
+
+Z1 = np.zeros((10,4),dtype = np.float32)
+Z1_back = np.zeros((10,4),dtype = np.float32)
+learning_rate =0.001
+
+for i in range(784):
+    for j in range(10):
+        weights[i,j] = 0.01 * np.random.randn()
+
+for i in range(10):
+
+    n=0
+    
+    for j in range(1500):
+
+        x_train = a[n:n+4,:]
+        y_train = b[n:n+4,:]
+
+        batch_size = x_train.shape[0]
+
+        for k in range(10):
+            for l in range(4):
+                for m in range(784):
+                    Z1[k,l] = Z1[k,l] + weights[m,k]* x_train[l,m]
+
+
+        for k in range(10):
+            for l in range(4):
+                Z1[k,l] = Z1[k,l] + baises[k,:]
+
+
+        Z1_max = np.max(Z1, axis=0)
+        Z1_max = np.reshape(Z1_max,(1, batch_size))
+        
+        for k in range(10):
+            for l in range(4):
+                Z1[k,l] = np.exp(Z1[k,l]-Z1_max[:,l])
+
+                
+####################################################
+        #Z1 = Z1.transpose()
+
+        A1 = Z1/np.sum(Z1,axis=0)
+
+##############################################
+        ###### Loss
+        loss = np.zeros((10,4), dtype = np.float32)
+        for k in range(10):
+            for l in range(4):
+                loss[k,l] = - y_train[l,k]*(np.log(A1[k,l]))
+        loss_per_sample = np.sum(loss,axis=1)
+        total_loss = np.sum(loss_per_sample,axis= 0)
+        total_loss = total_loss/batch_size
+
+        #####  Back propogation
+
+        for k in range(10):
+            for l in range(4):
+                Z1_back[k,l] = A1[k,l] - y_train[l,k]
+
+        for k in range(784):
+            for l in range(10):
+                for m in range(4):
+                    dloss_dweights[k,l] = dloss_dweights[k,l] + x_train[m,k]* Z1_back[l,m]
+
+        dloss_dbaises = np.sum(Z1_back, axis =1)
+        dloss_dbaises = np.reshape(dloss_dbaises,(10,1))
+##########################################################
+        dloss_dweights =  dloss_dweights/batch_size
+        dloss_dbaises = dloss_dbaises/batch_size
+#########################################################
+
+        for k in range(784):
+            for l in range(10):
+                weights[k,l] = weights[k,l] - learning_rate*dloss_dweights[k,l]
+
+        for k in range(10):
+            baises[k,:] = baises[k,:] - learning_rate*dloss_dbaises[k,:]
+
+
+        n= n + 4
+
+    cost.append(total_loss)
+
+    print("Final Cost :",total_loss, " Epoch : ", i)
+
+x = np.arange(0,10, 1)
+y = cost
+
+plt.xlabel('Epochs')  
+plt.ylabel('Training_Loss') 
+ 
+plt.title('Loss_Graph') 
+plt.plot(x, y)
+plt.show()
+
+
