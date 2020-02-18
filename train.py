@@ -3,7 +3,7 @@ import os
 import gzip
 import cv2
 import matplotlib.pyplot as plt
-
+from tqdm import tqdm
 
 
 #os.chdir("C:\Users\user\Desktop\MNIST")
@@ -114,11 +114,11 @@ for i in range(784):
     for j in range(10):
         weights[i,j] = 0.01 * np.random.randn()
 
+#for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
 for i in range(10):
-
     n=0
     
-    for j in range(1500):
+    for j in tqdm(range(1500), total=1500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
 
         x_train = a[n:n+4,:]
         y_train = b[n:n+4,:]
@@ -195,9 +195,9 @@ x = np.arange(0,10, 1)
 y = cost
 
 plt.xlabel('Epochs')  
-plt.ylabel('Training_Loss') 
+plt.ylabel('Loss') 
  
-plt.title('Loss_Graph') 
+plt.title('Training_Loss_Graph') 
 plt.plot(x, y)
 plt.show()
 
