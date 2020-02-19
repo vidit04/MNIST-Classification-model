@@ -118,13 +118,20 @@ for i in range(784):
 for i in range(10):
     n=0
     
-    for j in tqdm(range(1500), total=1500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
+    for j in tqdm(range(15000), total=15000 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
 
+        
         x_train = a[n:n+4,:]
         y_train = b[n:n+4,:]
 
-        batch_size = x_train.shape[0]
 
+        batch_size = x_train.shape[0]
+        dloss_dweights = np.zeros((784,10),dtype = np.float32)
+        dloss_dbaises  = np.zeros((10,1),dtype = np.float32)
+
+        Z1 = np.zeros((10,4),dtype = np.float32)
+        Z1_back = np.zeros((10,4),dtype = np.float32)
+        
         for k in range(10):
             for l in range(4):
                 for m in range(784):
@@ -144,12 +151,12 @@ for i in range(10):
                 Z1[k,l] = np.exp(Z1[k,l]-Z1_max[:,l])
 
                 
-####################################################
+        ####################################################
         #Z1 = Z1.transpose()
 
         A1 = Z1/np.sum(Z1,axis=0)
 
-##############################################
+        ##############################################
         ###### Loss
         loss = np.zeros((10,4), dtype = np.float32)
         for k in range(10):
@@ -172,10 +179,10 @@ for i in range(10):
 
         dloss_dbaises = np.sum(Z1_back, axis =1)
         dloss_dbaises = np.reshape(dloss_dbaises,(10,1))
-##########################################################
+        ##########################################################
         dloss_dweights =  dloss_dweights/batch_size
         dloss_dbaises = dloss_dbaises/batch_size
-#########################################################
+        #########################################################
 
         for k in range(784):
             for l in range(10):
