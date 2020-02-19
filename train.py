@@ -98,70 +98,118 @@ def Data_pre_processing():
     return image_train, one_hot_label_train, image_valid, one_hot_label_valid, image_test, one_hot_label_test
 
 
+batch_size = 4
+hidden_layer_1 = 64
+
 a,b,c,d,e,f = Data_pre_processing()
 cost = []
-weights = np.zeros((784,10),dtype = np.float32)
-baises = np.zeros((10,1), dtype = np.float32)
+weights_1 = np.zeros((784,64),dtype = np.float32)
+baises_1 = np.zeros((64,1), dtype = np.float32)
 
-dloss_dweights = np.zeros((784,10),dtype = np.float32)
-dloss_dbaises  = np.zeros((10,1),dtype = np.float32)
+weights_2 = np.zeros((64,10),dtype = np.float32)
+baises_2 = np.zeros((10,1), dtype = np.float32)
 
-Z1 = np.zeros((10,4),dtype = np.float32)
-Z1_back = np.zeros((10,4),dtype = np.float32)
-learning_rate =0.001
+dloss_dweights_1 = np.zeros((784,64),dtype = np.float32)
+dloss_dbaises_1  = np.zeros((64,1),dtype = np.float32)
+
+dloss_dweights_2 = np.zeros((64,10),dtype = np.float32)
+dloss_dbaises_2  = np.zeros((10,1),dtype = np.float32)
+
+dloss_dA1 = np.zeros((64,4),dtype = np.float32)
+
+Z1 = np.zeros((64,4),dtype = np.float32)
+Z2 = np.zeros((10,4),dtype = np.float32)
+
+Z1_back = np.zeros((64,4),dtype = np.float32)
+Z2_back = np.zeros((10,4),dtype = np.float32)
+
+learning_rate = 0.001
 
 for i in range(784):
+    for j in range(64):
+        weights_1[i,j] = 0.01 * np.random.randn()
+
+for i in range(64):
     for j in range(10):
-        weights[i,j] = 0.01 * np.random.randn()
+        weights_2[i,j] = 0.01 * np.random.randn()
 
 #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
-for i in range(10):
+for i in range(3):
     n=0
     
-    for j in tqdm(range(15000), total=15000 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
+    for j in tqdm(range(1500), total=14500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
 
         
-        x_train = a[n:n+4,:]
-        y_train = b[n:n+4,:]
+        x_train = a[n:n+batch_size,:]
+        y_train = b[n:n+batch_size,:]
 
 
-        batch_size = x_train.shape[0]
-        dloss_dweights = np.zeros((784,10),dtype = np.float32)
-        dloss_dbaises  = np.zeros((10,1),dtype = np.float32)
+        #batch_size = x_train.shape[0]
 
-        Z1 = np.zeros((10,4),dtype = np.float32)
-        Z1_back = np.zeros((10,4),dtype = np.float32)
+        dloss_dweights_1 = np.zeros((784,hidden_layer_1),dtype = np.float32)
+        dloss_dbaises_1  = np.zeros((hidden_layer_1,1),dtype = np.float32)
+
+        dloss_dweights_2 = np.zeros((hidden_layer_1,10),dtype = np.float32)
+        dloss_dbaises_2  = np.zeros((10,1),dtype = np.float32)
+
+        dloss_dA1 = np.zeros((64,4),dtype = np.float32)
+
+        Z1 = np.zeros((hidden_layer_1,batch_size),dtype = np.float32)
+        Z2 = np.zeros((10,batch_size),dtype = np.float32)
+
+        Z1_back = np.zeros((hidden_layer_1,batch_size),dtype = np.float32)
+        Z2_back = np.zeros((10,batch_size),dtype = np.float32)
         
-        for k in range(10):
-            for l in range(4):
+        for k in range(hidden_layer_1):
+            for l in range(batch_size):
                 for m in range(784):
-                    Z1[k,l] = Z1[k,l] + weights[m,k]* x_train[l,m]
+                    Z1[k,l] = Z1[k,l] + weights_1[m,k]* x_train[l,m]
 
+
+        for k in range(hidden_layer_1):
+            for l in range(batch_size):
+                Z1[k,l] = Z1[k,l] + baises_1[k,:]
+
+
+        ################### Relu activation
+        for k in range(hidden_layer_1):
+            for l in range(batch_size):
+                if Z1[k,l] <=0:
+                    Z1[k,l] = 0
+                if Z1[k,l] > 0:
+                    Z1[k,l] = Z1[k,l]
+
+        A1= Z1
+        #A1 = A1.transpose()
 
         for k in range(10):
-            for l in range(4):
-                Z1[k,l] = Z1[k,l] + baises[k,:]
+            for l in range(batch_size):
+                for m in range(hidden_layer_1):
+                    Z2[k,l] = Z2[k,l] + weights_2[m,k]* A1[m,l]
 
+        for k in range(10):
+            for l in range(batch_size):
+                Z2[k,l] = Z2[k,l] + baises_2[k,:]
 
-        Z1_max = np.max(Z1, axis=0)
-        Z1_max = np.reshape(Z1_max,(1, batch_size))
+        Z2_max = np.max(Z2, axis=0)
+        Z2_max = np.reshape(Z2_max,(1, batch_size))
         
         for k in range(10):
             for l in range(4):
-                Z1[k,l] = np.exp(Z1[k,l]-Z1_max[:,l])
+                Z2[k,l] = np.exp(Z2[k,l]-Z2_max[:,l])
 
                 
         ####################################################
         #Z1 = Z1.transpose()
 
-        A1 = Z1/np.sum(Z1,axis=0)
+        A2 = Z2/np.sum(Z2,axis=0)
 
         ##############################################
         ###### Loss
         loss = np.zeros((10,4), dtype = np.float32)
         for k in range(10):
             for l in range(4):
-                loss[k,l] = - y_train[l,k]*(np.log(A1[k,l]))
+                loss[k,l] = - y_train[l,k]*(np.log(A2[k,l]))
         loss_per_sample = np.sum(loss,axis=1)
         total_loss = np.sum(loss_per_sample,axis= 0)
         total_loss = total_loss/batch_size
@@ -170,29 +218,64 @@ for i in range(10):
 
         for k in range(10):
             for l in range(4):
-                Z1_back[k,l] = A1[k,l] - y_train[l,k]
+                Z2_back[k,l] = A2[k,l] - y_train[l,k]
 
-        for k in range(784):
+        for k in range(64):
             for l in range(10):
                 for m in range(4):
-                    dloss_dweights[k,l] = dloss_dweights[k,l] + x_train[m,k]* Z1_back[l,m]
+                    dloss_dweights_2[k,l] = dloss_dweights_2[k,l] + A1[k,m]* Z2_back[l,m]
 
-        dloss_dbaises = np.sum(Z1_back, axis =1)
-        dloss_dbaises = np.reshape(dloss_dbaises,(10,1))
+        dloss_dbaises_2 = np.sum(Z2_back, axis = 1)
+        dloss_dbaises_2 = np.reshape(dloss_dbaises_2,(10,1))
         ##########################################################
-        dloss_dweights =  dloss_dweights/batch_size
-        dloss_dbaises = dloss_dbaises/batch_size
+        dloss_dweights_2 =  dloss_dweights_2/batch_size
+        dloss_dbaises_2 = dloss_dbaises_2/batch_size
+        #########################################################
+
+        
+        for k in range(64):
+            for l in range(4):
+                for m in range(10):
+                    dloss_dA1[k,l] = dloss_dA1[k,l] + weights_2[k,m]* Z2_back[m,l]
+
+        ####### Relu Backward
+
+        for k in range(64):
+            for l in range(4):
+                if dloss_dA1[k,l] <=0:
+                    Z1_back[k,l] = 0
+                if dloss_dA1[k,l] > 0:
+                    Z1_back[k,l] = dloss_dA1[k,l]
+
+        for k in range(784):
+            for l in range(64):
+                for m in range(4):
+                    dloss_dweights_1[k,l] = dloss_dweights_1[k,l] + x_train[m,k]* Z1_back[l,m]
+
+        dloss_dbaises_1 = np.sum(Z1_back, axis =1)
+        dloss_dbaises_1 = np.reshape(dloss_dbaises_1,(64,1))
+        ##########################################################
+        dloss_dweights_1 =  dloss_dweights_1/batch_size
+        dloss_dbaises_1 = dloss_dbaises_1/batch_size
         #########################################################
 
         for k in range(784):
+            for l in range(64):
+                weights_1[k,l] = weights_1[k,l] - learning_rate*dloss_dweights_1[k,l]
+
+        for k in range(64):
+            baises_1[k,:] = baises_1[k,:] - learning_rate*dloss_dbaises_1[k,:]
+
+
+        for k in range(64):
             for l in range(10):
-                weights[k,l] = weights[k,l] - learning_rate*dloss_dweights[k,l]
+                weights_2[k,l] = weights_2[k,l] - learning_rate*dloss_dweights_2[k,l]
 
         for k in range(10):
-            baises[k,:] = baises[k,:] - learning_rate*dloss_dbaises[k,:]
+            baises_2[k,:] = baises_2[k,:] - learning_rate*dloss_dbaises_2[k,:]
 
 
-        n= n + 4
+        n = n + 4
 
     cost.append(total_loss)
 
