@@ -146,10 +146,10 @@ for i in range(3):
 
         #batch_size = x_train.shape[0]
 
-        dloss_dweights_1 = np.zeros((784,hidden_layer_1),dtype = np.float32)
-        dloss_dbaises_1  = np.zeros((hidden_layer_1,1),dtype = np.float32)
+        dloss_dweights_1 = np.zeros((784,64),dtype = np.float32)
+        dloss_dbaises_1  = np.zeros((64,1),dtype = np.float32)
 
-        dloss_dweights_2 = np.zeros((hidden_layer_1,10),dtype = np.float32)
+        dloss_dweights_2 = np.zeros((64,10),dtype = np.float32)
         dloss_dbaises_2  = np.zeros((10,1),dtype = np.float32)
 
         dloss_dA1 = np.zeros((64,4),dtype = np.float32)
@@ -160,20 +160,20 @@ for i in range(3):
         Z1_back = np.zeros((hidden_layer_1,batch_size),dtype = np.float32)
         Z2_back = np.zeros((10,batch_size),dtype = np.float32)
         
-        for k in range(hidden_layer_1):
-            for l in range(batch_size):
+        for k in range(64):
+            for l in range(4):
                 for m in range(784):
                     Z1[k,l] = Z1[k,l] + weights_1[m,k]* x_train[l,m]
 
 
-        for k in range(hidden_layer_1):
-            for l in range(batch_size):
+        for k in range(64):
+            for l in range(4):
                 Z1[k,l] = Z1[k,l] + baises_1[k,:]
 
 
         ################### Relu activation
-        for k in range(hidden_layer_1):
-            for l in range(batch_size):
+        for k in range(64):
+            for l in range(4):
                 if Z1[k,l] <=0:
                     Z1[k,l] = 0
                 if Z1[k,l] > 0:
@@ -183,16 +183,16 @@ for i in range(3):
         #A1 = A1.transpose()
 
         for k in range(10):
-            for l in range(batch_size):
-                for m in range(hidden_layer_1):
+            for l in range(4):
+                for m in range(64):
                     Z2[k,l] = Z2[k,l] + weights_2[m,k]* A1[m,l]
 
         for k in range(10):
-            for l in range(batch_size):
+            for l in range(4):
                 Z2[k,l] = Z2[k,l] + baises_2[k,:]
 
         Z2_max = np.max(Z2, axis=0)
-        Z2_max = np.reshape(Z2_max,(1, batch_size))
+        Z2_max = np.reshape(Z2_max,(1, 4))
         
         for k in range(10):
             for l in range(4):
@@ -238,13 +238,15 @@ for i in range(3):
                 for m in range(10):
                     dloss_dA1[k,l] = dloss_dA1[k,l] + weights_2[k,m]* Z2_back[m,l]
 
+        #Z1_back = dloss_dA1
+
         ####### Relu Backward
 
         for k in range(64):
             for l in range(4):
-                if dloss_dA1[k,l] <=0:
+                if Z1[k,l] <=0:
                     Z1_back[k,l] = 0
-                if dloss_dA1[k,l] > 0:
+                if Z1[k,l] > 0:
                     Z1_back[k,l] = dloss_dA1[k,l]
 
         for k in range(784):
