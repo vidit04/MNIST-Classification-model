@@ -5,6 +5,21 @@ import cv2
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
+def Loss_function(pred_y,true_y):
+    ##############################################
+    ###### Loss
+    length_loss = len(pred_y[1])
+    #print(pred_y.shape)
+    #print(true_y.shape)
+    loss = np.zeros((10,length_loss), dtype = np.float32)
+    for k in range(10):
+        for l in range(length_loss):
+            loss[k,l] = - true_y[l,k]*(np.log(pred_y[k,l]))
+    loss_per_sample = np.sum(loss,axis=1)
+    total_loss = np.sum(loss_per_sample,axis= 0)
+    total_loss = total_loss/length_loss
+    return total_loss
+
 
 #os.chdir("C:\Users\user\Desktop\MNIST")
 def accuracy(weights_1,weights_2,baises_1, baises_2 , image_arr, labels_arr ):
@@ -60,22 +75,18 @@ def accuracy(weights_1,weights_2,baises_1, baises_2 , image_arr, labels_arr ):
     #Z1 = Z1.transpose()
 
     A2 = Z2/np.sum(Z2,axis=0)
+    
+    total_loss = Loss_function(A2,labels_arr)
 
     pred_y = np.argmax(A2,axis = 0)
     pred_y = np.reshape(pred_y,(length,1))
     true_y = np.argmax(labels_arr, axis = 1)
     true_y = np.reshape(true_y,(length,1))
 
-    s = 0
-
-    for r in range(length):
-        if pred_y[r,:] == true_y[r,:]:
-            true_array[r,:] = True
-            s = s + 1
-
-    acc  = s/length
-
-    return acc
+    true_array = (pred_y==true_y).all()
+    s = np.count_nonzero(true_array)
+    acc = s/length
+    return acc,total_loss
 
 
 def Data_pre_processing():
@@ -140,7 +151,19 @@ def Data_pre_processing():
         position_test = label_test[i,:]
         one_hot_label_test[i,position_test] = 1.0
 
-    #print(one_hot_label_test[9999,:])   
+    #print(one_hot_label_test[9999,:])
+    total_image  = np.concatenate((image_train, image_test), axis=0)
+    total_labels = np.concatenate((one_hot_label_train,one_hot_label_test), axis=0)
+
+    perm = np.arange(total_image.shape[0])
+    np.random.shuffle(perm)
+    total_image = total_image[perm]
+    total_labels = total_labels[perm]
+
+    image_train = total_image[:60000,:]
+    image_test = total_image[60000:,:]
+    one_hot_label_train = total_labels[:60000,:]
+    one_hot_label_test = total_labels[60000:,:]
 
     image_valid1 = image_train[58000:,:]
     image_valid2 = image_test[:4000,:]
@@ -173,8 +196,12 @@ batch_size = 4
 hidden_layer_1 = 64
 
 a,b,c,d,e,f = Data_pre_processing()
-cost = []
-acc = []
+cost_train = []
+cost_valid = []
+cost_test = []
+acc_training = []
+acc_validation = []
+acc_test = []
 weights_1 = np.zeros((784,64),dtype = np.float32)
 baises_1 = np.zeros((64,1), dtype = np.float32)
 
@@ -195,7 +222,7 @@ Z2 = np.zeros((10,4),dtype = np.float32)
 Z1_back = np.zeros((64,4),dtype = np.float32)
 Z2_back = np.zeros((10,4),dtype = np.float32)
 
-learning_rate = 0.1
+learning_rate = 0.001
 
 for i in range(784):
     for j in range(64):
@@ -206,7 +233,7 @@ for i in range(64):
         weights_2[i,j] = 0.01 * np.random.randn()
 
 #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
-for i in range(10):
+for i in range(3):
     n=0
     
     for j in tqdm(range(150), total=14500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
@@ -280,13 +307,13 @@ for i in range(10):
 
         ##############################################
         ###### Loss
-        loss = np.zeros((10,4), dtype = np.float32)
-        for k in range(10):
-            for l in range(4):
-                loss[k,l] = - y_train[l,k]*(np.log(A2[k,l]))
-        loss_per_sample = np.sum(loss,axis=1)
-        total_loss = np.sum(loss_per_sample,axis= 0)
-        total_loss = total_loss/batch_size
+        #loss = np.zeros((10,4), dtype = np.float32)
+        #for k in range(10):
+        #    for l in range(4):
+        #        loss[k,l] = - y_train[l,k]*(np.log(A2[k,l]))
+        #loss_per_sample = np.sum(loss,axis=1)
+        #total_loss = np.sum(loss_per_sample,axis= 0)
+        #total_loss = total_loss/batch_size
 
         #####  Back propogation
 
@@ -353,31 +380,41 @@ for i in range(10):
 
         n = n + 4
         
-    acc_epoch = accuracy(weights_1,weights_2,baises_1, baises_2 , c, d )
-    cost.append(total_loss)
-    acc.append(acc_epoch)
+    acc_epoch_train, loss_train = accuracy(weights_1,weights_2,baises_1, baises_2, x_train, y_train )
+    acc_epoch_valid, loss_valid = accuracy(weights_1,weights_2,baises_1, baises_2 , c, d )
+    acc_epoch_test, loss_test = accuracy(weights_1,weights_2,baises_1, baises_2 , e, f )
+    cost_train.append(loss_train)
+    cost_valid.append(loss_valid)
+    cost_test.append(loss_test)
+    acc_training.append(acc_epoch_train)
+    acc_validation.append(acc_epoch_valid)
+    acc_test.append(acc_epoch_test)
 
-    print("Final Cost :",total_loss, " Epoch : ", i)
-    print("Final Accuracy :",acc_epoch, " Epoch : ", i)   
+    print("Final Cost :",loss_train, " Epoch : ", i)
+    print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
             
 
 
-x = np.arange(0,10, 1)
-y = cost
+x = np.arange(0,3, 1)
+y = cost_train
+y1 = cost_valid
+y2 = cost_test
 
 plt.xlabel('Epochs')  
 plt.ylabel('Loss') 
  
 plt.title('Training_Loss_Graph') 
-plt.plot(x, y)
+plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
 plt.show()
 
-z= acc
+z= acc_training
+z1 = acc_validation
+z2 = acc_test
 plt.xlabel('Epochs')  
 plt.ylabel('Accuracy')
 
 plt.title('Training_Acc_Graph') 
-plt.plot(x, z)
+plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
 plt.show()
 
 
