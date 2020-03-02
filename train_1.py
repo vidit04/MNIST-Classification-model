@@ -83,10 +83,22 @@ def accuracy(weights_1,weights_2,baises_1, baises_2 , image_arr, labels_arr ):
     true_y = np.argmax(labels_arr, axis = 1)
     true_y = np.reshape(true_y,(length,1))
 
-    true_array = (pred_y==true_y).all()
-    s = np.count_nonzero(true_array)
-    acc = s/length
+    s = 0
+    #true_array = (pred_y==true_y).all()
+    #print(true_array.shape)
+
+    for r in range(length):
+        if pred_y[r,:] == true_y[r,:]:
+            true_array[r,:] = 1
+            s = s + 1
+
+    acc  = s/length
+
     return acc,total_loss
+    #true_array = (pred_y==true_y).all()
+    #s = np.count_nonzero(true_array)
+    #acc = s/length
+    #return acc,total_loss
 
 
 def Data_pre_processing():
