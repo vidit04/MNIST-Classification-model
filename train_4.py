@@ -22,15 +22,15 @@ def relu_activation(array_Z):
 
     return array_A
 
-def relu_activation_back(array_dloss_dA, array_Z):
+def relu_activation_back(array_dloss_dA, array_Z_relu_back):
     array_dloss_dA_row = len(array_dloss_dA)
     array_dloss_dA_col = len(array_dloss_dA[1])
-    array_Z_back = np.zeros((array_dloss_dA_row,array_dloss_dA_row),dtype = np.float32)
+    array_Z_back = np.zeros((array_dloss_dA_row,array_dloss_dA_col),dtype = np.float32)
     for k in range(array_dloss_dA_row):
         for l in range(array_dloss_dA_col):
-            if array_Z[k,l] <=0:
+            if array_Z_relu_back[k,l] <=0:
                 array_Z_back[k,l] = 0
-            if array_Z[k,l] > 0:
+            if array_Z_relu_back[k,l] > 0:
                 array_Z_back[k,l] = array_dloss_dA[k,l]
 
     return array_Z_back
@@ -290,12 +290,12 @@ for i in range(40):
         Z1 = np.matmul(weights_1.T,x_train.T) + baises_1
 
         #A1 = np.maximum(0,Z1)
-        A1 = relu_activation(Z1):
+        A1 = relu_activation(Z1)
 
         Z2 = np.matmul(weights_2.T,A1) + baises_2
 
         #A2 = np.maximum(0,Z2)
-        A2 = relu_activation(Z2):
+        A2 = relu_activation(Z2)
 
         #A2= Z2
         Z3 = np.matmul(weights_3.T,A2) + baises_3
