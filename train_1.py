@@ -5,6 +5,34 @@ import cv2
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
+def relu_activation(array_Z):
+    array_z_row = len(array_Z)
+    array_z_col = len(array_Z[1])
+    array_A = np.zeros((array_z_row,array_z_col),dtype = np.float32)
+    
+    for k in range(array_z_row):
+        for l in range(array_z_col):
+            if array_Z[k,l] <=0:
+                array_A[k,l] = 0
+            if array_Z[k,l] > 0:
+                array_A[k,l] = array_Z[k,l]
+
+    return array_A
+
+def relu_activation_back(array_dloss_dA, array_Z):
+    array_dloss_dA_row = len(array_dloss_dA)
+    array_dloss_dA_col = len(array_dloss_dA[1])
+    array_Z_back = np.zeros((array_dloss_dA_row,array_dloss_dA_row),dtype = np.float32)
+    for k in range(array_dloss_dA_row):
+        for l in range(array_dloss_dA_col):
+            if array_Z[k,l] <=0:
+                array_Z_back[k,l] = 0
+            if array_Z[k,l] > 0:
+                array_Z_back[k,l] = array_dloss_dA[k,l]
+
+    return array_Z_back
+    
+
 def Loss_function(pred_y,true_y):
     ##############################################
     ###### Loss
@@ -22,7 +50,7 @@ def Loss_function(pred_y,true_y):
 
 
 #os.chdir("C:\Users\user\Desktop\MNIST")
-def accuracy(weights_1,weights_2,baises_1, baises_2 , image_arr, labels_arr ):
+def accuracy_layer_1(weights_1,weights_2,baises_1, baises_2 , image_arr, labels_arr ):
 
 
 
@@ -285,12 +313,14 @@ for i in range(3):
 
 
         ################### Relu activation
-        for k in range(64):
-            for l in range(4):
-                if Z1[k,l] <=0:
-                    A1[k,l] = 0
-                if Z1[k,l] > 0:
-                    A1[k,l] = Z1[k,l]
+        #for k in range(64):
+        #    for l in range(4):
+        #        if Z1[k,l] <=0:
+        #            A1[k,l] = 0
+        #        if Z1[k,l] > 0:
+        #            A1[k,l] = Z1[k,l]
+
+        A1 = relu_activation(Z1):
 
         #A1= Z1
         #A1 = A1.transpose()
@@ -355,12 +385,17 @@ for i in range(3):
 
         ####### Relu Backward
 
-        for k in range(64):
-            for l in range(4):
-                if Z1[k,l] <=0:
-                    Z1_back[k,l] = 0
-                if Z1[k,l] > 0:
-                    Z1_back[k,l] = dloss_dA1[k,l]
+        #for k in range(64):
+        #    for l in range(4):
+        #        if Z1[k,l] <=0:
+        #            Z1_back[k,l] = 0
+        #        if Z1[k,l] > 0:
+        #            Z1_back[k,l] = dloss_dA1[k,l]
+
+
+        Z1_back = relu_activation_back(dloss_dA1, Z1)
+
+
 
         for k in range(784):
             for l in range(64):
@@ -392,9 +427,9 @@ for i in range(3):
 
         n = n + 4
         
-    acc_epoch_train, loss_train = accuracy(weights_1,weights_2,baises_1, baises_2, x_train, y_train )
-    acc_epoch_valid, loss_valid = accuracy(weights_1,weights_2,baises_1, baises_2 , c, d )
-    acc_epoch_test, loss_test = accuracy(weights_1,weights_2,baises_1, baises_2 , e, f )
+    acc_epoch_train, loss_train = accuracy_layer_1(weights_1,weights_2,baises_1, baises_2, x_train, y_train )
+    acc_epoch_valid, loss_valid = accuracy_layer_1(weights_1,weights_2,baises_1, baises_2 , c, d )
+    acc_epoch_test, loss_test = accuracy_layer_1(weights_1,weights_2,baises_1, baises_2 , e, f )
     cost_train.append(loss_train)
     cost_valid.append(loss_valid)
     cost_test.append(loss_test)
