@@ -320,7 +320,7 @@ for i in range(3):
         #        if Z1[k,l] > 0:
         #            A1[k,l] = Z1[k,l]
 
-        A1 = relu_activation(Z1):
+        A1 = relu_activation(Z1)
 
         #A1= Z1
         #A1 = A1.transpose()
