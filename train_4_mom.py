@@ -130,7 +130,7 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
     return total_loss
 
     
-def accuracy(wweights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg):
+def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg):
 
 
     length = len(image_arr)
@@ -291,7 +291,8 @@ layers = input("Number of Hidden layers in Model: ")
 activation_1 = input("Activation Function for 1st Hidden layer: ")
 activation_2 = input("Activation Function for 2nd Hidden layer: ")
 
-reg = input("Want to implement L1 Regression: ") 
+reg = input("Want to implement L1 Regression: ")
+decay = input("Want to implement Decay learning rate: ")
 optimizer = input("Type of Optimizer want to use: ")
 
 a,b,c,d,e,f = Data_pre_processing()
@@ -342,6 +343,7 @@ Z3_back = np.zeros((10,4),dtype = np.float32)
 learning_rate = 0.001
 beta = 0.9
 alpha = 0.00001
+decay_rate = 0.95
 
 for i in range(784):
     for j in range(64):
@@ -487,6 +489,9 @@ for i in range(10):
             weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta)
         
         n = n + 4
+
+    if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
+        learning_rate = learning_rate * decay_rate
 
     acc_epoch_train, loss_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , a, b , alpha,reg )
     acc_epoch_valid, loss_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , c, d, alpha,reg )
