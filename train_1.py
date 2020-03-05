@@ -506,10 +506,10 @@ for i in range(3):
         #    baises_2[k,:] = baises_2[k,:] - learning_rate*dloss_dbaises_2[k,:]
 
         if optimizer == "SGD" or optimizer =="sgd":
-            weights_1,baises_1,weights_2,baises_2= SGD_optimizer(weights_1,baises_1,weights_2,baises_2,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2, learning_rate)
+            weights_1,baises_1,weights_2,baises_2= SGD_optimizer_layer_1(weights_1,baises_1,weights_2,baises_2,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2, learning_rate)
 
         if optimizer == "Momentum" or optimizer =="momentum":
-            weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2, learning_rate, beta)
+            weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2 = Momentum_optimizer_layer_1(weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2, learning_rate, beta)
 
 
         n = n + 4
