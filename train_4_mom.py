@@ -102,8 +102,16 @@ def relu_activation_back(array_dloss_dA, array_Z_relu_back):
                 array_Z_back[k,l] = array_dloss_dA[k,l]
 
     return array_Z_back
+
+
+def reg_loss_layer_2(weights_1,weights_2,weights_3, alpha):
+
+    reg_loss_2 = (0.5 * alpha * np.sum(weights_1*weights_1)) + (0.5 * alpha * np.sum(weights_2*weights_2)) + (0.5 * alpha * np.sum(weights_3 * weights_3))
+
+    return reg_loss_2
     
-def Loss_function(pred_y,true_y):
+    
+def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
     ##############################################
     ###### Loss
     length_loss = len(pred_y[1])
@@ -114,10 +122,15 @@ def Loss_function(pred_y,true_y):
     loss_per_sample = np.sum(loss,axis=1)
     total_loss = np.sum(loss_per_sample,axis= 0)
     total_loss = total_loss/length_loss
+
+    if (reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES"):
+        reg_loss = reg_loss_layer_2(weights_1,weights_2,weights_3, alpha)
+        total_loss = total_loss + reg_loss
+
     return total_loss
 
     
-def accuracy(weights_1,weights_2,baises_1, baises_2,weights_3,baises_3, image_arr, labels_arr ):
+def accuracy(wweights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg):
 
 
     length = len(image_arr)
@@ -143,7 +156,7 @@ def accuracy(weights_1,weights_2,baises_1, baises_2,weights_3,baises_3, image_ar
 
     A3 = Z3/np.sum(Z3,axis=0)
 
-    total_loss = Loss_function(A3,labels_arr)
+    total_loss = Loss_function(A3,labels_arr,weights_1,weights_2,weights_3, alpha, reg)
 
     pred_y = np.argmax(A3,axis = 0)
     pred_y = np.reshape(pred_y,(length,1))
@@ -274,6 +287,13 @@ batch_size = 4
 hidden_layer_1 = 64
 hadden_layer_2 = 16
 
+layers = input("Number of Hidden layers in Model: ")
+activation_1 = input("Activation Function for 1st Hidden layer: ")
+activation_2 = input("Activation Function for 2nd Hidden layer: ")
+
+reg = input("Want to implement L1 Regression: ") 
+optimizer = input("Type of Optimizer want to use: ")
+
 a,b,c,d,e,f = Data_pre_processing()
 cost_train = []
 cost_valid = []
@@ -321,6 +341,7 @@ Z3_back = np.zeros((10,4),dtype = np.float32)
 
 learning_rate = 0.001
 beta = 0.9
+alpha = 0.00001
 
 for i in range(784):
     for j in range(64):
@@ -444,8 +465,11 @@ for i in range(10):
         dloss_dweights_1 = (1./batch_size) * np.matmul(x_train.T,Z1_back.T)
         dloss_dbaises_1 = (1./batch_size) * np.sum(Z1_back, axis = 1, keepdims= True)
 
-
-
+        if reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES":
+            dloss_dweights_1 = dloss_dweights_1 + alpha * dloss_dweights_1
+            dloss_dweights_2 = dloss_dweights_2 + alpha * dloss_dweights_2
+            dloss_dweights_3 = dloss_dweights_3 + alpha * dloss_dweights_3
+            
 
         #weights_1= weights_1- learning_rate*dloss_dweights_1
         #baises_1 = baises_1 - learning_rate*dloss_dbaises_1
@@ -456,15 +480,17 @@ for i in range(10):
         #weights_3= weights_3- learning_rate*dloss_dweights_3
         #baises_3 = baises_3 - learning_rate*dloss_dbaises_3
 
-        #weights_1,baises_1,weights_2,baises_2,weights_3,baises_3 = SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate)
+        if optimizer == "SGD" or optimizer =="sgd":
+            weights_1,baises_1,weights_2,baises_2,weights_3,baises_3 = SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate)
 
-        weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta)
+        if optimizer == "Momentum" or optimizer =="momentum":
+            weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta)
         
         n = n + 4
 
-    acc_epoch_train, loss_train = accuracy(weights_1,weights_2,baises_1, baises_2,weights_3,baises_3 , a, b )
-    acc_epoch_valid, loss_valid = accuracy(weights_1,weights_2,baises_1, baises_2 ,weights_3,baises_3, c, d )
-    acc_epoch_test, loss_test = accuracy(weights_1,weights_2,baises_1, baises_2 ,weights_3,baises_3, e, f )
+    acc_epoch_train, loss_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , a, b , alpha,reg )
+    acc_epoch_valid, loss_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , c, d, alpha,reg )
+    acc_epoch_test, loss_test = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , e, f, alpha,reg )
     cost_train.append(loss_train)
     cost_valid.append(loss_valid)
     cost_test.append(loss_test)
