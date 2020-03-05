@@ -85,11 +85,14 @@ def accuracy(weights_1,weights_2,baises_1, baises_2,weights_3,baises_3, image_ar
 
     Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
 
-    A1 = np.maximum(0,Z1)
+    #A1 = np.maximum(0,Z1)
+    A1 = sigmoid_activation(Z1)
 
     Z2 = np.matmul(weights_2.T,A1) + baises_2
 
-    A2 = np.maximum(0,Z2)
+    #A2 = np.maximum(0,Z2)
+    A2 = sigmoid_activation(Z2)
+
     #A2= Z2
     Z3 = np.matmul(weights_3.T,A2) + baises_3
 
