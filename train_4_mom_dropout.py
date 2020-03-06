@@ -143,7 +143,7 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
 
 def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg, prob):
 
-    #length = len(image_arr)
+    length = len(image_arr)
     #true_array = np.zeros((length,1),dtype=np.float32)
 
     Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
@@ -589,9 +589,9 @@ for i in range(40):
     acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , c, d )
     acc_epoch_test = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , e, f )
 
-    loss_train = Loss_fun(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b , alpha ,reg, prob)
-    loss_valid = Loss_fun(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d , alpha ,reg, prob)
-    loss_test = Loss_fun(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f , alpha ,reg, prob)
+    loss_train = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b , alpha ,reg, prob)
+    loss_valid = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d , alpha ,reg, prob)
+    loss_test = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f , alpha ,reg, prob)
     
     cost_train.append(loss_train)
     cost_valid.append(loss_valid)
