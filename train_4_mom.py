@@ -115,6 +115,8 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
     ##############################################
     ###### Loss
     length_loss = len(pred_y[1])
+    epsilon=1e-12
+    pred_y = np.clip(pred_y, epsilon, 1. - epsilon)
     loss = np.zeros((10,length_loss), dtype = np.float32)
     for k in range(10):
         for l in range(length_loss):
@@ -340,10 +342,10 @@ Z1_back = np.zeros((64,4),dtype = np.float32)
 Z2_back = np.zeros((64,4),dtype = np.float32)
 Z3_back = np.zeros((10,4),dtype = np.float32)
 
-learning_rate = 0.001
+learning_rate = 0.01
 beta = 0.9
 alpha = 0.00001
-decay_rate = 0.95
+decay_rate = 0.9
 
 for i in range(784):
     for j in range(64):
@@ -358,7 +360,7 @@ for i in range(64):
         weights_3[i,j] = 0.01 * np.random.randn()
 
 #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
-for i in range(10):
+for i in range(40):
     n=0
     
     for j in tqdm(range(14500), total=14500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
@@ -492,6 +494,10 @@ for i in range(10):
 
     if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
         learning_rate = learning_rate * decay_rate
+    if learning_rate < 0.001:
+        learning_rate = 0.001
+        
+    
 
     acc_epoch_train, loss_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , a, b , alpha,reg )
     acc_epoch_valid, loss_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3 , c, d, alpha,reg )
@@ -508,7 +514,7 @@ for i in range(10):
             
 
 
-x = np.arange(0,10, 1)
+x = np.arange(0,40, 1)
 y = cost_train
 y1 = cost_valid
 y2 = cost_test

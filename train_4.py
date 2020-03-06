@@ -8,34 +8,6 @@ from tqdm import tqdm
 
 #os.chdir("C:\Users\user\Desktop\MNIST")
 #os.chdir("C:\Users\user\Desktop\MNIST")
-def sigmoid_activation(array_Z_sigmoid):
-    array_z_row = len(array_Z_sigmoid)
-    array_z_col = len(array_Z_sigmoid[1])
-    array_A_sig = np.zeros((array_z_row,array_z_col),dtype = np.float32)
-    
-    for k in range(array_z_row):
-        for l in range(array_z_col):
-            array_A_sig[k,l] = 1/(1+np.exp(-array_Z_sigmoid[k,l]))
-            
-    return array_A_sig
-
-def sigmoid_activation_back(array_dloss_dA_sigmoid, array_Z_sigmoid_back):
-    array_dloss_dA_row = len(array_dloss_dA_sigmoid)
-    array_dloss_dA_col = len(array_dloss_dA_sigmoid[1])
-    array_Z_back_sig = np.zeros((array_dloss_dA_row,array_dloss_dA_col),dtype = np.float32)
-    array_Z_back_sigmoid_dummy = np.zeros((array_dloss_dA_row,array_dloss_dA_col),dtype = np.float32)
-
-    for k in range(array_dloss_dA_row):
-        for l in range(array_dloss_dA_col):
-            array_Z_back_sigmoid_dummy[k,l] = 1/(1+np.exp(-array_Z_sigmoid_back[k,l]))
-
-    for k in range(array_dloss_dA_row):
-        for l in range(array_dloss_dA_col):
-            array_Z_back_sig[k,l] = array_dloss_dA_sigmoid[k,l]* array_Z_back_sigmoid_dummy[k,l]*(1-array_Z_back_sigmoid_dummy[k,l])
-
-    return array_Z_back_sig
-
-
 def relu_activation(array_Z):
     array_z_row = len(array_Z)
     array_z_col = len(array_Z[1])
@@ -67,6 +39,8 @@ def Loss_function(pred_y,true_y):
     ##############################################
     ###### Loss
     length_loss = len(pred_y[1])
+    epsilon=1e-12
+    pred_y = np.clip(pred_y, epsilon, 1. - epsilon)
     loss = np.zeros((10,length_loss), dtype = np.float32)
     for k in range(10):
         for l in range(length_loss):
@@ -270,7 +244,7 @@ Z1_back = np.zeros((64,4),dtype = np.float32)
 Z2_back = np.zeros((64,4),dtype = np.float32)
 Z3_back = np.zeros((10,4),dtype = np.float32)
 
-learning_rate = 0.001
+learning_rate = 0.01
 
 for i in range(784):
     for j in range(64):
