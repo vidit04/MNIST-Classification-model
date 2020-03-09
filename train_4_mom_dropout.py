@@ -312,15 +312,36 @@ def Data_pre_processing():
     image_valid2 = image_test[:4000,:]
     image_valid = np.concatenate((image_valid1, image_valid2), axis=0)
     image_valid = image_valid.astype('float32')
-    image_valid = image_valid/255
+
+    if (Normal == "simple" or Normal == "Simple"):
+        image_valid = Simple_normalization(image_valid)
+        print("I am in simple")
+    if (Normal == "normal" or Normal == "Normal"):
+        image_valid = Normal_normalization(image_valid)
+        print("I am in normal")
+
     #print(len(image_valid))
     image_train = image_train[:58000,:]
     image_train = image_train.astype('float32')
-    image_train = image_train/255
+    
+    if (Normal == "simple" or Normal == "Simple"):
+        image_train = Simple_normalization(image_train)
+        print("I am in simple")
+    if (Normal == "normal" or Normal == "Normal"):
+        image_train = Normal_normalization(image_train)
+        print("I am in normal")
+
     #print(len(image_train))
     image_test = image_test[4000:,:]
     image_test = image_test.astype('float32')
-    image_test = image_test/255
+
+    if (Normal == "simple" or Normal == "Simple"):
+        image_test = Simple_normalization(image_test)
+        print("I am in simple")
+    if (Normal == "normal" or Normal == "Normal"):
+        image_test = Normal_normalization(image_test)
+        print("I am in normal")
+
     #print(len(image_test))
 
     one_hot_label_valid1 = one_hot_label_train[58000:,:]
@@ -334,6 +355,27 @@ def Data_pre_processing():
 
     return image_train, one_hot_label_train, image_valid, one_hot_label_valid, image_test, one_hot_label_test
 
+def Normal_normalization(image_array):
+    mean  = np.mean(image_array)
+    std = np.std(image_array)
+    image_array = (image_array - mean)/std
+    return image_array
+
+def Simple_normalization(image_array):
+    image_array = image_array / 255
+    return image_array
+
+def Gaussian_initialization(weights):
+    row_weights = weights.shape[0]
+    width_weights = weights.shape[1]
+    weights = 0.01 * np.random.randn(row_weights,width_weights)
+    return weights
+
+def Xavier_initialization(weights):
+    row_weights = weights.shape[0]
+    width_weights = weights.shape[1]
+    weights = np.random.randn(row_weights,width_weights) * np.sqrt(1./row_weights)
+    return weights
 
 batch_size = 4
 hidden_layer_1 = 64
@@ -342,6 +384,10 @@ hadden_layer_2 = 16
 layers = input("Number of Hidden layers in Model: ")
 activation_1 = input("Activation Function for 1st Hidden layer: ")
 activation_2 = input("Activation Function for 2nd Hidden layer: ")
+
+Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
+initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
+
 
 reg = input("Want to implement L1 Regression: ")
 decay = input("Want to implement Decay learning rate: ")
@@ -399,17 +445,42 @@ alpha = 0.00001
 decay_rate = 0.9
 prob = 0.8
 
-for i in range(784):
-    for j in range(64):
-        weights_1[i,j] = 0.01 * np.random.randn()
 
-for i in range(64):
-    for j in range(64):
-        weights_2[i,j] = 0.01 * np.random.randn()
+if (initial == "gauss" or initial == "Gauss"):
+    weights_1 = Gaussian_initialization(weights_1)
+    print("I am in Gauss")
+if (initial == "xavier" or initial == "Xavier"):
+    weights_1 = Xavier_initialization(weights_1)
+    print("I am in Xavier")
 
-for i in range(64):
-    for j in range(10):
-        weights_3[i,j] = 0.01 * np.random.randn()
+if (initial == "gauss" or initial == "Gauss"):
+    weights_2 = Gaussian_initialization(weights_2)
+    print("I am in Gauss")
+if (initial == "xavier" or initial == "Xavier"):
+    weights_2 = Xavier_initialization(weights_2)
+    print("I am in Xavier")
+
+if (initial == "gauss" or initial == "Gauss"):
+    weights_3 = Gaussian_initialization(weights_3)
+    print("I am in Gauss")
+if (initial == "xavier" or initial == "Xavier"):
+    weights_3 = Xavier_initialization(weights_3)
+    print("I am in Xavier")
+
+
+
+#for i in range(784):
+#    for j in range(64):
+#        weights_1[i,j] = 0.01 * np.random.randn()
+
+#for i in range(64):
+#    for j in range(64):
+#        weights_2[i,j] = 0.01 * np.random.randn()
+
+#for i in range(64):
+#    for j in range(10):
+#        weights_3[i,j] = 0.01 * np.random.randn()
+
 
 #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
 for i in range(40):
