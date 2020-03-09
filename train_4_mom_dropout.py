@@ -377,6 +377,10 @@ def Xavier_initialization(weights):
     weights = np.random.randn(row_weights,width_weights) * np.sqrt(1./row_weights)
     return weights
 
+def learning_rate_decay(learning_rate, decay_rate):
+    learning_rate = learning_rate * decay_rate
+    return learning_rate
+
 batch_size = 4
 hidden_layer_1 = 64
 hadden_layer_2 = 16
@@ -650,7 +654,7 @@ for i in range(40):
         n = n + 4
 
     if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
-        learning_rate = learning_rate * decay_rate
+        learning_rate = learning_rate_decay(learning_rate,decay_rate)
     if learning_rate < 0.001:
         learning_rate = 0.001
         
