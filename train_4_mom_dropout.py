@@ -405,6 +405,7 @@ cost_test = []
 acc_training = []
 acc_validation = []
 acc_test = []
+learning_rate_list = []
 weights_1 = np.zeros((784,64),dtype = np.float32)
 baises_1 = np.zeros((64,1), dtype = np.float32)
 
@@ -489,7 +490,7 @@ if (initial == "xavier" or initial == "Xavier"):
 #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
 for i in range(40):
     n=0
-    
+    learning_rate_list.append(learning_rate)
     for j in tqdm(range(14500), total=14500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
 
         
@@ -674,6 +675,7 @@ for i in range(40):
     acc_training.append(acc_epoch_train)
     acc_validation.append(acc_epoch_valid)
     acc_test.append(acc_epoch_test)
+    
 
     print("Final Cost :",loss_train, " Epoch : ", i)
     print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
@@ -702,5 +704,9 @@ plt.title('Training_Acc_Graph')
 plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
 plt.show()
 
+l = learning_rate_list
+plt.title('Learning rate_Graph') 
+plt.plot(x, l,"b")
+plt.show()
 
 
