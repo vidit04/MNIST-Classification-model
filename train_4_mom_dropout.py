@@ -4,6 +4,7 @@ import gzip
 import cv2
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import csv
 
 
 #os.chdir("C:\Users\user\Desktop\MNIST")
@@ -381,6 +382,16 @@ def learning_rate_decay(learning_rate, decay_rate):
     learning_rate = learning_rate * decay_rate
     return learning_rate
 
+def save_fun(save_array, ext):
+    np.savetxt( ext + '.csv', save_array, delimiter=',')
+    #return None
+
+def save_fun_list(save_list, ext):
+    with open( ext + ".csv", 'w',newline = "") as f:
+         riter= csv.writer(f)
+         riter.writerow(save_list)
+    #return None
+
 batch_size = 4
 hidden_layer_1 = 64
 hadden_layer_2 = 16
@@ -488,7 +499,7 @@ if (initial == "xavier" or initial == "Xavier"):
 
 
 #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
-for i in range(40):
+for i in range(10):
     n=0
     learning_rate_list.append(learning_rate)
     for j in tqdm(range(14500), total=14500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
@@ -679,13 +690,26 @@ for i in range(40):
 
     print("Final Cost :",loss_train, " Epoch : ", i)
     print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
-            
 
 
-x = np.arange(0,40, 1)
+string = "_for_" + layers + "_layer_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
+
+save_fun( weights_1, "Weights_1" + string)
+save_fun( baises_1, "Baises_1"  + string)
+save_fun( weights_2, "Weights_2" + string)
+save_fun( baises_2, "Baises_2" + string)
+save_fun(weights_3 , "Weights_3" + string)
+save_fun( baises_3, "Baises_3" + string)
+
+
+x = np.arange(0,10, 1)
 y = cost_train
+
+save_fun_list(y , "Training_loss" + string)
 y1 = cost_valid
+save_fun_list(y1 , "Validation_loss" + string)
 y2 = cost_test
+save_fun_list(y2 , "Test_loss" + string)
 
 plt.xlabel('Epochs')  
 plt.ylabel('Loss') 
@@ -695,8 +719,11 @@ plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
 plt.show()
 
 z= acc_training
+save_fun_list(z , "Training_acc" + string)
 z1 = acc_validation
+save_fun_list(z1 , "Validation_acc" + string)
 z2 = acc_test
+save_fun_list(z2 , "Test_acc" + string)
 plt.xlabel('Epochs')  
 plt.ylabel('Accuracy')
 
@@ -705,8 +732,11 @@ plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
 plt.show()
 
 l = learning_rate_list
+
+save_fun_list(l , "Learning_rate" + string)
+plt.xlabel('Epochs')  
+plt.ylabel('Learning rate')
+
 plt.title('Learning rate_Graph') 
 plt.plot(x, l,"b")
 plt.show()
-
-
