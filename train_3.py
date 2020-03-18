@@ -1396,6 +1396,205 @@ def NN_1_layers():
     plt.show()
     return None
 
+def NN_0_layers():
+    batch_size = 4
+    hidden_layer_1 = 64
+    hidden_layer_2 = 16
+
+    #layers = input("Number of Hidden layers in Model: ")
+    #activation_1 = input("Activation Function for 1st Hidden layer: ")
+    #activation_2 = input("Activation Function for 2nd Hidden layer: ")
+
+    Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
+    initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
+
+
+    reg = input("Want to implement L1 Regression: ")
+    decay = input("Want to implement Decay learning rate: ")
+    #dropout = input("Want to implement Dropout: ")
+    optimizer = input("Type of Optimizer want to use: ")
+
+    a,b,c,d,e,f = Data_pre_processing(Normal)
+
+    cost_train = []
+    cost_valid = []
+    cost_test = []
+    acc_training = []
+    acc_validation = []
+    acc_test = []
+    learning_rate_list = []
+
+    weights_1 = np.zeros((784,10),dtype = np.float32)
+    baises_1 = np.zeros((10,1), dtype = np.float32)
+
+    dloss_dweights_1 = np.zeros((784,10),dtype = np.float32)
+    dloss_dbaises_1  = np.zeros((10,1),dtype = np.float32)
+
+    mov_weights_1 = np.zeros((784,10),dtype = np.float32)
+    mov_baises_1 = np.zeros((10,1), dtype = np.float32)
+
+    Z1 = np.zeros((10,4),dtype = np.float32)
+    Z1_back = np.zeros((10,4),dtype = np.float32)
+
+    learning_rate = 0.01
+    beta = 0.9
+    alpha = 0.00001
+    decay_rate = 0.9
+    prob = 0.8
+
+    #for i in range(784):
+    #    for j in range(10):
+    #        weights[i,j] = 0.01 * np.random.randn()
+
+
+    if (initial == "gauss" or initial == "Gauss"):
+        weights_1 = Gaussian_initialization(weights_1)
+        print("I am in Gauss")
+    if (initial == "xavier" or initial == "Xavier"):
+        weights_1 = Xavier_initialization(weights_1)
+        print("I am in Xavier")
+
+    #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
+    for i in range(10):
+        n=0
+        learning_rate_list.append(learning_rate)
+        for j in tqdm(range(14500), total=14500 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
+
+        
+            x_train = a[n:n+batch_size,:]
+            y_train = b[n:n+batch_size,:]
+
+            dloss_dweights_1 = np.zeros((784,10),dtype = np.float32)
+            dloss_dbaises_1  = np.zeros((10,1),dtype = np.float32)
+
+            Z1 = np.zeros((10,4),dtype = np.float32)
+
+            Z1_back = np.zeros((10,4),dtype = np.float32)
+
+            Z1 = np.matmul(weights_1.T,x_train.T) + baises_1
+
+            Z1_max = np.max(Z1, axis=0)
+            Z1_max = np.reshape(Z1_max,(1, 4))
+            Z1 = np.exp(Z1-Z1_max)
+                
+            ####################################################
+            #Z1 = Z1.transpose()
+
+            A1 = Z1/np.sum(Z1,axis=0)
+
+            ##############################################
+            ###### Loss
+            #loss = np.zeros((10,4), dtype = np.float32)
+            #for k in range(10):
+            #    for l in range(4):
+            #        loss[k,l] = - y_train[l,k]*(np.log(A3[k,l]))
+            #loss_per_sample = np.sum(loss,axis=1)
+            #total_loss = np.sum(loss_per_sample,axis= 0)
+            #total_loss = total_loss/batch_size
+
+            #####  Back propogation
+
+            Z1_back = A1 - y_train.T
+
+            ##################################################################################
+            dloss_dweights_1 = (1./batch_size) * np.matmul(x_train.T,Z1_back.T)
+            dloss_dbaises_1 = (1./batch_size) * np.sum(Z1_back, axis = 1, keepdims= True)
+
+            if reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES":
+                dloss_dweights_1 = dloss_dweights_1 + alpha * dloss_dweights_1
+                #dloss_dweights_2 = dloss_dweights_2 + alpha * dloss_dweights_2
+                #dloss_dweights_3 = dloss_dweights_3 + alpha * dloss_dweights_3
+
+            if optimizer == "SGD" or optimizer =="sgd":
+                weights_1,baises_1 = SGD_optimizer_layer_0(weights_1,baises_1,dloss_dweights_1,dloss_dbaises_1, learning_rate)
+
+            if optimizer == "Momentum" or optimizer =="momentum":
+                weights_1,baises_1,mov_weights_1,mov_baises_1 = Momentum_optimizer_layer_0(weights_1,baises_1,mov_weights_1,mov_baises_1,dloss_dweights_1,dloss_dbaises_1, learning_rate, beta)
+  
+
+            #for k in range(784):
+            #    for l in range(10):
+            #        weights[k,l] = weights[k,l] - learning_rate*dloss_dweights[k,l]
+
+            #for k in range(10):
+            #    baises[k,:] = baises[k,:] - learning_rate*dloss_dbaises[k,:]
+
+
+            n = n + 4
+
+        if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
+            learning_rate = learning_rate_decay(learning_rate,decay_rate)
+        if learning_rate < 0.001:
+            learning_rate = 0.001
+
+        acc_epoch_train = accuracy_layer_0(weights_1,baises_1 , a, b )
+        acc_epoch_valid = accuracy_layer_0(weights_1,baises_1, c, d )
+        acc_epoch_test = accuracy_layer_0(weights_1,baises_1, e, f )
+
+        loss_train = forward_prop_for_loss_layer_0(weights_1,baises_1, a, b , alpha ,reg, prob)
+        loss_valid = forward_prop_for_loss_layer_0(weights_1,baises_1, c, d , alpha ,reg, prob)
+        loss_test = forward_prop_for_loss_layer_0(weights_1,baises_1, e, f , alpha ,reg, prob)
+    
+        cost_train.append(loss_train)
+        cost_valid.append(loss_valid)
+        cost_test.append(loss_test)
+        acc_training.append(acc_epoch_train)
+        acc_validation.append(acc_epoch_valid)
+        acc_test.append(acc_epoch_test)
+    
+
+        print("Final Cost :",loss_train, " Epoch : ", i)
+        print("Final Accuracy :",acc_epoch_train, " Epoch : ", i) 
+
+    string = "_for_" + layers + "_layer_"  + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + optimizer + "_optimizer"
+
+    save_fun( weights_1, "Weights_1" + string)
+    save_fun( baises_1, "Baises_1"  + string)
+    #save_fun( weights_2, "Weights_2" + string)
+    #save_fun( baises_2, "Baises_2" + string)
+    #save_fun(weights_3 , "Weights_3" + string)
+    #save_fun( baises_3, "Baises_3" + string)
+
+
+    x = np.arange(0,10, 1)
+    y = cost_train
+
+    save_fun_list(y , "Training_loss" + string)
+    y1 = cost_valid
+    save_fun_list(y1 , "Validation_loss" + string)
+    y2 = cost_test
+    save_fun_list(y2 , "Test_loss" + string)
+
+    plt.xlabel('Epochs')  
+    plt.ylabel('Loss') 
+ 
+    plt.title('Training_Loss_Graph') 
+    plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
+    plt.show()
+
+    z= acc_training
+    save_fun_list(z , "Training_acc" + string)
+    z1 = acc_validation
+    save_fun_list(z1 , "Validation_acc" + string)
+    z2 = acc_test
+    save_fun_list(z2 , "Test_acc" + string)
+    plt.xlabel('Epochs')  
+    plt.ylabel('Accuracy')
+
+    plt.title('Training_Acc_Graph') 
+    plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
+    plt.show()
+
+    l = learning_rate_list
+
+    save_fun_list(l , "Learning_rate" + string)
+    plt.xlabel('Epochs')  
+    plt.ylabel('Learning rate')
+
+    plt.title('Learning rate_Graph')
+    plt.plot(x, l,"b")
+    plt.show()
+    return None
 
 if __name__=='__main__':
 
@@ -1404,4 +1603,6 @@ if __name__=='__main__':
         NN_2_layers()
     if (layers == "1" or layers == "one" or layers == "One"):
         NN_1_layers()
+    if (layers == "0" or layers == "zero" or layers == "Zero"):
+        NN_0_layers()
     
