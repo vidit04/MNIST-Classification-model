@@ -992,7 +992,7 @@ def NN_2_layers():
         print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
 
 
-    string = "_for_" + layers + "_layer_" + activation_1 + "_activation_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
+    string = "_for_two_layer_" + activation_1 + "_activation_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
 
     save_fun( weights_1, "Weights_1" + string)
     print("Weight_1 file saved for 2 Layer Neural Network.")
@@ -1007,53 +1007,7 @@ def NN_2_layers():
     save_fun( baises_3, "Baises_3" + string)
     print("Baises_3 file saved for 2 Layer Neural Network.")
 
-
-    x = np.arange(0,10, 1)
-    y = cost_train
-
-    save_fun_list(y , "Training_loss" + string)
-    print("Training Loss history file saved for 2 Layer Neural Network.")
-    y1 = cost_valid
-    save_fun_list(y1 , "Validation_loss" + string)
-    print("Validation Loss history file saved for 2 Layer Neural Network.")
-    y2 = cost_test
-    save_fun_list(y2 , "Test_loss" + string)
-    print("Test Loss history file saved for 2 Layer Neural Network.")
-
-    plt.xlabel('Epochs')  
-    plt.ylabel('Loss') 
- 
-    plt.title('Training_Loss_Graph') 
-    plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
-    plt.show()
-
-    z= acc_training
-    save_fun_list(z , "Training_acc" + string)
-    print("Training Accuracy history file saved for 2 Layer Neural Network.")
-    z1 = acc_validation
-    save_fun_list(z1 , "Validation_acc" + string)
-    print("Validation Accuracy history file saved for 2 Layer Neural Network.")
-    z2 = acc_test
-    save_fun_list(z2 , "Test_acc" + string)
-    print("Test Accuracy history file saved for 2 Layer Neural Network.")
-    plt.xlabel('Epochs')  
-    plt.ylabel('Accuracy')
-
-    plt.title('Training_Acc_Graph') 
-    plt.plot(x, z,"b", x, z1,"g", x, z2,"r")    
-    plt.show()
-
-    l = learning_rate_list
-
-    save_fun_list(l , "Learning_rate" + string)
-    print("Learning rate history file saved for 2 Layer Neural Network.")
-    plt.xlabel('Epochs')  
-    plt.ylabel('Learning rate')
-
-    plt.title('Learning rate_Graph') 
-    plt.plot(x, l,"b")
-    plt.show()
-    return None
+    return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string 
 
 def NN_1_layers():
     batch_size = 4
@@ -1333,7 +1287,7 @@ def NN_1_layers():
             
 
 
-    string = "_for_" + layers + "_layer_" + activation_1 + "_activation_"+ Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
+    string = "_for_one_layer_" + activation_1 + "_activation_"+ Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
 
     save_fun( weights_1, "Weights_1" + string)
     print("Weight_1 file saved for 1 Layer Neural Network.")
@@ -1348,53 +1302,7 @@ def NN_1_layers():
     #save_fun( baises_3, "Baises_3" + string)
     #print("Baises_3 file saved ")
 
-
-    x = np.arange(0,10, 1)
-    y = cost_train
-
-    save_fun_list(y , "Training_loss" + string)
-    print("Training Loss history file saved for 1 Layer Neural Network.")
-    y1 = cost_valid
-    save_fun_list(y1 , "Validation_loss" + string)
-    print("Validation Loss history file saved for 1 Layer Neural Network.")
-    y2 = cost_test
-    save_fun_list(y2 , "Test_loss" + string)
-    print("Test Loss history file saved for 1 Layer Neural Network.")
-
-    plt.xlabel('Epochs')  
-    plt.ylabel('Loss') 
- 
-    plt.title('Training_Loss_Graph') 
-    plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
-    plt.show()
-
-    z= acc_training
-    save_fun_list(z , "Training_acc" + string)
-    print("Training Accuracy history file saved for 1 Layer Neural Network.")
-    z1 = acc_validation
-    save_fun_list(z1 , "Validation_acc" + string)
-    print("Validation Accuracy history file saved for 1 Layer Neural Network.")
-    z2 = acc_test
-    save_fun_list(z2 , "Test_acc" + string)
-    print("Test Accuracy history file saved for 1 Layer Neural Network.")
-    plt.xlabel('Epochs')  
-    plt.ylabel('Accuracy')
-
-    plt.title('Training_Acc_Graph') 
-    plt.plot(x, z,"b", x, z1,"g", x, z2,"r")    
-    plt.show()
-
-    l = learning_rate_list
-
-    save_fun_list(l , "Learning_rate" + string)
-    print("Learning rate history file saved for 1 Layer Neural Network.")
-    plt.xlabel('Epochs')  
-    plt.ylabel('Learning rate')
-
-    plt.title('Learning rate_Graph') 
-    plt.plot(x, l,"b")
-    plt.show()
-    return None
+    return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string 
 
 def NN_0_layers():
     batch_size = 4
@@ -1546,7 +1454,7 @@ def NN_0_layers():
         print("Final Cost :",loss_train, " Epoch : ", i)
         print("Final Accuracy :",acc_epoch_train, " Epoch : ", i) 
 
-    string = "_for_" + layers + "_layer_"  + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + optimizer + "_optimizer"
+    string = "_for_zero_layer_"  + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + optimizer + "_optimizer"
 
     save_fun( weights_1, "Weights_1" + string)
     save_fun( baises_1, "Baises_1"  + string)
@@ -1554,8 +1462,20 @@ def NN_0_layers():
     #save_fun( baises_2, "Baises_2" + string)
     #save_fun(weights_3 , "Weights_3" + string)
     #save_fun( baises_3, "Baises_3" + string)
+    
+    return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string 
 
+if __name__=='__main__':
 
+    layers = input("Number of Hidden layers in Model: ")
+    if (layers == "2" or layers == "two" or layers == "Two"):
+        cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string  = NN_2_layers()
+    if (layers == "1" or layers == "one" or layers == "One"):
+        cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string  = NN_1_layers()
+    if (layers == "0" or layers == "zero" or layers == "Zero"):
+        cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string =  NN_0_layers()
+
+    
     x = np.arange(0,10, 1)
     y = cost_train
 
@@ -1594,15 +1514,3 @@ def NN_0_layers():
     plt.title('Learning rate_Graph')
     plt.plot(x, l,"b")
     plt.show()
-    return None
-
-if __name__=='__main__':
-
-    layers = input("Number of Hidden layers in Model: ")
-    if (layers == "2" or layers == "two" or layers == "Two"):
-        NN_2_layers()
-    if (layers == "1" or layers == "one" or layers == "One"):
-        NN_1_layers()
-    if (layers == "0" or layers == "zero" or layers == "Zero"):
-        NN_0_layers()
-    
