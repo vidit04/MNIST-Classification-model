@@ -731,7 +731,7 @@ for i in range(10):
     print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
 
 
-string = "_for_" + layers + "_layer_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
+string = "_for_" + layers + "_layer_" + activation_1 + "_activation_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
 
 save_fun( weights_1, "Weights_1" + string)
 save_fun( baises_1, "Baises_1"  + string)
