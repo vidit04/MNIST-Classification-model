@@ -417,6 +417,7 @@ acc_training = []
 acc_validation = []
 acc_test = []
 learning_rate_list = []
+
 weights_1 = np.zeros((784,64),dtype = np.float32)
 baises_1 = np.zeros((64,1), dtype = np.float32)
 
@@ -523,6 +524,9 @@ for i in range(10):
         Z1 = np.zeros((64,4),dtype = np.float32)
         Z2 = np.zeros((64,4),dtype = np.float32)
         Z3 = np.zeros((10,4),dtype = np.float32)
+
+        A1 = np.zeros((64,4),dtype = np.float32)
+        A2 = np.zeros((64,4),dtype = np.float32)
 
         Z1_back = np.zeros((64,4),dtype = np.float32)
         Z2_back = np.zeros((64,4),dtype = np.float32)
