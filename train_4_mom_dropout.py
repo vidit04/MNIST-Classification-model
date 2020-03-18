@@ -149,7 +149,11 @@ def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baise
 
     Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
 
-    A1 = np.maximum(0,Z1)
+    if activation_1 == "relu" or activation_1 == "Relu":
+        #A1 = relu_activation(Z1)
+        A1 = np.maximum(0,Z1)
+    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+        A1 = sigmoid_activation(Z1)
 
     ##### Dropout
     if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
@@ -157,7 +161,11 @@ def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baise
 
     Z2 = np.matmul(weights_2.T,A1) + baises_2
 
-    A2 = np.maximum(0,Z2)
+    if activation_1 == "relu" or activation_1 == "Relu":
+        #A1 = relu_activation(Z1)
+        A2 = np.maximum(0,Z2)
+    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+        A2 = sigmoid_activation(Z2)
 
     ##### Dropout
     if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
@@ -191,11 +199,20 @@ def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_ar
 
     Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
 
-    A1 = np.maximum(0,Z1)
+    if activation_1 == "relu" or activation_1 == "Relu":
+        #A1 = relu_activation(Z1)
+        A1 = np.maximum(0,Z1)
+    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+        A1 = sigmoid_activation(Z1)
 
     Z2 = np.matmul(weights_2.T,A1) + baises_2
 
-    A2 = np.maximum(0,Z2)
+    if activation_1 == "relu" or activation_1 == "Relu":
+        #A1 = relu_activation(Z1)
+        A2 = np.maximum(0,Z2)
+    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+        A2 = sigmoid_activation(Z2)
+
     #A2= Z2
     Z3 = np.matmul(weights_3.T,A2) + baises_3
 
@@ -398,7 +415,7 @@ hadden_layer_2 = 16
 
 layers = input("Number of Hidden layers in Model: ")
 activation_1 = input("Activation Function for 1st Hidden layer: ")
-activation_2 = input("Activation Function for 2nd Hidden layer: ")
+#activation_2 = input("Activation Function for 2nd Hidden layer: ")
 
 Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
 initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
@@ -536,7 +553,11 @@ for i in range(10):
         Z1 = np.matmul(weights_1.T,x_train.T) + baises_1
 
         #A1 = np.maximum(0,Z1)
-        A1 = relu_activation(Z1)
+        #A1 = relu_activation(Z1)
+        if activation_1 == "relu" or activation_1 == "Relu":
+            A1 = relu_activation(Z1)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A1 = sigmoid_activation(Z1)
 
         ##### Dropout
         if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
@@ -554,7 +575,11 @@ for i in range(10):
         Z2 = np.matmul(weights_2.T,A1) + baises_2
 
         #A2 = np.maximum(0,Z2)
-        A2 = relu_activation(Z2)
+        #A2 = relu_activation(Z2)
+        if activation_1 == "relu" or activation_1 == "Relu":
+            A2 = relu_activation(Z2)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A2 = sigmoid_activation(Z2)
 
         ##### Dropout
 
@@ -616,7 +641,12 @@ for i in range(10):
         #        if Z2[k,l] > 0:
         #            Z2_back[k,l] = dloss_dA2[k,l]
 
-        Z2_back = relu_activation_back(dloss_dA2, Z2)
+        if activation_1 == "relu" or activation_1 == "Relu":
+            Z2_back = relu_activation_back(dloss_dA2, Z2)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            Z2_back = sigmoid_activation_back(dloss_dA2, Z2)
+
+        #Z2_back = relu_activation_back(dloss_dA2, Z2)
 
         dloss_dweights_2 = (1./batch_size) * np.matmul(A1,Z2_back.T)
         dloss_dbaises_2 = (1./batch_size) * np.sum(Z2_back, axis = 1, keepdims= True)
@@ -640,7 +670,12 @@ for i in range(10):
         #        if Z1[k,l] > 0:
         #            Z1_back[k,l] = dloss_dA1[k,l]
 
-        Z1_back = relu_activation_back(dloss_dA1, Z1)
+        if activation_1 == "relu" or activation_1 == "Relu":
+            Z1_back = relu_activation_back(dloss_dA1, Z1)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            Z1_back = sigmoid_activation_back(dloss_dA1, Z1)
+
+        #Z1_back = relu_activation_back(dloss_dA1, Z1)
 
         ##################################################################################
         dloss_dweights_1 = (1./batch_size) * np.matmul(x_train.T,Z1_back.T)
