@@ -71,7 +71,7 @@ def forward_prop_for_loss_layer_0(weights_1,baises_1, image_arr, labels_arr, alp
 
     ##############################################
     ###### Loss
-    total_loss = Loss_function(A1,labels_arr,weights_1, alpha, reg)
+    total_loss = Loss_function_layer_0(A1,labels_arr,weights_1, alpha, reg)
 
     return total_loss
 
