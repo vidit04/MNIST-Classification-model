@@ -1158,7 +1158,7 @@ def dropout_forward_test():
         print("Fuction tested not okay")
     return None
 
-def Loss_function_with_reg_test():
+def Loss_function_with_reg_2_layer_test():
     num = 2
     alpha  = 0.00001
     reg = "y"
@@ -1187,6 +1187,107 @@ def Loss_function_with_reg_test():
             input_weights_1[i,j] = data_sheet.cell_value(i+22,j+1)
             input_weights_2[i,j] = data_sheet.cell_value(i+35,j+1)
             input_weights_3[i,j] = data_sheet.cell_value(i+48,j+1)
+
+    result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg,num)
+    output_loss = round(output_loss, 6)
+    result_loss = round(result_loss, 6)
+    #for i in range(10):
+    #    for j in range(4):
+    #        if output_array[i,j] != result_array[i,j]:
+    #            print(i)
+    #            print(j)
+    #print(result_array)
+    #print(output_loss)
+    #print(result_loss)
+    
+
+    if result_loss == output_loss:
+        print("Fuction tested okay")
+    if result_loss != output_loss:
+        print("Fuction tested not okay")
+    return None
+
+
+def Loss_function_with_reg_1_layer_test():
+
+    num = 1
+    alpha  = 0.00001
+    reg = "y"
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet14')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = 0
+    output_loss = data_sheet.cell_value(1,23)
+    input_pred_y_array = np.zeros((10,4),dtype = np.float32)
+    input_true_y_array = np.zeros((4,10),dtype = np.float32)
+    for i in range(10):
+        for j in range(4):
+            input_pred_y_array[i,j] = data_sheet.cell_value(i+6,j+7)
+            input_true_y_array [j,i] = data_sheet.cell_value(i+6,j+12)
+    #print(output_loss)
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+1)
+            input_weights_2[i,j] = data_sheet.cell_value(i+35,j+1)
+            #input_weights_3[i,j] = data_sheet.cell_value(i+48,j+1)
+
+    result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg,num)
+    output_loss = round(output_loss, 6)
+    result_loss = round(result_loss, 6)
+    #for i in range(10):
+    #    for j in range(4):
+    #        if output_array[i,j] != result_array[i,j]:
+    #            print(i)
+    #            print(j)
+    #print(result_array)
+    #print(output_loss)
+    #print(result_loss)
+    
+
+    if result_loss == output_loss:
+        print("Fuction tested okay")
+    if result_loss != output_loss:
+        print("Fuction tested not okay")
+    return None
+
+def Loss_function_with_reg_0_layer_test():
+
+    num = 0
+    alpha  = 0.00001
+    reg = "y"
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet14')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = 0
+    input_weights_3 = 0
+    output_loss = data_sheet.cell_value(1,24)
+    input_pred_y_array = np.zeros((10,4),dtype = np.float32)
+    input_true_y_array = np.zeros((4,10),dtype = np.float32)
+    for i in range(10):
+        for j in range(4):
+            input_pred_y_array[i,j] = data_sheet.cell_value(i+6,j+7)
+            input_true_y_array [j,i] = data_sheet.cell_value(i+6,j+12)
+    #print(output_loss)
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+1)
+            #input_weights_2[i,j] = data_sheet.cell_value(i+35,j+1)
+            #input_weights_3[i,j] = data_sheet.cell_value(i+48,j+1)
 
     result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg,num)
     output_loss = round(output_loss, 6)
@@ -1713,4 +1814,4 @@ def Data_pre_processing_test():
     return None
 
 if __name__=='__main__':
-    Accuracy_with_sigmoid_test()
+    Loss_function_with_reg_0_layer_test()
