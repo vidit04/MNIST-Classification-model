@@ -183,7 +183,7 @@ def dropout_forward(array_Act, prob):
     mask = mask < prob
     array_Act = np.multiply(array_Act, mask)
     array_Act = array_Act/prob
-    print("I am in dropout")
+    #print("I am in dropout")
     return array_Act
 
 def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta, num):
@@ -357,9 +357,9 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg , num)
     if (reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES"):
         #print("Yes, I am in regression")
 
-        reg_loss = reg_loss(weights_1,weights_2,weights_3, alpha,num)
+        reg_loss_ = reg_loss(weights_1,weights_2,weights_3, alpha,num)
         #print(reg_loss)
-        total_loss = total_loss + reg_loss
+        total_loss = total_loss + reg_loss_
 
     return total_loss
 
@@ -630,7 +630,7 @@ def NN_2_layers():
     hidden_layer_2 = 64
 
     #layers = input("Number of Hidden layers in Model: ")
-    activation_1 = input("Activation Function for 1st Hidden layer: ")
+    activation_1 = input("Activation Function for Hidden layers: ")
     #activation_2 = input("Activation Function for 2nd Hidden layer: ")
      
     Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
@@ -971,7 +971,7 @@ def NN_1_layers():
     #hidden_layer_2 = 16
     num = 1
     #layers = input("Number of Hidden layers in Model: ")
-    activation_1 = input("Activation Function for 1st Hidden layer: ")
+    activation_1 = input("Activation Function for Hidden layer: ")
 
     Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
     initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
@@ -1279,6 +1279,7 @@ def NN_0_layers():
     #layers = input("Number of Hidden layers in Model: ")
     #activation_1 = input("Activation Function for 1st Hidden layer: ")
     #activation_2 = input("Activation Function for 2nd Hidden layer: ")
+    activation_1 = "no"
 
     Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
     initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
@@ -1424,7 +1425,7 @@ def NN_0_layers():
         if learning_rate < 0.001:
             learning_rate = 0.001
 
-        acc_epoch_train = aaccuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b,activation_1, num)
+        acc_epoch_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b,activation_1, num)
         acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d,activation_1, num)
         acc_epoch_test = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f,activation_1, num)
 
@@ -1446,7 +1447,9 @@ def NN_0_layers():
     string = "_for_zero_layer_"  + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + optimizer + "_optimizer"
 
     save_fun( weights_1, "Weights_1" + string)
+    print("Weight_1 file saved for 0 Layer Neural Network.")
     save_fun( baises_1, "Baises_1"  + string)
+    print("Baises_1 file saved for 0 Layer Neural Network.")
     #save_fun( weights_2, "Weights_2" + string)
     #save_fun( baises_2, "Baises_2" + string)
     #save_fun(weights_3 , "Weights_3" + string)
