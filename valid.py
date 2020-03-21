@@ -1,5 +1,5 @@
 import xlrd
-from train_3 import*
+from train3 import*
 import matplotlib.pyplot as plt
 
 def relu_activation_test():
@@ -115,8 +115,9 @@ def sigmoid_activation_back_test():
         print("Fuction tested not okay")
     return None
 
-def SGD_optimizer_test():
+def SGD_optimizer_test_for_2_layers():
     learning_rate = 0.001
+    num=2
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet5')
@@ -180,7 +181,7 @@ def SGD_optimizer_test():
             output_baises_3[i,0] = data_sheet.cell_value(47,i+25)
 
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3 = SGD_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3 = SGD_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate,num)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -210,9 +211,202 @@ def SGD_optimizer_test():
         print("Fuction tested not okay")
     return None
 
-def Momentum_optimizer_test():
+def SGD_optimizer_test_for_1_layers():
+    learning_rate = 0.001
+    num =1
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet5')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = 0
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = 0
+
+    input_dloss_dweights_1 = np.zeros((10,10),dtype = np.float32)
+    input_dloss_dweights_2 = np.zeros((10,10),dtype = np.float32)
+    input_dloss_dweights_3 = 0
+
+    input_dloss_dbaises_1 = np.zeros((10,1),dtype = np.float32)
+    input_dloss_dbaises_2 = np.zeros((10,1),dtype = np.float32)
+    input_dloss_dbaises_3 = 0
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    #output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    #output_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+15,j+1)
+            input_dloss_dweights_1[i,j] = data_sheet.cell_value(i+15,j+13)
+            output_weights_1[i,j] = data_sheet.cell_value(i+15,j+25)
+            #print(i)
+            #print(j)
+            input_weights_2[i,j] = data_sheet.cell_value(i+33,j+1)
+            input_dloss_dweights_2[i,j] = data_sheet.cell_value(i+33,j+13)
+            output_weights_2[i,j] = data_sheet.cell_value(i+33,j+25)
+            
+            #input_weights_3[i,j] = data_sheet.cell_value(i+51,j+1)
+            #input_dloss_dweights_3[i,j] = data_sheet.cell_value(i+51,j+13)
+            #output_weights_3[i,j] = data_sheet.cell_value(i+51,j+25)
+
+    for i in range(10):
+            input_baises_1[i,0] = data_sheet.cell_value(11,i+1)
+            input_baises_2[i,0] = data_sheet.cell_value(29,i+1)
+            #input_baises_3[i,0] = data_sheet.cell_value(47,i+1)
+
+            input_dloss_dbaises_1[i,0] = data_sheet.cell_value(11,i+13)
+            input_dloss_dbaises_2[i,0] = data_sheet.cell_value(29,i+13)
+            #input_dloss_dbaises_3[i,0] = data_sheet.cell_value(47,i+13)
+            
+            output_baises_1[i,0] = data_sheet.cell_value(11,i+25)
+            output_baises_2[i,0] = data_sheet.cell_value(29,i+25)
+            #output_baises_3[i,0] = data_sheet.cell_value(47,i+25)
+
+
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2 = SGD_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate,num)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    result_weights_2 = np.round(result_weights_2 ,4)
+    output_weights_2 = np.round(output_weights_2, 4)
+    #result_weights_3 = np.round(result_weights_3 ,4)
+    #output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    result_baises_2 = np.round(result_baises_2 ,4)
+    output_baises_2 = np.round(output_baises_2, 4) 
+    #result_baises_3 = np.round(result_baises_3 ,4)
+    #output_baises_3 = np.round(output_baises_3, 4) 
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all())):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all())) == False:
+        print("Fuction tested not okay")
+    return None
+
+def SGD_optimizer_test_for_0_layers():
+    learning_rate = 0.001
+    num =0
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet5')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = 0
+    input_weights_3 = 0
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = 0
+    input_baises_3 = 0
+
+    input_dloss_dweights_1 = np.zeros((10,10),dtype = np.float32)
+    input_dloss_dweights_2 = 0
+    input_dloss_dweights_3 = 0
+
+    input_dloss_dbaises_1 = np.zeros((10,1),dtype = np.float32)
+    input_dloss_dbaises_2 = 0
+    input_dloss_dbaises_3 = 0
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    #output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    #output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    #output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    #output_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+15,j+1)
+            input_dloss_dweights_1[i,j] = data_sheet.cell_value(i+15,j+13)
+            output_weights_1[i,j] = data_sheet.cell_value(i+15,j+25)
+            #print(i)
+            #print(j)
+            #input_weights_2[i,j] = data_sheet.cell_value(i+33,j+1)
+            #input_dloss_dweights_2[i,j] = data_sheet.cell_value(i+33,j+13)
+            #output_weights_2[i,j] = data_sheet.cell_value(i+33,j+25)
+            
+            #input_weights_3[i,j] = data_sheet.cell_value(i+51,j+1)
+            #input_dloss_dweights_3[i,j] = data_sheet.cell_value(i+51,j+13)
+            #output_weights_3[i,j] = data_sheet.cell_value(i+51,j+25)
+
+    for i in range(10):
+            input_baises_1[i,0] = data_sheet.cell_value(11,i+1)
+            #input_baises_2[i,0] = data_sheet.cell_value(29,i+1)
+            #input_baises_3[i,0] = data_sheet.cell_value(47,i+1)
+
+            input_dloss_dbaises_1[i,0] = data_sheet.cell_value(11,i+13)
+            #input_dloss_dbaises_2[i,0] = data_sheet.cell_value(29,i+13)
+            #input_dloss_dbaises_3[i,0] = data_sheet.cell_value(47,i+13)
+            
+            output_baises_1[i,0] = data_sheet.cell_value(11,i+25)
+            #output_baises_2[i,0] = data_sheet.cell_value(29,i+25)
+            #output_baises_3[i,0] = data_sheet.cell_value(47,i+25)
+
+
+    result_weights_1,result_baises_1= SGD_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate,num)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    #result_weights_2 = np.round(result_weights_2 ,4)
+    #output_weights_2 = np.round(output_weights_2, 4)
+    #result_weights_3 = np.round(result_weights_3 ,4)
+    #output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    #result_baises_2 = np.round(result_baises_2 ,4)
+    #output_baises_2 = np.round(output_baises_2, 4) 
+    #result_baises_3 = np.round(result_baises_3 ,4)
+    #output_baises_3 = np.round(output_baises_3, 4) 
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_baises_1 == output_baises_1).all())):
+        print("Fuction tested okay")
+    if ((((result_weights_1 == output_weights_1).all()) and ((result_baises_1 == output_baises_1).all()))) == False:
+        print("Fuction tested not okay")
+    return None
+
+def Momentum_optimizer_test_for_2_layers():
     learning_rate = 0.001
     beta = 0.9
+    num = 2
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet6')
     #prob = 0.8
@@ -305,7 +499,7 @@ def Momentum_optimizer_test():
             output_baises_3[i,0] = data_sheet.cell_value(47,i+49)
 
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_mov_weights_1,result_mov_baises_1,result_mov_weights_2,result_mov_baises_2,result_mov_weights_3,result_mov_baises_3 = Momentum_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate, beta)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_mov_weights_1,result_mov_baises_1,result_mov_weights_2,result_mov_baises_2,result_mov_weights_3,result_mov_baises_3 = Momentum_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate, beta,num)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -350,7 +544,290 @@ def Momentum_optimizer_test():
         print("Fuction tested not okay")
     return None
 
-def reg_loss_test():
+def Momentum_optimizer_test_for_1_layers():
+    learning_rate = 0.001
+    beta = 0.9
+    num = 1
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet6')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = 0
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = 0
+
+    input_dloss_dweights_1 = np.zeros((10,10),dtype = np.float32)
+    input_dloss_dweights_2 = np.zeros((10,10),dtype = np.float32)
+    input_dloss_dweights_3 = 0
+
+    input_dloss_dbaises_1 = np.zeros((10,1),dtype = np.float32)
+    input_dloss_dbaises_2 = np.zeros((10,1),dtype = np.float32)
+    input_dloss_dbaises_3 = 0
+
+    mov_weights_1 = np.zeros((10,10),dtype = np.float32)
+    mov_weights_2 = np.zeros((10,10),dtype = np.float32)
+    mov_weights_3 = 0
+
+    mov_baises_1 = np.zeros((10,1),dtype = np.float32)
+    mov_baises_2 = np.zeros((10,1),dtype = np.float32)
+    mov_baises_3 = 0
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    #output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    #output_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    output_mov_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_mov_weights_2 = np.zeros((10,10),dtype = np.float32)
+    #output_mov_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_mov_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_mov_baises_2 = np.zeros((10,1),dtype = np.float32)
+    #output_mov_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+15,j+1)
+            mov_weights_1[i,j] = data_sheet.cell_value(i+15,j+25)
+            input_dloss_dweights_1[i,j] = data_sheet.cell_value(i+15,j+13)
+            output_mov_weights_1[i,j] = data_sheet.cell_value(i+15,j+37)
+            output_weights_1[i,j] = data_sheet.cell_value(i+15,j+49)
+            #print(i)
+            #print(j)
+            input_weights_2[i,j] = data_sheet.cell_value(i+33,j+1)
+            mov_weights_2[i,j] = data_sheet.cell_value(i+33,j+25)
+            input_dloss_dweights_2[i,j] = data_sheet.cell_value(i+33,j+13)
+            output_mov_weights_2[i,j] = data_sheet.cell_value(i+33,j+37)
+            output_weights_2[i,j] = data_sheet.cell_value(i+33,j+49)
+            
+            #input_weights_3[i,j] = data_sheet.cell_value(i+51,j+1)
+            #mov_weights_3[i,j] = data_sheet.cell_value(i+51,j+25)
+            #input_dloss_dweights_3[i,j] = data_sheet.cell_value(i+51,j+13)
+            #output_mov_weights_3[i,j] = data_sheet.cell_value(i+51,j+37)
+            #output_weights_3[i,j] = data_sheet.cell_value(i+51,j+49)
+
+    for i in range(10):
+            input_baises_1[i,0] = data_sheet.cell_value(11,i+1)
+            input_baises_2[i,0] = data_sheet.cell_value(29,i+1)
+            #input_baises_3[i,0] = data_sheet.cell_value(47,i+1)
+
+            input_dloss_dbaises_1[i,0] = data_sheet.cell_value(11,i+13)
+            input_dloss_dbaises_2[i,0] = data_sheet.cell_value(29,i+13)
+            #input_dloss_dbaises_3[i,0] = data_sheet.cell_value(47,i+13)
+
+            mov_baises_1[i,0] = data_sheet.cell_value(11,i+25)
+            mov_baises_2[i,0] = data_sheet.cell_value(29,i+25)
+            #mov_baises_3[i,0] = data_sheet.cell_value(47,i+25)
+
+            output_mov_baises_1[i,0] = data_sheet.cell_value(11,i+37)
+            output_mov_baises_2[i,0] = data_sheet.cell_value(29,i+37)
+            #output_mov_baises_3[i,0] = data_sheet.cell_value(47,i+37)
+            
+            output_baises_1[i,0] = data_sheet.cell_value(11,i+49)
+            output_baises_2[i,0] = data_sheet.cell_value(29,i+49)
+            #output_baises_3[i,0] = data_sheet.cell_value(47,i+49)
+
+
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_mov_weights_1,result_mov_baises_1,result_mov_weights_2,result_mov_baises_2 = Momentum_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate, beta,num)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    result_weights_2 = np.round(result_weights_2 ,4)
+    output_weights_2 = np.round(output_weights_2, 4)
+    #result_weights_3 = np.round(result_weights_3 ,4)
+    #output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    result_baises_2 = np.round(result_baises_2 ,4)
+    output_baises_2 = np.round(output_baises_2, 4) 
+    #result_baises_3 = np.round(result_baises_3 ,4)
+    #output_baises_3 = np.round(output_baises_3, 4)
+
+    result_mov_weights_1 = np.round(result_mov_weights_1 ,4)
+    output_mov_weights_1 = np.round(output_mov_weights_1, 4)
+    result_mov_weights_2 = np.round(result_mov_weights_2 ,4)
+    output_mov_weights_2 = np.round(output_mov_weights_2, 4)
+    #result_mov_weights_3 = np.round(result_mov_weights_3 ,4)
+    #output_mov_weights_3 = np.round(output_mov_weights_3, 4)
+
+
+    result_mov_baises_1 = np.round(result_mov_baises_1 ,4)
+    output_mov_baises_1 = np.round(output_mov_baises_1, 4) 
+    result_mov_baises_2 = np.round(result_mov_baises_2 ,4)
+    output_mov_baises_2 = np.round(output_mov_baises_2, 4) 
+    #result_mov_baises_3 = np.round(result_mov_baises_3 ,4)
+    #output_mov_baises_3 = np.round(output_mov_baises_3, 4)
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and  ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and  ((result_mov_weights_1 == output_mov_weights_1).all()) and ((result_mov_weights_2 == output_mov_weights_2).all()) and ((result_mov_baises_1 == output_mov_baises_1).all()) and ((result_mov_baises_2 == output_mov_baises_2).all())):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and  ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and  ((result_mov_weights_1 == output_mov_weights_1).all()) and ((result_mov_weights_2 == output_mov_weights_2).all()) and ((result_mov_baises_1 == output_mov_baises_1).all()) and ((result_mov_baises_2 == output_mov_baises_2).all())) == False:
+        print("Fuction tested not okay")
+    return None
+
+def Momentum_optimizer_test_for_0_layers():
+    learning_rate = 0.001
+    beta = 0.9
+    num = 0
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet6')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = 0
+    input_weights_3 = 0
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = 0
+    input_baises_3 = 0
+
+    input_dloss_dweights_1 = np.zeros((10,10),dtype = np.float32)
+    input_dloss_dweights_2 = 0
+    input_dloss_dweights_3 = 0
+
+    input_dloss_dbaises_1 = np.zeros((10,1),dtype = np.float32)
+    input_dloss_dbaises_2 = 0
+    input_dloss_dbaises_3 = 0
+
+    mov_weights_1 = np.zeros((10,10),dtype = np.float32)
+    mov_weights_2 = 0
+    mov_weights_3 = 0
+
+    mov_baises_1 = np.zeros((10,1),dtype = np.float32)
+    mov_baises_2 = 0
+    mov_baises_3 = 0
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    #output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    #output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    #output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    #output_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    output_mov_weights_1 = np.zeros((10,10),dtype = np.float32)
+    #output_mov_weights_2 = np.zeros((10,10),dtype = np.float32)
+    #output_mov_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_mov_baises_1 = np.zeros((10,1),dtype = np.float32)
+    #output_mov_baises_2 = np.zeros((10,1),dtype = np.float32)
+    #output_mov_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+15,j+1)
+            mov_weights_1[i,j] = data_sheet.cell_value(i+15,j+25)
+            input_dloss_dweights_1[i,j] = data_sheet.cell_value(i+15,j+13)
+            output_mov_weights_1[i,j] = data_sheet.cell_value(i+15,j+37)
+            output_weights_1[i,j] = data_sheet.cell_value(i+15,j+49)
+            #print(i)
+            #print(j)
+            #input_weights_2[i,j] = data_sheet.cell_value(i+33,j+1)
+            #mov_weights_2[i,j] = data_sheet.cell_value(i+33,j+25)
+            #input_dloss_dweights_2[i,j] = data_sheet.cell_value(i+33,j+13)
+            #output_mov_weights_2[i,j] = data_sheet.cell_value(i+33,j+37)
+            #output_weights_2[i,j] = data_sheet.cell_value(i+33,j+49)
+            
+            #input_weights_3[i,j] = data_sheet.cell_value(i+51,j+1)
+            #mov_weights_3[i,j] = data_sheet.cell_value(i+51,j+25)
+            #input_dloss_dweights_3[i,j] = data_sheet.cell_value(i+51,j+13)
+            #output_mov_weights_3[i,j] = data_sheet.cell_value(i+51,j+37)
+            #output_weights_3[i,j] = data_sheet.cell_value(i+51,j+49)
+
+    for i in range(10):
+            input_baises_1[i,0] = data_sheet.cell_value(11,i+1)
+            #input_baises_2[i,0] = data_sheet.cell_value(29,i+1)
+            #input_baises_3[i,0] = data_sheet.cell_value(47,i+1)
+
+            input_dloss_dbaises_1[i,0] = data_sheet.cell_value(11,i+13)
+            #input_dloss_dbaises_2[i,0] = data_sheet.cell_value(29,i+13)
+            #input_dloss_dbaises_3[i,0] = data_sheet.cell_value(47,i+13)
+
+            mov_baises_1[i,0] = data_sheet.cell_value(11,i+25)
+            #mov_baises_2[i,0] = data_sheet.cell_value(29,i+25)
+            #mov_baises_3[i,0] = data_sheet.cell_value(47,i+25)
+
+            output_mov_baises_1[i,0] = data_sheet.cell_value(11,i+37)
+            #output_mov_baises_2[i,0] = data_sheet.cell_value(29,i+37)
+            #output_mov_baises_3[i,0] = data_sheet.cell_value(47,i+37)
+            
+            output_baises_1[i,0] = data_sheet.cell_value(11,i+49)
+            #output_baises_2[i,0] = data_sheet.cell_value(29,i+49)
+            #output_baises_3[i,0] = data_sheet.cell_value(47,i+49)
+
+
+    result_weights_1,result_baises_1,result_mov_weights_1,result_mov_baises_1 = Momentum_optimizer(input_weights_1,input_baises_1,input_weights_2,input_baises_2,input_weights_3,input_baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,input_dloss_dweights_1,input_dloss_dbaises_1,input_dloss_dweights_2,input_dloss_dbaises_2,input_dloss_dweights_3, input_dloss_dbaises_3, learning_rate, beta,num)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    #result_weights_2 = np.round(result_weights_2 ,4)
+    #output_weights_2 = np.round(output_weights_2, 4)
+    #result_weights_3 = np.round(result_weights_3 ,4)
+    #output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    #result_baises_2 = np.round(result_baises_2 ,4)
+    #output_baises_2 = np.round(output_baises_2, 4) 
+    #result_baises_3 = np.round(result_baises_3 ,4)
+    #output_baises_3 = np.round(output_baises_3, 4)
+
+    result_mov_weights_1 = np.round(result_mov_weights_1 ,4)
+    output_mov_weights_1 = np.round(output_mov_weights_1, 4)
+    #result_mov_weights_2 = np.round(result_mov_weights_2 ,4)
+    #output_mov_weights_2 = np.round(output_mov_weights_2, 4)
+    #result_mov_weights_3 = np.round(result_mov_weights_3 ,4)
+    #output_mov_weights_3 = np.round(output_mov_weights_3, 4)
+
+
+    result_mov_baises_1 = np.round(result_mov_baises_1 ,4)
+    output_mov_baises_1 = np.round(output_mov_baises_1, 4) 
+    #result_mov_baises_2 = np.round(result_mov_baises_2 ,4)
+    #output_mov_baises_2 = np.round(output_mov_baises_2, 4) 
+    #result_mov_baises_3 = np.round(result_mov_baises_3 ,4)
+    #output_mov_baises_3 = np.round(output_mov_baises_3, 4)
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and  ((result_baises_1 == output_baises_1).all()) and ((result_mov_weights_1 == output_mov_weights_1).all()) and ((result_mov_baises_1 == output_mov_baises_1).all())):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and  ((result_baises_1 == output_baises_1).all()) and ((result_mov_weights_1 == output_mov_weights_1).all()) and ((result_mov_baises_1 == output_mov_baises_1).all())) == False:
+        print("Fuction tested not okay")
+    return None
+
+def reg_loss_test_2_layers():
+    num = 2
     alpha  = 0.00001
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet7')
@@ -372,7 +849,7 @@ def reg_loss_test():
             input_weights_2[i,j] = data_sheet.cell_value(i+19,j+1)
             input_weights_3[i,j] = data_sheet.cell_value(i+32,j+1)
 
-    result_loss = reg_loss_layer_2(input_weights_1, input_weights_2, input_weights_3, alpha)
+    result_loss = reg_loss(input_weights_1, input_weights_2, input_weights_3, alpha, num)
     output_loss = round(output_loss, 6)
     result_loss = round(result_loss, 6)
     #for i in range(10):
@@ -389,7 +866,91 @@ def reg_loss_test():
         print("Fuction tested okay")
     if result_loss != output_loss:
         print("Fuction tested not okay")
-    return None       
+    return None
+
+def reg_loss_test_1_layers():
+    num = 1
+    alpha  = 0.00001
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet7')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = 0
+    output_loss = data_sheet.cell_value(2,16)
+    #print(output_loss)
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+6,j+1)
+            input_weights_2[i,j] = data_sheet.cell_value(i+19,j+1)
+            #input_weights_3[i,j] = data_sheet.cell_value(i+32,j+1)
+
+    result_loss = reg_loss(input_weights_1, input_weights_2, input_weights_3, alpha, num)
+    output_loss = round(output_loss, 6)
+    result_loss = round(result_loss, 6)
+    #for i in range(10):
+    #    for j in range(4):
+    #        if output_array[i,j] != result_array[i,j]:
+    #            print(i)
+    #            print(j)
+    #print(result_array)
+    #print(output_array)
+    #print(result_loss)
+    
+
+    if result_loss == output_loss:
+        print("Fuction tested okay")
+    if result_loss != output_loss:
+        print("Fuction tested not okay")
+    return None
+
+def reg_loss_test_0_layers():
+    num = 0
+    alpha  = 0.00001
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet7')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = 0
+    input_weights_3 = 0
+    output_loss = data_sheet.cell_value(2,17)
+    #print(output_loss)
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+6,j+1)
+            #input_weights_2[i,j] = data_sheet.cell_value(i+19,j+1)
+            #input_weights_3[i,j] = data_sheet.cell_value(i+32,j+1)
+
+    result_loss = reg_loss(input_weights_1, input_weights_2, input_weights_3, alpha, num)
+    output_loss = round(output_loss, 6)
+    result_loss = round(result_loss, 6)
+    #for i in range(10):
+    #    for j in range(4):
+    #        if output_array[i,j] != result_array[i,j]:
+    #            print(i)
+    #            print(j)
+    #print(result_array)
+    #print(output_array)
+    #print(result_loss)
+    
+
+    if result_loss == output_loss:
+        print("Fuction tested okay")
+    if result_loss != output_loss:
+        print("Fuction tested not okay")
+    return None  
 
 def learning_rate_decay_test():
     #learning_rate  = 0.001
@@ -598,6 +1159,7 @@ def dropout_forward_test():
     return None
 
 def Loss_function_with_reg_test():
+    num = 2
     alpha  = 0.00001
     reg = "y"
     data = xlrd.open_workbook('valid_excel.xlsx')
@@ -626,7 +1188,7 @@ def Loss_function_with_reg_test():
             input_weights_2[i,j] = data_sheet.cell_value(i+35,j+1)
             input_weights_3[i,j] = data_sheet.cell_value(i+48,j+1)
 
-    result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg)
+    result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg,num)
     output_loss = round(output_loss, 6)
     result_loss = round(result_loss, 6)
     #for i in range(10):
@@ -646,6 +1208,8 @@ def Loss_function_with_reg_test():
     return None
 
 def Loss_function_with_no_reg_test():
+    num=2
+
     alpha  = 0.00001
     reg = "n"
     data = xlrd.open_workbook('valid_excel.xlsx')
@@ -674,7 +1238,7 @@ def Loss_function_with_no_reg_test():
             input_weights_2[i,j] = data_sheet.cell_value(i+35,j+1)
             input_weights_3[i,j] = data_sheet.cell_value(i+48,j+1)
 
-    result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg)
+    result_loss = Loss_function(input_pred_y_array, input_true_y_array,input_weights_1, input_weights_2, input_weights_3, alpha, reg, num)
     output_loss = round(output_loss, 6)
     result_loss = round(result_loss, 6)
     #for i in range(10):
@@ -695,6 +1259,7 @@ def Loss_function_with_no_reg_test():
 
 def forward_prop_for_loss_with_reg_with_relu_test():
 
+    num=2
     alpha = 0.00001
     dropout = "n"
     prob = 0.8
@@ -742,7 +1307,7 @@ def forward_prop_for_loss_with_reg_with_relu_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout)
+    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout, num)
     output_loss = round(output_loss, 4)
     result_loss = round(result_loss, 4)
     #for i in range(10):
@@ -763,6 +1328,7 @@ def forward_prop_for_loss_with_reg_with_relu_test():
     return None
 
 def forward_prop_for_loss_with_no_reg_with_relu_test():
+    num =2
 
     alpha = 0.00001
     dropout = "n"
@@ -811,7 +1377,7 @@ def forward_prop_for_loss_with_no_reg_with_relu_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout)
+    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout,num)
     output_loss = round(output_loss, 4)
     result_loss = round(result_loss, 4)
     #for i in range(10):
@@ -832,7 +1398,7 @@ def forward_prop_for_loss_with_no_reg_with_relu_test():
     return None
 
 def forward_prop_for_loss_with_reg_with_sigmoid_test():
-
+    num=2
     alpha = 0.00001
     dropout = "n"
     prob = 0.8
@@ -880,7 +1446,7 @@ def forward_prop_for_loss_with_reg_with_sigmoid_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout)
+    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout,num)
     output_loss = round(output_loss, 4)
     result_loss = round(result_loss, 4)
     #for i in range(10):
@@ -899,7 +1465,9 @@ def forward_prop_for_loss_with_reg_with_sigmoid_test():
         print("Fuction tested not okay")
 
     return None
+
 def forward_prop_for_loss_with_no_reg_with_sigmoid_test():
+    num =2
 
     alpha = 0.00001
     dropout = "n"
@@ -948,7 +1516,7 @@ def forward_prop_for_loss_with_no_reg_with_sigmoid_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout)
+    result_loss = forward_prop_for_loss(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, alpha ,reg, prob,activation_1,dropout,num)
     output_loss = round(output_loss, 4)
     result_loss = round(result_loss, 4)
     #for i in range(10):
@@ -969,6 +1537,7 @@ def forward_prop_for_loss_with_no_reg_with_sigmoid_test():
     return None
 
 def Accuracy_with_relu_test():
+    num =2
 
     #alpha = 0.00001
     #dropout = "n"
@@ -1017,7 +1586,7 @@ def Accuracy_with_relu_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_accuracy = accuracy(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array,activation_1)
+    result_accuracy = accuracy(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array,activation_1,num)
     #output_loss = round(output_loss, 4)
     #result_loss = round(result_loss, 4)
     #for i in range(10):
@@ -1038,6 +1607,7 @@ def Accuracy_with_relu_test():
     return None
 
 def Accuracy_with_sigmoid_test():
+    num =2
 
     #alpha = 0.00001
     #dropout = "n"
@@ -1086,7 +1656,7 @@ def Accuracy_with_sigmoid_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_accuracy = accuracy(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array,activation_1)
+    result_accuracy = accuracy(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array,activation_1,num)
     #output_loss = round(output_loss, 4)
     #result_loss = round(result_loss, 4)
     #for i in range(10):
@@ -1143,4 +1713,4 @@ def Data_pre_processing_test():
     return None
 
 if __name__=='__main__':
-    Data_pre_processing_test()
+    Accuracy_with_sigmoid_test()
