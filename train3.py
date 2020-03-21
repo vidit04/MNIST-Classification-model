@@ -186,36 +186,57 @@ def dropout_forward(array_Act, prob):
     print("I am in dropout")
     return array_Act
 
-def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta):
+def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta, num):
 
     #print(dloss_dbaises_3)
     #print(mov_baises_3)
-    
+    if num ==2:
+        mov_weights_1 = (beta*mov_weights_1) + ((1. - beta)* dloss_dweights_1)
+        mov_baises_1 = (beta*mov_baises_1) + ((1. - beta)* dloss_dbaises_1)
 
-    mov_weights_1 = (beta*mov_weights_1) + ((1. - beta)* dloss_dweights_1)
-    mov_baises_1 = (beta*mov_baises_1) + ((1. - beta)* dloss_dbaises_1)
-
-    mov_weights_2 = (beta*mov_weights_2) + ((1. - beta)* dloss_dweights_2)
-    mov_baises_2 = (beta*mov_baises_2) + ((1. - beta)* dloss_dbaises_2)
+        mov_weights_2 = (beta*mov_weights_2) + ((1. - beta)* dloss_dweights_2)
+        mov_baises_2 = (beta*mov_baises_2) + ((1. - beta)* dloss_dbaises_2)
 
 
-    mov_weights_3 = (beta*mov_weights_3) + ((1. - beta)* dloss_dweights_3)
-    mov_baises_3 = (beta*mov_baises_3) + ((1. - beta)* dloss_dbaises_3)
+        mov_weights_3 = (beta*mov_weights_3) + ((1. - beta)* dloss_dweights_3)
+        mov_baises_3 = (beta*mov_baises_3) + ((1. - beta)* dloss_dbaises_3)
 
-    #print(baises_3)
-    #print(mov_baises_3)
+        #print(baises_3)
+        #print(mov_baises_3)
 
-    weights_1 = weights_1- learning_rate*mov_weights_1
-    baises_1 = baises_1 - learning_rate*mov_baises_1
+        weights_1 = weights_1- learning_rate*mov_weights_1
+        baises_1 = baises_1 - learning_rate*mov_baises_1
         
-    weights_2= weights_2- learning_rate*mov_weights_2
-    baises_2 = baises_2 - learning_rate*mov_baises_2
+        weights_2= weights_2- learning_rate*mov_weights_2
+        baises_2 = baises_2 - learning_rate*mov_baises_2
 
-    weights_3= weights_3- learning_rate*mov_weights_3
-    baises_3 = baises_3 - learning_rate*mov_baises_3
+        weights_3= weights_3- learning_rate*mov_weights_3
+        baises_3 = baises_3 - learning_rate*mov_baises_3
 
-    return weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3
+        return weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3
 
+    if num ==1:
+        mov_weights_1 = beta*mov_weights_1 + (1. - beta)* dloss_dweights_1
+        mov_baises_1 = beta*mov_baises_1 + (1. - beta)* dloss_dbaises_1
+
+        mov_weights_2 = beta*mov_weights_2 + (1. - beta)* dloss_dweights_2
+        mov_baises_2 = beta*mov_baises_2+(1. - beta)* dloss_dbaises_2
+    
+        weights_1 = weights_1- learning_rate*mov_weights_1
+        baises_1 = baises_1 - learning_rate*mov_baises_1
+        
+        weights_2= weights_2- learning_rate*mov_weights_2
+        baises_2 = baises_2 - learning_rate*mov_baises_2
+
+        return weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2
+
+    if num ==0:
+        mov_weights_1 = beta*mov_weights_1 + (1. - beta)* dloss_dweights_1
+        mov_baises_1 = beta*mov_baises_1 + (1. - beta)* dloss_dbaises_1
+    
+        weights_1 = weights_1- learning_rate*mov_weights_1
+        baises_1 = baises_1 - learning_rate*mov_baises_1
+        return weights_1,baises_1,mov_weights_1,mov_baises_1
 
 
 def SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate,num):
@@ -305,14 +326,19 @@ def relu_activation_back(array_dloss_dA, array_Z_relu_back):
     return array_Z_back
 
 
-def reg_loss_layer_2(weights_1,weights_2,weights_3, alpha):
+def reg_loss(weights_1,weights_2,weights_3, alpha,num):
 
-    reg_loss_2 = (0.5 * alpha * np.sum(weights_1*weights_1)) + (0.5 * alpha * np.sum(weights_2*weights_2)) + (0.5 * alpha * np.sum(weights_3 * weights_3))
-
-    return reg_loss_2
+    if num == 2:
+        reg_loss_2 = (0.5 * alpha * np.sum(weights_1*weights_1)) + (0.5 * alpha * np.sum(weights_2*weights_2)) + (0.5 * alpha * np.sum(weights_3 * weights_3))
+        return reg_loss_2
+    if num == 1:
+        reg_loss_1 = (0.5 * alpha * np.sum(weights_1*weights_1)) + (0.5 * alpha * np.sum(weights_2*weights_2))
+        return reg_loss_1
+    if num == 0:
+        reg_loss_0 = 0.5 * alpha * np.sum(weights_1*weights_1)
+        return reg_loss_0
     
-    
-def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
+def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg , num):
     ##############################################
     ###### Loss
     length_loss = len(pred_y[1])
@@ -331,120 +357,273 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
     if (reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES"):
         #print("Yes, I am in regression")
 
-        reg_loss = reg_loss_layer_2(weights_1,weights_2,weights_3, alpha)
+        reg_loss = reg_loss(weights_1,weights_2,weights_3, alpha,num)
         #print(reg_loss)
         total_loss = total_loss + reg_loss
 
     return total_loss
 
-def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg, prob,activation_1,dropout):
+def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg, prob,activation_1,dropout, num):
 
-    length = len(image_arr)
-    #true_array = np.zeros((length,1),dtype=np.float32)
+    if num == 2:
+        length = len(image_arr)
+        #true_array = np.zeros((length,1),dtype=np.float32)
 
-    Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
+        Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
 
-    if activation_1 == "relu" or activation_1 == "Relu":
-        #A1 = relu_activation(Z1)
-        A1 = np.maximum(0,Z1)
-    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
-        A1 = sigmoid_activation(Z1)
+        if activation_1 == "relu" or activation_1 == "Relu":
+            #A1 = relu_activation(Z1)
+            A1 = np.maximum(0,Z1)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A1 = sigmoid_activation(Z1)
 
-    ##### Dropout
-    if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
-        A1 = dropout_forward(A1, prob)
+        ##### Dropout
+        if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+            A1 = dropout_forward(A1, prob)
 
-    Z2 = np.matmul(weights_2.T,A1) + baises_2
+        Z2 = np.matmul(weights_2.T,A1) + baises_2
 
-    if activation_1 == "relu" or activation_1 == "Relu":
-        #A1 = relu_activation(Z1)
-        A2 = np.maximum(0,Z2)
-    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
-        A2 = sigmoid_activation(Z2)
+        if activation_1 == "relu" or activation_1 == "Relu":
+            #A1 = relu_activation(Z1)
+            A2 = np.maximum(0,Z2)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A2 = sigmoid_activation(Z2)
 
-    ##### Dropout
-    if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
-        A2 = dropout_forward(A2, prob)
+        ##### Dropout
+        if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+            A2 = dropout_forward(A2, prob)
     
-    #A2= Z2
-    Z3 = np.matmul(weights_3.T,A2) + baises_3
+        #A2= Z2
+        Z3 = np.matmul(weights_3.T,A2) + baises_3
 
-    Z3_max = np.max(Z3, axis=0)
-    Z3_max = np.reshape(Z3_max,(1, length))
-    Z3 = np.exp(Z3-Z3_max)
+        Z3_max = np.max(Z3, axis=0)
+        Z3_max = np.reshape(Z3_max,(1, length))
+        Z3 = np.exp(Z3-Z3_max)
 
                 
-    ####################################################
-    #Z1 = Z1.transpose()
+        ####################################################
+        #Z1 = Z1.transpose()
 
-    A3 = Z3/np.sum(Z3,axis=0)
-    #print(A3)
+        A3 = Z3/np.sum(Z3,axis=0)
+        #print(A3)
 
-    ##############################################
-    ###### Loss
-    total_loss = Loss_function(A3,labels_arr,weights_1,weights_2,weights_3, alpha, reg)
+        ##############################################
+        ###### Loss
+        total_loss = Loss_function(A3,labels_arr,weights_1,weights_2,weights_3, alpha, reg, num)
+        return total_loss
 
-    return total_loss
+    if num ==1:
+        length = len(image_arr)
+        #true_array = np.zeros((length,1),dtype=np.float32)
 
+        Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
+
+        if activation_1 == "relu" or activation_1 == "Relu":
+            #A1 = relu_activation(Z1)
+            A1 = np.maximum(0,Z1)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A1 = sigmoid_activation(Z1)
+        
+        #A1 = np.maximum(0,Z1)
+
+        ##### Dropout
+        if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+            A1 = dropout_forward(A1, prob)
+
+        Z2 = np.matmul(weights_2.T,A1) + baises_2
+
+        #A2 = np.maximum(0,Z2)
+
+        ##### Dropout
+        #if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+        #    A2 = dropout_forward(A2, prob)
     
-def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr,activation_1):
+        #A2= Z2
+        #Z3 = np.matmul(weights_3.T,A2) + baises_3
 
-
-    length = len(image_arr)
-    true_array = np.zeros((length,1),dtype=np.float32)
-
-    Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
-
-    if activation_1 == "relu" or activation_1 == "Relu":
-        #A1 = relu_activation(Z1)
-        A1 = np.maximum(0,Z1)
-    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
-        A1 = sigmoid_activation(Z1)
-
-    Z2 = np.matmul(weights_2.T,A1) + baises_2
-
-    if activation_1 == "relu" or activation_1 == "Relu":
-        #A1 = relu_activation(Z1)
-        A2 = np.maximum(0,Z2)
-    if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
-        A2 = sigmoid_activation(Z2)
-
-    #A2= Z2
-    Z3 = np.matmul(weights_3.T,A2) + baises_3
-
-    Z3_max = np.max(Z3, axis=0)
-    Z3_max = np.reshape(Z3_max,(1, length))
-    Z3 = np.exp(Z3-Z3_max)
+        Z2_max = np.max(Z2, axis=0)
+        Z2_max = np.reshape(Z2_max,(1, length))
+        Z2 = np.exp(Z2-Z2_max)
 
                 
-    ####################################################
-    #Z1 = Z1.transpose()
+        ####################################################
+        #Z1 = Z1.transpose()
 
-    A3 = Z3/np.sum(Z3,axis=0)
+        A2 = Z2/np.sum(Z2,axis=0)
 
-    #total_loss = Loss_function(A3,labels_arr,weights_1,weights_2,weights_3, alpha, reg)
+        ##############################################
+        ###### Loss
+        total_loss = Loss_function(A2,labels_arr,weights_1,weights_2,weights_3, alpha, reg, num)
 
-    pred_y = np.argmax(A3,axis = 0)
-    pred_y = np.reshape(pred_y,(length,1))
-    true_y = np.argmax(labels_arr, axis = 1)
-    true_y = np.reshape(true_y,(length,1))
+        return total_loss
 
-    s = 0
-    #true_array = (pred_y==true_y).all()
-    #print(true_array.shape)
+    if num ==0:
+        length = len(image_arr)
+        #true_array = np.zeros((length,1),dtype=np.float32)
 
-    for r in range(length):
-        if pred_y[r,:] == true_y[r,:]:
-            true_array[r,:] = 1
-            s = s + 1
+        Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
 
-    acc  = s/length
+        Z1_max = np.max(Z1, axis=0)
+        Z1_max = np.reshape(Z1_max,(1, length))
+        Z1 = np.exp(Z1-Z1_max)
+    
+        ####################################################
+        #Z1 = Z1.transpose()
 
-    return acc #, total_loss
-    #true_array = (pred_y==true_y).all()
-    #s = np.count_nonzero(true_array)
-    #acc = s/length 
-    #return acc
+        A1 = Z1/np.sum(Z1,axis=0)
+
+        ##############################################
+        ###### Loss
+        total_loss = Loss_function(A1,labels_arr,weights_1,weights_2,weights_3, alpha, reg, num)
+        return total_loss
+        
+        
+
+    
+def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr,activation_1, num):
+
+    if num==2:
+        
+        length = len(image_arr)
+        true_array = np.zeros((length,1),dtype=np.float32)
+
+        Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
+
+        if activation_1 == "relu" or activation_1 == "Relu":
+            #A1 = relu_activation(Z1)
+            A1 = np.maximum(0,Z1)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A1 = sigmoid_activation(Z1)
+
+        Z2 = np.matmul(weights_2.T,A1) + baises_2
+
+        if activation_1 == "relu" or activation_1 == "Relu":
+            #A1 = relu_activation(Z1)
+            A2 = np.maximum(0,Z2)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A2 = sigmoid_activation(Z2)
+
+        #A2= Z2
+        Z3 = np.matmul(weights_3.T,A2) + baises_3
+
+        Z3_max = np.max(Z3, axis=0)
+        Z3_max = np.reshape(Z3_max,(1, length))
+        Z3 = np.exp(Z3-Z3_max)
+
+                
+        ####################################################
+        #Z1 = Z1.transpose()
+
+        A3 = Z3/np.sum(Z3,axis=0)
+
+        #total_loss = Loss_function(A3,labels_arr,weights_1,weights_2,weights_3, alpha, reg)
+
+        pred_y = np.argmax(A3,axis = 0)
+        pred_y = np.reshape(pred_y,(length,1))
+        true_y = np.argmax(labels_arr, axis = 1)
+        true_y = np.reshape(true_y,(length,1))
+
+        s = 0
+        #true_array = (pred_y==true_y).all()
+        #print(true_array.shape)
+
+        for r in range(length):
+            if pred_y[r,:] == true_y[r,:]:
+                true_array[r,:] = 1
+                s = s + 1
+
+        acc  = s/length
+
+        return acc #, total_loss
+        #true_array = (pred_y==true_y).all()
+        #s = np.count_nonzero(true_array)
+        #acc = s/length 
+        #return acc
+    if num ==1:
+        
+        length = len(image_arr)
+        Z1 = np.zeros((64,length),dtype = np.float32)
+        Z2 = np.zeros((10,length),dtype = np.float32)
+        A1 = np.zeros((64,length),dtype = np.float32)
+        true_array = np.zeros((length,1),dtype=np.float32)
+
+        Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
+
+        if activation_1 == "relu" or activation_1 == "Relu":
+            #A1 = relu_activation(Z1)
+            A1 = np.maximum(0,Z1)
+        if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+            A1 = sigmoid_activation(Z1)
+        #A1 = np.maximum(0,Z1)
+
+        Z2 = np.matmul(weights_2.T,A1) + baises_2
+
+        Z2_max = np.max(Z2, axis=0)
+        Z2_max = np.reshape(Z2_max,(1, length))
+        Z2 = np.exp(Z2-Z2_max)
+             
+        ####################################################
+        #Z1 = Z1.transpose()
+
+        A2 = Z2/np.sum(Z2,axis=0)
+    
+        #total_loss = Loss_function(A2,labels_arr)
+
+        pred_y = np.argmax(A2,axis = 0)
+        pred_y = np.reshape(pred_y,(length,1))
+        true_y = np.argmax(labels_arr, axis = 1)
+        true_y = np.reshape(true_y,(length,1))
+
+        s = 0
+        #true_array = (pred_y==true_y).all()
+        #print(true_array.shape)
+
+        for r in range(length):
+            if pred_y[r,:] == true_y[r,:]:
+                true_array[r,:] = 1
+                s = s + 1
+
+        acc  = s/length
+
+        return acc #,total_loss
+
+    if num==0:
+            
+        length = len(image_arr)
+        true_array = np.zeros((length,1),dtype=np.float32)
+
+        Z1 = np.matmul(weights_1.T,image_arr.T) + baises_1
+
+        Z1_max = np.max(Z1, axis=0)
+        Z1_max = np.reshape(Z1_max,(1, length))
+        Z1 = np.exp(Z1-Z1_max)
+
+                
+        ####################################################
+        #Z1 = Z1.transpose()
+
+        A1 = Z1/np.sum(Z1,axis=0)
+
+        #total_loss = Loss_function(A3,labels_arr,weights_1,weights_2,weights_3, alpha, reg)
+
+        pred_y = np.argmax(A1,axis = 0)
+        pred_y = np.reshape(pred_y,(length,1))
+        true_y = np.argmax(labels_arr, axis = 1)
+        true_y = np.reshape(true_y,(length,1))
+
+        s = 0
+        #true_array = (pred_y==true_y).all()
+        #print(true_array.shape)
+
+        for r in range(length):
+            if pred_y[r,:] == true_y[r,:]:
+                true_array[r,:] = 1
+                s = s + 1
+
+        acc  = s/length
+
+        return acc #, total_loss
+        
 def Momentum_optimizer_layer_1(weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2, learning_rate, beta):
 
     mov_weights_1 = beta*mov_weights_1 + (1. - beta)* dloss_dweights_1
@@ -1311,7 +1490,8 @@ def NN_1_layers():
 
 
             if optimizer == "Momentum" or optimizer =="momentum":
-                weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2 = Momentum_optimizer_layer_1(weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2, learning_rate, beta)
+                weights_1,baises_1,weights_2,baises_2,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta, num)
+
         
             n = n + 4
 
@@ -1320,13 +1500,13 @@ def NN_1_layers():
         if learning_rate < 0.001:
             learning_rate = 0.001
                
-        acc_epoch_train = accuracy_layer_1(weights_1,baises_1,weights_2, baises_2, a, b, activation_1 )
-        acc_epoch_valid = accuracy_layer_1(weights_1,baises_1,weights_2, baises_2, c, d, activation_1 )
-        acc_epoch_test = accuracy_layer_1(weights_1,baises_1,weights_2, baises_2, e, f, activation_1 )
+        acc_epoch_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b,activation_1, num)
+        acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d,activation_1, num)
+        acc_epoch_test = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f,activation_1, num)
 
-        loss_train = forward_prop_for_loss_layer_1(weights_1,baises_1,weights_2, baises_2, a, b , alpha ,reg, prob, activation_1, dropout)
-        loss_valid = forward_prop_for_loss_layer_1(weights_1,baises_1,weights_2, baises_2, c, d , alpha ,reg, prob, activation_1, dropout)
-        loss_test = forward_prop_for_loss_layer_1(weights_1,baises_1,weights_2, baises_2, e, f , alpha ,reg, prob, activation_1, dropout)
+        loss_train = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b, alpha ,reg, prob,activation_1,dropout, num)
+        loss_valid = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d, alpha ,reg, prob,activation_1,dropout, num)
+        loss_test = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f, alpha ,reg, prob,activation_1,dropout, num)
     
         cost_train.append(loss_train)
         cost_valid.append(loss_valid)
@@ -1373,7 +1553,9 @@ def NN_0_layers():
     reg = input("Want to implement L1 Regression: ")
     decay = input("Want to implement Decay learning rate: ")
     #dropout = input("Want to implement Dropout: ")
+    dropout = "n"
     optimizer = input("Type of Optimizer want to use: ")
+    #prob = 0.8
 
     a,b,c,d,e,f = Data_pre_processing(Normal)
 
@@ -1489,7 +1671,8 @@ def NN_0_layers():
                 weights_1,baises_1 = SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate,num)
 
             if optimizer == "Momentum" or optimizer =="momentum":
-                weights_1,baises_1,mov_weights_1,mov_baises_1 = Momentum_optimizer_layer_0(weights_1,baises_1,mov_weights_1,mov_baises_1,dloss_dweights_1,dloss_dbaises_1, learning_rate, beta)
+                weights_1,baises_1,mov_weights_1,mov_baises_1 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta, num)
+
   
 
             #for k in range(784):
@@ -1507,13 +1690,13 @@ def NN_0_layers():
         if learning_rate < 0.001:
             learning_rate = 0.001
 
-        acc_epoch_train = accuracy_layer_0(weights_1,baises_1 , a, b )
-        acc_epoch_valid = accuracy_layer_0(weights_1,baises_1, c, d )
-        acc_epoch_test = accuracy_layer_0(weights_1,baises_1, e, f )
+        acc_epoch_train = aaccuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b,activation_1, num)
+        acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d,activation_1, num)
+        acc_epoch_test = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f,activation_1, num)
 
-        loss_train = forward_prop_for_loss_layer_0(weights_1,baises_1, a, b , alpha ,reg, prob)
-        loss_valid = forward_prop_for_loss_layer_0(weights_1,baises_1, c, d , alpha ,reg, prob)
-        loss_test = forward_prop_for_loss_layer_0(weights_1,baises_1, e, f , alpha ,reg, prob)
+        loss_train = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b, alpha ,reg, prob,activation_1,dropout, num)
+        loss_valid = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d, alpha ,reg, prob,activation_1,dropout, num)
+        loss_test = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f , alpha ,reg, prob,activation_1,dropout, num)
     
         cost_train.append(loss_train)
         cost_valid.append(loss_valid)
