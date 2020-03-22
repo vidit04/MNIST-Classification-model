@@ -689,10 +689,10 @@ def NN_2_layers():
     Z2_back = np.zeros((64,4),dtype = np.float32)
     Z3_back = np.zeros((10,4),dtype = np.float32)
 
-    learning_rate = 0.01
+    learning_rate = 0.001
     beta = 0.9
     alpha = 0.00001
-    decay_rate = 0.9
+    decay_rate = 0.98
     prob = 0.8
 
 
@@ -922,8 +922,8 @@ def NN_2_layers():
 
         if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
             learning_rate = learning_rate_decay(learning_rate,decay_rate)
-        if learning_rate < 0.001:
-            learning_rate = 0.001
+        #if learning_rate < 0.001:
+        #    learning_rate = 0.001
         
     
 
@@ -943,8 +943,8 @@ def NN_2_layers():
         acc_test.append(acc_epoch_test)
     
 
-        print("Final Cost :",loss_train, " Epoch : ", i)
-        print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
+        print("Training Cost for Epoch:",loss_train, " Epoch : ", i)
+        print("Training Accuracy for Epoch:",acc_epoch_train, " Epoch : ", i)  
 
 
     string = "_for_two_layer_" + activation_1 + "_activation_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
@@ -1025,10 +1025,10 @@ def NN_1_layers():
     Z1_back = np.zeros((64,4),dtype = np.float32)
     Z2_back = np.zeros((10,4),dtype = np.float32)
 
-    learning_rate = 0.01
+    learning_rate = 0.001
     beta = 0.9
     alpha = 0.00001
-    decay_rate = 0.9
+    decay_rate = 0.98
     prob = 0.8
 
     if (initial == "gauss" or initial == "Gauss"):
@@ -1231,8 +1231,8 @@ def NN_1_layers():
 
         if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
             learning_rate = learning_rate_decay(learning_rate,decay_rate)
-        if learning_rate < 0.001:
-            learning_rate = 0.001
+        #if learning_rate < 0.001:
+        #    learning_rate = 0.001
                
         acc_epoch_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b,activation_1, num)
         acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d,activation_1, num)
@@ -1249,8 +1249,8 @@ def NN_1_layers():
         acc_validation.append(acc_epoch_valid)
         acc_test.append(acc_epoch_test)
 
-        print("Final Cost :",loss_train, " Epoch : ", i)
-        print("Final Accuracy :",acc_epoch_train, " Epoch : ", i)   
+        print("Training Cost for Epoch:",loss_train, " Epoch : ", i)
+        print("Training Accuracy for Epoch:",acc_epoch_train, " Epoch : ", i)   
             
 
 
@@ -1333,10 +1333,10 @@ def NN_0_layers():
     Z1 = np.zeros((10,4),dtype = np.float32)
     Z1_back = np.zeros((10,4),dtype = np.float32)
 
-    learning_rate = 0.01
+    learning_rate = 0.001
     beta = 0.9
     alpha = 0.00001
-    decay_rate = 0.9
+    decay_rate = 0.98
     prob = 0.8
 
     #for i in range(784):
@@ -1422,8 +1422,8 @@ def NN_0_layers():
 
         if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
             learning_rate = learning_rate_decay(learning_rate,decay_rate)
-        if learning_rate < 0.001:
-            learning_rate = 0.001
+        #if learning_rate < 0.001:
+        #    learning_rate = 0.001
 
         acc_epoch_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b,activation_1, num)
         acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d,activation_1, num)
@@ -1441,8 +1441,8 @@ def NN_0_layers():
         acc_test.append(acc_epoch_test)
     
 
-        print("Final Cost :",loss_train, " Epoch : ", i)
-        print("Final Accuracy :",acc_epoch_train, " Epoch : ", i) 
+        print("Training Cost for Epoch:",loss_train, " Epoch : ", i)
+        print("Training Accuracy for Epoch:",acc_epoch_train, " Epoch : ", i) 
 
     string = "_for_zero_layer_"  + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + optimizer + "_optimizer"
 
@@ -1467,8 +1467,7 @@ if __name__=='__main__':
     if (layers == "0" or layers == "zero" or layers == "Zero"):
         cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string =  NN_0_layers()
 
-    
-    x = np.arange(0,10, 1)
+    x = np.arange(0,40, 1)
     y = cost_train
 
     save_fun_list(y , "Training_loss" + string)
@@ -1480,9 +1479,14 @@ if __name__=='__main__':
     plt.xlabel('Epochs')  
     plt.ylabel('Loss') 
  
-    plt.title('Training_Loss_Graph') 
-    plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
+    plt.title('Loss_Graph')
+    plt.plot(x, y,"b", label='Training Loss')
+    plt.plot(x, y1,"g", label='Validation Loss')
+    plt.plot(x, y2,"r", label='Test Loss')
+    #plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
+    plt.legend()
     plt.show()
+
 
     z= acc_training
     save_fun_list(z , "Training_acc" + string)
@@ -1493,8 +1497,13 @@ if __name__=='__main__':
     plt.xlabel('Epochs')  
     plt.ylabel('Accuracy')
 
-    plt.title('Training_Acc_Graph') 
-    plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
+    plt.title('Accuracy Graph')
+
+    plt.plot(x, z,"b", label='Training Accuracy')
+    plt.plot(x, z1,"g", label='Validation Accuracy')
+    plt.plot(x, z2,"r", label='Test Accuracy')
+    #plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
+    plt.legend()
     plt.show()
 
     l = learning_rate_list
@@ -1504,5 +1513,6 @@ if __name__=='__main__':
     plt.ylabel('Learning rate')
 
     plt.title('Learning rate_Graph')
-    plt.plot(x, l,"b")
+    plt.plot(x, l,"b", label='Learning rate')
+    plt.legend()
     plt.show()
