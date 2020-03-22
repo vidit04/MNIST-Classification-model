@@ -1,4 +1,5 @@
 import numpy as np
+#from statistics import stdev 
 import os
 import gzip
 import matplotlib.pyplot as plt
@@ -130,7 +131,9 @@ def Data_pre_processing(Normal):
 
 def Normal_normalization(image_array):
     mean  = np.mean(image_array)
-    std = np.std(image_array)
+    #print(mean)
+    std = np.std(image_array, ddof = 1)
+    #print(std)
     image_array = (image_array - mean)/std
     return image_array
 
@@ -142,12 +145,18 @@ def Gaussian_initialization(weights):
     row_weights = weights.shape[0]
     width_weights = weights.shape[1]
     weights = 0.01 * np.random.randn(row_weights,width_weights)
+
+    ## only uncomment during testing
+    #weights = 0.01 * weights
     return weights
 
 def Xavier_initialization(weights):
     row_weights = weights.shape[0]
     width_weights = weights.shape[1]
     weights = np.random.randn(row_weights,width_weights) * np.sqrt(1./row_weights)
+    
+    ## only uncomment during testing
+    #weights = weights * np.sqrt(1./row_weights)
     return weights
 
 def learning_rate_decay(learning_rate, decay_rate):
@@ -168,23 +177,33 @@ def dropout_forward(array_Act, prob):
 
     mask = np.zeros((len(array_Act),len(array_Act[1])),dtype = np.float32)
     mask = np.random.rand(len(mask),len(mask[1]))
+    
+    # only uncomment for testing
+    #mask = np.ones(len(mask),len(mask[1]),dtype = np.float32) 
     mask = mask < prob
     array_Act = np.multiply(array_Act, mask)
     array_Act = array_Act/prob
+    print("I am in dropout")
     return array_Act
 
 def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta):
 
-    mov_weights_1 = beta*mov_weights_1 + (1. - beta)* dloss_dweights_1
-    mov_baises_1 = beta*mov_baises_1 + (1. - beta)* dloss_dbaises_1
-
-    mov_weights_2 = beta*mov_weights_2 + (1. - beta)* dloss_dweights_2
-    mov_baises_2 = beta*mov_baises_2+(1. - beta)* dloss_dbaises_2
-
-
-    mov_weights_3 = beta*mov_weights_3 + (1. - beta)* dloss_dweights_3
-    mov_baises_3 = beta*mov_baises_3 + (1. - beta)* dloss_dbaises_3
+    #print(dloss_dbaises_3)
+    #print(mov_baises_3)
     
+
+    mov_weights_1 = (beta*mov_weights_1) + ((1. - beta)* dloss_dweights_1)
+    mov_baises_1 = (beta*mov_baises_1) + ((1. - beta)* dloss_dbaises_1)
+
+    mov_weights_2 = (beta*mov_weights_2) + ((1. - beta)* dloss_dweights_2)
+    mov_baises_2 = (beta*mov_baises_2) + ((1. - beta)* dloss_dbaises_2)
+
+
+    mov_weights_3 = (beta*mov_weights_3) + ((1. - beta)* dloss_dweights_3)
+    mov_baises_3 = (beta*mov_baises_3) + ((1. - beta)* dloss_dbaises_3)
+
+    #print(baises_3)
+    #print(mov_baises_3)
 
     weights_1 = weights_1- learning_rate*mov_weights_1
     baises_1 = baises_1 - learning_rate*mov_baises_1
@@ -201,14 +220,17 @@ def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,
 
 def SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate):
 
-    weights_1= weights_1- learning_rate*dloss_dweights_1
-    baises_1 = baises_1 - learning_rate*dloss_dbaises_1
-        
-    weights_2= weights_2- learning_rate*dloss_dweights_2
-    baises_2 = baises_2 - learning_rate*dloss_dbaises_2
+    #print(baises_3)
+    #print(dloss_dbaises_3)
 
-    weights_3= weights_3- learning_rate*dloss_dweights_3
-    baises_3 = baises_3 - learning_rate*dloss_dbaises_3
+    weights_1= weights_1- (learning_rate*dloss_dweights_1)
+    baises_1 = baises_1 - (learning_rate*dloss_dbaises_1)
+        
+    weights_2= weights_2- (learning_rate*dloss_dweights_2)
+    baises_2 = baises_2 - (learning_rate*dloss_dbaises_2)
+
+    weights_3= weights_3- (learning_rate*dloss_dweights_3)
+    baises_3 = baises_3 - (learning_rate*dloss_dbaises_3)
 
     return weights_1,baises_1,weights_2,baises_2,weights_3,baises_3
 
@@ -280,18 +302,23 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg):
     ##############################################
     ###### Loss
     length_loss = len(pred_y[1])
-    epsilon=1e-12
-    pred_y = np.clip(pred_y, epsilon, 1. - epsilon)
+    eps=1e-12
+    # Comment the next line for testing
+    pred_y = np.clip(pred_y, eps, 1. - eps)
     loss = np.zeros((10,length_loss), dtype = np.float32)
     for k in range(10):
         for l in range(length_loss):
             loss[k,l] = - true_y[l,k]*(np.log(pred_y[k,l]))
+    #print(loss)
     loss_per_sample = np.sum(loss,axis=1)
     total_loss = np.sum(loss_per_sample,axis= 0)
     total_loss = total_loss/length_loss
 
     if (reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES"):
+        #print("Yes, I am in regression")
+
         reg_loss = reg_loss_layer_2(weights_1,weights_2,weights_3, alpha)
+        #print(reg_loss)
         total_loss = total_loss + reg_loss
 
     return total_loss
@@ -337,6 +364,7 @@ def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baise
     #Z1 = Z1.transpose()
 
     A3 = Z3/np.sum(Z3,axis=0)
+    #print(A3)
 
     ##############################################
     ###### Loss
