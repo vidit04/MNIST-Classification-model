@@ -623,6 +623,370 @@ def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_ar
         return acc #, total_loss
         
 
+def NN_2_layers_test(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,a,b):
+
+    batch_size = 4
+    hidden_layer_1 = 64
+    hidden_layer_2 = 64
+
+    #layers = input("Number of Hidden layers in Model: ")
+    activation_1 = input("Activation Function for Hidden layers: ")
+    #activation_2 = input("Activation Function for 2nd Hidden layer: ")
+     
+    #Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
+    #initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
+    
+    num = 2
+    reg = input("Want to implement L1 Regression: ")
+    decay = input("Want to implement Decay learning rate: ")
+    dropout = input("Want to implement Dropout: ")
+    optimizer = input("Type of Optimizer want to use: ")
+
+    #a,b,c,d,e,f = Data_pre_processing(Normal)
+    cost_train = []
+    #cost_valid = []
+    #cost_test = []
+    acc_training = []
+    #acc_validation = []
+    #acc_test = []
+    learning_rate_list = []
+
+    #weights_1 = np.zeros((784,64),dtype = np.float32)
+    #baises_1 = np.zeros((64,1), dtype = np.float32)
+
+    #weights_2 = np.zeros((64,64),dtype = np.float32)
+    #baises_2 = np.zeros((64,1), dtype = np.float32)
+
+    #weights_3 = np.zeros((64,10),dtype = np.float32)
+    #baises_3 = np.zeros((10,1), dtype = np.float32)
+
+    mov_weights_1 = np.zeros((10,10),dtype = np.float32)
+    mov_baises_1 = np.zeros((10,1), dtype = np.float32)
+
+    mov_weights_2 = np.zeros((10,10),dtype = np.float32)
+    mov_baises_2 = np.zeros((10,1), dtype = np.float32)
+
+    mov_weights_3 = np.zeros((10,10),dtype = np.float32)
+    mov_baises_3 = np.zeros((10,1), dtype = np.float32)
+
+    dloss_dweights_1 = np.zeros((10,10),dtype = np.float32)
+    dloss_dbaises_1  = np.zeros((10,1),dtype = np.float32)
+
+    dloss_dweights_2 = np.zeros((10,10),dtype = np.float32)
+    dloss_dbaises_2  = np.zeros((10,1),dtype = np.float32)
+
+    dloss_dweights_3 = np.zeros((10,10),dtype = np.float32)
+    dloss_dbaises_3  = np.zeros((10,1),dtype = np.float32)
+
+    dloss_dA1 = np.zeros((10,4),dtype = np.float32)
+    dloss_dA2 = np.zeros((10,4),dtype = np.float32)
+
+    Z1 = np.zeros((10,4),dtype = np.float32)
+    Z2 = np.zeros((10,4),dtype = np.float32)
+    Z3 = np.zeros((10,4),dtype = np.float32)
+
+    Z1_back = np.zeros((10,4),dtype = np.float32)
+    Z2_back = np.zeros((10,4),dtype = np.float32)
+    Z3_back = np.zeros((10,4),dtype = np.float32)
+
+    learning_rate = 0.001
+    beta = 0.9
+    alpha = 0.00001
+    decay_rate = 0.98
+    prob = 0.8
+
+
+    #if (initial == "gauss" or initial == "Gauss"):
+    #    weights_1 = Gaussian_initialization(weights_1)
+    #    print("I am in Gauss")
+    #if (initial == "xavier" or initial == "Xavier"):
+    #    weights_1 = Xavier_initialization(weights_1)
+    #    print("I am in Xavier")
+
+    #if (initial == "gauss" or initial == "Gauss"):
+    #    weights_2 = Gaussian_initialization(weights_2)
+    #    print("I am in Gauss")
+    #if (initial == "xavier" or initial == "Xavier"):
+    #    weights_2 = Xavier_initialization(weights_2)
+    #    print("I am in Xavier")
+
+    #if (initial == "gauss" or initial == "Gauss"):
+    #    weights_3 = Gaussian_initialization(weights_3)
+    #    print("I am in Gauss")
+
+    #if (initial == "xavier" or initial == "Xavier"):
+    #    weights_3 = Xavier_initialization(weights_3)
+    #    print("I am in Xavier")
+
+
+
+    #for i in range(784):
+    #    for j in range(64):
+    #        weights_1[i,j] = 0.01 * np.random.randn()
+
+    #for i in range(64):
+    #    for j in range(64):
+    #        weights_2[i,j] = 0.01 * np.random.randn()
+
+    #for i in range(64):
+    #    for j in range(10):
+    #        weights_3[i,j] = 0.01 * np.random.randn()
+
+
+    #for i in tqdm(range(10), total=10 ,desc = "First Loop", unit='Epochs', unit_scale=True):
+    for i in range(5):
+        n=0
+        learning_rate_list.append(learning_rate)
+        for j in tqdm(range(1), total=1 ,desc = "Second Loop", unit='Iterations', unit_scale=True):
+
+            x_train = a[n:n+batch_size,:]
+            y_train = b[n:n+batch_size,:]
+
+            dloss_dweights_1 = np.zeros((10,10),dtype = np.float32)
+            dloss_dbaises_1  = np.zeros((10,1),dtype = np.float32)
+
+            dloss_dweights_2 = np.zeros((10,10),dtype = np.float32)
+            dloss_dbaises_2  = np.zeros((10,1),dtype = np.float32)
+
+            dloss_dweights_3 = np.zeros((10,10),dtype = np.float32)
+            dloss_dbaises_3  = np.zeros((10,1),dtype = np.float32)
+
+            dloss_dA1 = np.zeros((10,4),dtype = np.float32)
+            dloss_dA2 = np.zeros((10,4),dtype = np.float32)
+
+            Z1 = np.zeros((10,4),dtype = np.float32)
+            Z2 = np.zeros((10,4),dtype = np.float32)
+            Z3 = np.zeros((10,4),dtype = np.float32)
+
+            A1 = np.zeros((10,4),dtype = np.float32)
+            A2 = np.zeros((10,4),dtype = np.float32)
+
+            Z1_back = np.zeros((10,4),dtype = np.float32)
+            Z2_back = np.zeros((10,4),dtype = np.float32)
+            Z3_back = np.zeros((10,4),dtype = np.float32)
+
+
+            Z1 = np.matmul(weights_1.T,x_train.T) + baises_1
+
+            #A1 = np.maximum(0,Z1)
+            #A1 = relu_activation(Z1)
+            if activation_1 == "relu" or activation_1 == "Relu":
+                A1 = relu_activation(Z1)
+            if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+                A1 = sigmoid_activation(Z1)
+
+            ##### Dropout
+            if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+                mask_1 = np.zeros((len(A1),len(A1[1])),dtype = np.float32)
+                mask_1 = np.random.rand(len(mask_1),len(mask_1[1]))
+                mask_1 = mask_1 < prob
+
+                A1 = np.multiply(A1, mask_1)
+                A1 = A1/prob
+
+             #if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+             #    A1 = dropout_forward(A1, prob)
+            
+
+            Z2 = np.matmul(weights_2.T,A1) + baises_2
+
+            #A2 = np.maximum(0,Z2)
+            #A2 = relu_activation(Z2)
+            if activation_1 == "relu" or activation_1 == "Relu":
+                A2 = relu_activation(Z2)
+            if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+                A2 = sigmoid_activation(Z2)
+
+            ##### Dropout
+
+            if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+            #       A2 = dropout_forward(A2, prob)
+                mask_2 = np.zeros((len(A2),len(A2[1])),dtype = np.float32)
+                mask_2 = np.random.rand(len(mask_2),len(mask_2[1]))
+                mask_2 = mask_2 < prob
+
+                A2 = np.multiply(A2, mask_2)
+                A2 = A2/prob
+            
+            #A2= Z2
+            Z3 = np.matmul(weights_3.T,A2) + baises_3
+
+            Z3_max = np.max(Z3, axis=0)
+            Z3_max = np.reshape(Z3_max,(1, 4))
+            Z3 = np.exp(Z3-Z3_max)
+
+                
+            ####################################################
+            #Z1 = Z1.transpose()
+
+            A3 = Z3/np.sum(Z3,axis=0)
+
+            #print(A3)
+
+            ##############################################
+            ###### Loss
+            #loss = np.zeros((10,4), dtype = np.float32)
+            #for k in range(10):
+            #    for l in range(4):
+            #        loss[k,l] = - y_train[l,k]*(np.log(A3[k,l]))
+            #loss_per_sample = np.sum(loss,axis=1)
+            #total_loss = np.sum(loss_per_sample,axis= 0)
+            #total_loss = total_loss/batch_size
+
+            #####  Back propogation
+
+            Z3_back = A3 - y_train.T
+            dloss_dweights_3 = (1./batch_size) * np.matmul(A2,Z3_back.T)
+            dloss_dbaises_3 = (1./batch_size) * np.sum(Z3_back, axis = 1, keepdims= True)
+        
+            dloss_dA2 = np.matmul(weights_3, Z3_back)
+
+            ### Dropout_backward
+
+            if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+                dloss_dA2 =  np.multiply(dloss_dA2, mask_2)
+                dloss_dA2 = dloss_dA2/prob
+
+
+            #Z1_back = dloss_dA1
+
+            ####### Relu Backward
+
+            #for k in range(64):
+            #    for l in range(4):
+            #        if Z2[k,l] <=0:
+            #            Z2_back[k,l] = 0
+            #        if Z2[k,l] > 0:
+            #            Z2_back[k,l] = dloss_dA2[k,l]
+
+            if activation_1 == "relu" or activation_1 == "Relu":
+                Z2_back = relu_activation_back(dloss_dA2, Z2)
+            if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+                Z2_back = sigmoid_activation_back(dloss_dA2, Z2)
+
+            #Z2_back = relu_activation_back(dloss_dA2, Z2)
+
+            dloss_dweights_2 = (1./batch_size) * np.matmul(A1,Z2_back.T)
+            dloss_dbaises_2 = (1./batch_size) * np.sum(Z2_back, axis = 1, keepdims= True)
+
+            dloss_dA1 = np.matmul(weights_2,Z2_back)
+
+            if dropout == "Yes" or dropout == "yes" or dropout == "y" or dropout == "Y" or dropout == "YES":
+                dloss_dA1 =  np.multiply(dloss_dA1, mask_1)
+                dloss_dA1 = dloss_dA1/prob
+
+        
+
+            #Z1_back = dloss_dA1
+
+            ####### Relu Backward
+
+            #for k in range(64):
+            #    for l in range(4):
+            #        if Z1[k,l] <=0:
+            #            Z1_back[k,l] = 0
+            #        if Z1[k,l] > 0:
+            #            Z1_back[k,l] = dloss_dA1[k,l]
+
+            if activation_1 == "relu" or activation_1 == "Relu":
+                Z1_back = relu_activation_back(dloss_dA1, Z1)
+            if activation_1 == "sigmoid" or activation_1 == "Sigmoid":
+                Z1_back = sigmoid_activation_back(dloss_dA1, Z1)
+
+            #Z1_back = relu_activation_back(dloss_dA1, Z1)
+
+            ##################################################################################
+            dloss_dweights_1 = (1./batch_size) * np.matmul(x_train.T,Z1_back.T)
+            dloss_dbaises_1 = (1./batch_size) * np.sum(Z1_back, axis = 1, keepdims= True)
+
+            if reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES":
+                dloss_dweights_1 = dloss_dweights_1 + alpha * weights_1
+                dloss_dweights_2 = dloss_dweights_2 + alpha * weights_2
+                dloss_dweights_3 = dloss_dweights_3 + alpha * weights_3
+            
+
+            #weights_1= weights_1- learning_rate*dloss_dweights_1
+            #baises_1 = baises_1 - learning_rate*dloss_dbaises_1
+        
+            #weights_2= weights_2- learning_rate*dloss_dweights_2
+            #baises_2 = baises_2 - learning_rate*dloss_dbaises_2
+
+            #weights_3= weights_3- learning_rate*dloss_dweights_3
+            #baises_3 = baises_3 - learning_rate*dloss_dbaises_3
+            
+
+            if optimizer == "SGD" or optimizer =="sgd":
+                weights_1,baises_1,weights_2,baises_2,weights_3,baises_3 = SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, num)
+
+            #print(mov_weights_1)
+            #print(mov_weights_2)
+            #print(mov_weights_3)
+            #print(mov_baises_1)
+            #print(mov_baises_2)
+            #print(mov_baises_3)
+            
+            #print(weights_1)
+            #print(weights_2)
+            #print(weights_3)
+            #print(baises_1)
+            #print(baises_2)
+            #print(baises_3)
+            
+            
+            if optimizer == "Momentum" or optimizer =="momentum":
+                weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3 = Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta,num)
+        
+            n = n + 4
+
+        if decay == "Yes" or decay == "yes" or decay == "y" or decay == "Y" or decay == "YES":
+            learning_rate = learning_rate_decay(learning_rate,decay_rate)
+        #if learning_rate < 0.001:
+        #    learning_rate = 0.001
+        #print(dloss_dA2)
+        #print(dloss_dbaises_2)
+        
+    
+
+        acc_epoch_train = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3,a,b, activation_1,num )
+        #acc_epoch_valid = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3,c,d, activation_1,num )
+        #acc_epoch_test = accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3,e,f, activation_1,num )
+        #print(acc_epoch_train)
+
+        loss_train = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, a, b , alpha ,reg, prob, activation_1, dropout,num)
+        #print(loss_train)
+        #loss_valid = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, c, d , alpha ,reg, prob, activation_1, dropout,num)
+        #loss_test = forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, e, f , alpha ,reg, prob, activation_1, dropout,num)
+    
+        #cost_train.append(loss_train)
+        #cost_valid.append(loss_valid)
+        #cost_test.append(loss_test)
+        #acc_training.append(acc_epoch_train)
+        #acc_validation.append(acc_epoch_valid)
+        #acc_test.append(acc_epoch_test)
+    
+
+        #print("Training Cost for Epoch:",loss_train, " Epoch : ", i)
+        #print("Training Accuracy for Epoch:",acc_epoch_train, " Epoch : ", i)  
+
+
+    #string = "_for_two_layer_" + activation_1 + "_activation_" + Normal + "_Normalization_" + initial+ "_initalization_with_" + reg + "_regression_with_" + decay + "_learning_decay_with_" + dropout + "_dropout_with_" + optimizer + "_optimizer"
+
+    #save_fun( weights_1, "Weights_1" + string)
+    #print("Weight_1 file saved for 2 Layer Neural Network.")
+    #save_fun( baises_1, "Baises_1"  + string)
+    #print("Baises_1 file saved for 2 Layer Neural Network.")
+    #save_fun( weights_2, "Weights_2" + string)
+    #print("Weight_2 file saved for 2 Layer Neural Network.")
+    #save_fun( baises_2, "Baises_2" + string)
+    #print("Baises_2 file saved for 2 Layer Neural Network.")
+    #save_fun(weights_3 , "Weights_3" + string)
+    #print("Weight_3 file saved for 2 Layer Neural Network.")
+    #save_fun( baises_3, "Baises_3" + string)
+    #print("Baises_3 file saved for 2 Layer Neural Network.")
+
+    return weights_1,baises_1,weights_2, baises_2,weights_3,baises_3,loss_train, acc_epoch_train
+
+
 def NN_2_layers():
 
     batch_size = 4
@@ -898,9 +1262,9 @@ def NN_2_layers():
             dloss_dbaises_1 = (1./batch_size) * np.sum(Z1_back, axis = 1, keepdims= True)
 
             if reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES":
-                dloss_dweights_1 = dloss_dweights_1 + alpha * dloss_dweights_1
-                dloss_dweights_2 = dloss_dweights_2 + alpha * dloss_dweights_2
-                dloss_dweights_3 = dloss_dweights_3 + alpha * dloss_dweights_3
+                dloss_dweights_1 = dloss_dweights_1 + alpha * weights_1
+                dloss_dweights_2 = dloss_dweights_2 + alpha * weights_2
+                dloss_dweights_3 = dloss_dweights_3 + alpha * weights_3
             
 
             #weights_1= weights_1- learning_rate*dloss_dweights_1
@@ -963,6 +1327,8 @@ def NN_2_layers():
     print("Baises_3 file saved for 2 Layer Neural Network.")
 
     return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string 
+
+
 
 def NN_1_layers():
 
@@ -1205,8 +1571,8 @@ def NN_1_layers():
             dloss_dbaises_1 = (1./batch_size) * np.sum(Z1_back, axis = 1, keepdims= True)
 
             if reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES":
-                dloss_dweights_1 = dloss_dweights_1 + alpha * dloss_dweights_1
-                dloss_dweights_2 = dloss_dweights_2 + alpha * dloss_dweights_2
+                dloss_dweights_1 = dloss_dweights_1 + alpha * weights_1
+                dloss_dweights_2 = dloss_dweights_2 + alpha * weights_2
                 #dloss_dweights_3 = dloss_dweights_3 + alpha * dloss_dweights_3
             
 
@@ -1398,7 +1764,7 @@ def NN_0_layers():
             dloss_dbaises_1 = (1./batch_size) * np.sum(Z1_back, axis = 1, keepdims= True)
 
             if reg == "Yes" or reg == "yes" or reg == "y" or reg == "Y" or reg == "YES":
-                dloss_dweights_1 = dloss_dweights_1 + alpha * dloss_dweights_1
+                dloss_dweights_1 = dloss_dweights_1 + alpha * weights_1
                 #dloss_dweights_2 = dloss_dweights_2 + alpha * dloss_dweights_2
                 #dloss_dweights_3 = dloss_dweights_3 + alpha * dloss_dweights_3
 
@@ -1467,7 +1833,7 @@ if __name__=='__main__':
     if (layers == "0" or layers == "zero" or layers == "Zero"):
         cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string =  NN_0_layers()
 
-    x = np.arange(0,40, 1)
+    x = np.arange(0,10, 1)
     y = cost_train
 
     save_fun_list(y , "Training_loss" + string)

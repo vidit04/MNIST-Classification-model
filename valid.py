@@ -1813,5 +1813,511 @@ def Data_pre_processing_test():
         
     return None
 
+def layer_2_test():
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet19')
+    data_sheet1 = data.sheet_by_name('Sheet23')
+    data_sheet2 = data.sheet_by_name('Sheet24')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = np.zeros((10,10),dtype = np.float32)
+    #output_loss = data_sheet.cell_value(1,73)
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    input_image_array = np.zeros((4,10),dtype = np.float32)
+    input_label_array = np.zeros((4,10),dtype = np.float32)
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    output_baises_3 = np.zeros((10,1),dtype = np.float32)
+    output_loss = data_sheet2.cell_value(1,73)
+    output_accuracy = 0.25
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+18)
+            input_weights_2[i,j] = data_sheet.cell_value(i+35,j+18)
+            input_weights_3[i,j] = data_sheet.cell_value(i+48,j+18)
+            output_weights_1[i,j] = data_sheet1.cell_value(i+15,j+167)
+            output_weights_2[i,j] = data_sheet1.cell_value(i+33,j+167)
+            output_weights_3[i,j] = data_sheet1.cell_value(i+51,j+167)
+
+
+    for i in range(10):
+        input_baises_1[i,0] = data_sheet.cell_value(i+22,12)
+        input_baises_2[i,0] = data_sheet.cell_value(i+35,12)
+        input_baises_3[i,0] = data_sheet.cell_value(i+48,12)
+
+        output_baises_1[i,0] = data_sheet1.cell_value(11,i+167)
+        output_baises_2[i,0] = data_sheet1.cell_value(29,i+167)
+        output_baises_3[i,0] = data_sheet1.cell_value(47,i+167)
+
+
+    for i in range(10):
+        for j in range(4):
+            #print(i)
+            #print(j)
+            input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
+            input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
+
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    result_weights_2 = np.round(result_weights_2 ,4)
+    output_weights_2 = np.round(output_weights_2, 4)
+    result_weights_3 = np.round(result_weights_3 ,4)
+    output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    result_baises_2 = np.round(result_baises_2 ,4)
+    output_baises_2 = np.round(output_baises_2, 4) 
+    result_baises_3 = np.round(result_baises_3 ,4)
+    output_baises_3 = np.round(output_baises_3, 4)
+
+    output_loss = round(output_loss, 4)
+    result_loss = round(result_loss, 4)
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy) == False:
+        print("Fuction tested not okay")
+    return None
+def layer_2_sigmoid_test():
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet25')
+    data_sheet1 = data.sheet_by_name('Sheet29')
+    data_sheet2 = data.sheet_by_name('Sheet30')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = np.zeros((10,10),dtype = np.float32)
+    #output_loss = data_sheet.cell_value(1,73)
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    input_image_array = np.zeros((4,10),dtype = np.float32)
+    input_label_array = np.zeros((4,10),dtype = np.float32)
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    output_baises_3 = np.zeros((10,1),dtype = np.float32)
+    output_loss = data_sheet2.cell_value(1,73)
+    output_accuracy = 0.25
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+18)
+            input_weights_2[i,j] = data_sheet.cell_value(i+35,j+18)
+            input_weights_3[i,j] = data_sheet.cell_value(i+48,j+18)
+            output_weights_1[i,j] = data_sheet1.cell_value(i+15,j+167)
+            output_weights_2[i,j] = data_sheet1.cell_value(i+33,j+167)
+            output_weights_3[i,j] = data_sheet1.cell_value(i+51,j+167)
+
+
+    for i in range(10):
+        input_baises_1[i,0] = data_sheet.cell_value(i+22,12)
+        input_baises_2[i,0] = data_sheet.cell_value(i+35,12)
+        input_baises_3[i,0] = data_sheet.cell_value(i+48,12)
+
+        output_baises_1[i,0] = data_sheet1.cell_value(11,i+167)
+        output_baises_2[i,0] = data_sheet1.cell_value(29,i+167)
+        output_baises_3[i,0] = data_sheet1.cell_value(47,i+167)
+
+
+    for i in range(10):
+        for j in range(4):
+            #print(i)
+            #print(j)
+            input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
+            input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
+
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    result_weights_2 = np.round(result_weights_2 ,4)
+    output_weights_2 = np.round(output_weights_2, 4)
+    result_weights_3 = np.round(result_weights_3 ,4)
+    output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    result_baises_2 = np.round(result_baises_2 ,4)
+    output_baises_2 = np.round(output_baises_2, 4) 
+    result_baises_3 = np.round(result_baises_3 ,4)
+    output_baises_3 = np.round(output_baises_3, 4)
+
+    output_loss = round(output_loss, 4)
+    result_loss = round(result_loss, 4)
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy) == False:
+        print("Fuction tested not okay")
+    return None
+
+def layer_2_momentum_opt_test():
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet31')
+    data_sheet1 = data.sheet_by_name('Sheet35')
+    data_sheet2 = data.sheet_by_name('Sheet36')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = np.zeros((10,10),dtype = np.float32)
+    #output_loss = data_sheet.cell_value(1,73)
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    input_image_array = np.zeros((4,10),dtype = np.float32)
+    input_label_array = np.zeros((4,10),dtype = np.float32)
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    output_baises_3 = np.zeros((10,1),dtype = np.float32)
+    output_loss = data_sheet2.cell_value(1,73)
+    output_accuracy = 0
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+18)
+            input_weights_2[i,j] = data_sheet.cell_value(i+35,j+18)
+            input_weights_3[i,j] = data_sheet.cell_value(i+48,j+18)
+            output_weights_1[i,j] = data_sheet1.cell_value(i+15,j+191)
+            output_weights_2[i,j] = data_sheet1.cell_value(i+33,j+191)
+            output_weights_3[i,j] = data_sheet1.cell_value(i+51,j+191)
+
+
+    for i in range(10):
+        input_baises_1[i,0] = data_sheet.cell_value(i+22,12)
+        input_baises_2[i,0] = data_sheet.cell_value(i+35,12)
+        input_baises_3[i,0] = data_sheet.cell_value(i+48,12)
+
+        output_baises_1[i,0] = data_sheet1.cell_value(11,i+191)
+        output_baises_2[i,0] = data_sheet1.cell_value(29,i+191)
+        output_baises_3[i,0] = data_sheet1.cell_value(47,i+191)
+
+
+    for i in range(10):
+        for j in range(4):
+            #print(i)
+            #print(j)
+            input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
+            input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
+
+    #print(input_baises_1)
+    #print(input_baises_2)
+    #print(input_baises_3)
+    
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+
+    result_weights_1 = np.round(result_weights_1 ,3)
+    #print(result_weights_1)
+    output_weights_1 = np.round(output_weights_1, 3)
+    #print(output_weights_1)
+    result_weights_2 = np.round(result_weights_2 ,3)
+    #print(result_weights_2)
+    output_weights_2 = np.round(output_weights_2, 3)
+    result_weights_3 = np.round(result_weights_3 ,3)
+    output_weights_3 = np.round(output_weights_3, 3)
+
+
+    result_baises_1 = np.round(result_baises_1 ,3)
+    output_baises_1 = np.round(output_baises_1, 3) 
+    result_baises_2 = np.round(result_baises_2 ,3)
+    output_baises_2 = np.round(output_baises_2, 3) 
+    result_baises_3 = np.round(result_baises_3 ,3)
+    output_baises_3 = np.round(output_baises_3, 3)
+
+    output_loss = round(output_loss, 4)
+    result_loss = round(result_loss, 4)
+    #print(result_loss)
+    #print(output_loss)
+    #print(result_accuracy)
+    #print(output_accuracy)
+    #for i in range(10):
+    #    for j in range(10):
+    #        if (result_weights_1[i,j] == output_weights_1[i,j]) == False:
+    #            print(i)
+    #            print(j)
+    #if ((result_weights_2 == output_weights_2).all()):
+    #    print("Fuction tested okay")
+    #if ((result_weights_2 == output_weights_2).all()) == False:
+    #    print("Fuction tested not okay")
+    #if ((result_weights_3 == output_weights_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_weights_3 == output_weights_3).all()) == False:
+    #    print("Fuction tested not okay")
+    #if ((result_weights_1 == output_weights_1).all()):
+    #    print("Fuction tested okay")
+    #if ((result_weights_1 == output_weights_1).all()) == False:
+    #    print("Fuction tested not okay")
+    #if ((result_baises_1 == output_baises_1).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_1 == output_baises_1).all()) == False:
+    #    print("Fuction tested not okay")
+    #if ((result_baises_2 == output_baises_2).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_2 == output_baises_2).all()) == False:
+    #    print("Fuction tested not okay")
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy) == False:
+        print("Fuction tested not okay")
+    return None
+
+def layer_2_with_learning_rate_decay_test():
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet37')
+    data_sheet1 = data.sheet_by_name('Sheet41')
+    data_sheet2 = data.sheet_by_name('Sheet42')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = np.zeros((10,10),dtype = np.float32)
+    #output_loss = data_sheet.cell_value(1,73)
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    input_image_array = np.zeros((4,10),dtype = np.float32)
+    input_label_array = np.zeros((4,10),dtype = np.float32)
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    output_baises_3 = np.zeros((10,1),dtype = np.float32)
+    output_loss = data_sheet2.cell_value(1,73)
+    output_accuracy = 0.25
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+18)
+            input_weights_2[i,j] = data_sheet.cell_value(i+35,j+18)
+            input_weights_3[i,j] = data_sheet.cell_value(i+48,j+18)
+            output_weights_1[i,j] = data_sheet1.cell_value(i+15,j+167)
+            output_weights_2[i,j] = data_sheet1.cell_value(i+33,j+167)
+            output_weights_3[i,j] = data_sheet1.cell_value(i+51,j+167)
+
+
+    for i in range(10):
+        input_baises_1[i,0] = data_sheet.cell_value(i+22,12)
+        input_baises_2[i,0] = data_sheet.cell_value(i+35,12)
+        input_baises_3[i,0] = data_sheet.cell_value(i+48,12)
+
+        output_baises_1[i,0] = data_sheet1.cell_value(11,i+167)
+        output_baises_2[i,0] = data_sheet1.cell_value(29,i+167)
+        output_baises_3[i,0] = data_sheet1.cell_value(47,i+167)
+
+
+    for i in range(10):
+        for j in range(4):
+            #print(i)
+            #print(j)
+            input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
+            input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
+
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    result_weights_2 = np.round(result_weights_2 ,4)
+    output_weights_2 = np.round(output_weights_2, 4)
+    result_weights_3 = np.round(result_weights_3 ,4)
+    output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    result_baises_2 = np.round(result_baises_2 ,4)
+    output_baises_2 = np.round(output_baises_2, 4) 
+    result_baises_3 = np.round(result_baises_3 ,4)
+    output_baises_3 = np.round(output_baises_3, 4)
+
+    output_loss = round(output_loss, 4)
+    result_loss = round(result_loss, 4)
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy) == False:
+        print("Fuction tested not okay")
+    return None
+
+def layer_2_with_reg_test():
+
+    data = xlrd.open_workbook('valid_excel.xlsx')
+    data_sheet = data.sheet_by_name('Sheet43')
+    data_sheet1 = data.sheet_by_name('Sheet47')
+    data_sheet2 = data.sheet_by_name('Sheet48')
+    #prob = 0.8
+    total_rows = data_sheet.nrows
+    total_cols = data_sheet.ncols
+    #print(total_rows)
+    #print(total_cols)
+    input_weights_1 = np.zeros((10,10),dtype = np.float32)
+    input_weights_2 = np.zeros((10,10),dtype = np.float32)
+    input_weights_3 = np.zeros((10,10),dtype = np.float32)
+    #output_loss = data_sheet.cell_value(1,73)
+
+    input_baises_1 = np.zeros((10,1),dtype = np.float32)
+    input_baises_2 = np.zeros((10,1),dtype = np.float32)
+    input_baises_3 = np.zeros((10,1),dtype = np.float32)
+
+    input_image_array = np.zeros((4,10),dtype = np.float32)
+    input_label_array = np.zeros((4,10),dtype = np.float32)
+
+    output_weights_1 = np.zeros((10,10),dtype = np.float32)
+    output_weights_2 = np.zeros((10,10),dtype = np.float32)
+    output_weights_3 = np.zeros((10,10),dtype = np.float32)
+
+    output_baises_1 = np.zeros((10,1),dtype = np.float32)
+    output_baises_2 = np.zeros((10,1),dtype = np.float32)
+    output_baises_3 = np.zeros((10,1),dtype = np.float32)
+    output_loss = data_sheet2.cell_value(1,73)
+    output_accuracy = 0.25
+
+    for i in range(10):
+        for j in range(10):
+            #print(i)
+            #print(j)
+            input_weights_1[i,j] = data_sheet.cell_value(i+22,j+18)
+            input_weights_2[i,j] = data_sheet.cell_value(i+35,j+18)
+            input_weights_3[i,j] = data_sheet.cell_value(i+48,j+18)
+            output_weights_1[i,j] = data_sheet1.cell_value(i+15,j+167)
+            output_weights_2[i,j] = data_sheet1.cell_value(i+33,j+167)
+            output_weights_3[i,j] = data_sheet1.cell_value(i+51,j+167)
+
+
+    for i in range(10):
+        input_baises_1[i,0] = data_sheet.cell_value(i+22,12)
+        input_baises_2[i,0] = data_sheet.cell_value(i+35,12)
+        input_baises_3[i,0] = data_sheet.cell_value(i+48,12)
+
+        output_baises_1[i,0] = data_sheet1.cell_value(11,i+167)
+        output_baises_2[i,0] = data_sheet1.cell_value(29,i+167)
+        output_baises_3[i,0] = data_sheet1.cell_value(47,i+167)
+
+
+    for i in range(10):
+        for j in range(4):
+            #print(i)
+            #print(j)
+            input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
+            input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
+
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+
+    result_weights_1 = np.round(result_weights_1 ,4)
+    output_weights_1 = np.round(output_weights_1, 4)
+    result_weights_2 = np.round(result_weights_2 ,4)
+    output_weights_2 = np.round(output_weights_2, 4)
+    result_weights_3 = np.round(result_weights_3 ,4)
+    output_weights_3 = np.round(output_weights_3, 4)
+
+
+    result_baises_1 = np.round(result_baises_1 ,4)
+    output_baises_1 = np.round(output_baises_1, 4) 
+    result_baises_2 = np.round(result_baises_2 ,4)
+    output_baises_2 = np.round(output_baises_2, 4) 
+    result_baises_3 = np.round(result_baises_3 ,4)
+    output_baises_3 = np.round(output_baises_3, 4)
+
+    output_loss = round(output_loss, 4)
+    result_loss = round(result_loss, 4)
+    #print(result_baises_3)
+    #print(output_baises_3)
+    
+    #if ((result_baises_3 == output_baises_3).all()):
+    #    print("Fuction tested okay")
+    #if ((result_baises_3 == output_baises_3).all()) == False:
+    #    print("Fuction tested not okay")
+        
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy):
+        print("Fuction tested okay")
+    if (((result_weights_1 == output_weights_1).all()) and ((result_weights_2 == output_weights_2).all()) and ((result_weights_3 == output_weights_3).all()) and ((result_baises_1 == output_baises_1).all()) and ((result_baises_2 == output_baises_2).all()) and ((result_baises_3 == output_baises_3).all()) and result_loss == output_loss and result_accuracy == output_accuracy) == False:
+        print("Fuction tested not okay")
+        return None
 if __name__=='__main__':
-    Loss_function_with_reg_0_layer_test()
+    layer_2_with_reg_test()
