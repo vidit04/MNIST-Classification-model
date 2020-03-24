@@ -641,7 +641,9 @@ def NN_2_layers_test(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,a,
     num = 2
     reg = input("Want to implement L1 Regression: ")
     decay = input("Want to implement Decay learning rate: ")
-    dropout = input("Want to implement Dropout: ")
+    #dropout = input("Want to implement Dropout: ")
+    dropout = "n"
+
     optimizer = input("Type of Optimizer want to use: ")
 
     #a,b,c,d,e,f = Data_pre_processing(Normal)
@@ -1030,12 +1032,13 @@ def NN_2_layers():
         if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
             repeat1 =1
 
-    repeat1 = 0
-    while (repeat1 ==0):
-        dropout = input("Want to implement Dropout[y/n]: ")
-        print("String entered for dropout : " + dropout)
-        if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
-            repeat1 =1
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    dropout = input("Want to implement Dropout[y/n]: ")
+    #    print("String entered for dropout : " + dropout)
+    #    if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
+    #        repeat1 =1
+    dropout ="n"
 
     repeat1 = 0
     while (repeat1 ==0):
@@ -1048,7 +1051,14 @@ def NN_2_layers():
     print("Epoch value Entered : ",epoch)
     epoch = int(epoch)
 
-    print("\nModel with 2 hidden layer with 64 Neuron each is under training\n")
+
+    print("\n      Model with 2 hidden layer with 64 Neuron each is under training\n")
+
+    print("Value of hyper parameters used in the model during training")
+    print("Learning rate = 0.001 ")
+    print("Momentum parameter [beta] = 0.9 ")
+    print("Regression parameter [alpha] = 0.00001 ")
+    print("Decay rate = 0.98")
 
     num=2
 
@@ -1389,7 +1399,9 @@ def NN_1_layers_test(weights_1,baises_1,weights_2,baises_2,a,b):
 
     reg = input("Want to implement L1 Regression: ")
     decay = input("Want to implement Decay learning rate: ")
-    dropout = input("Want to implement Dropout: ")
+    #dropout = input("Want to implement Dropout: ")
+    dropout = "n"
+
     optimizer = input("Type of Optimizer want to use: ")
 
     #a,b,c,d,e,f = Data_pre_processing(Normal)
@@ -1724,12 +1736,13 @@ def NN_1_layers():
         if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
             repeat1 =1
 
-    repeat1 = 0
-    while (repeat1 ==0):
-        dropout = input("Want to implement Dropout[y/n]: ")
-        print("String entered for dropout : " + dropout)
-        if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
-            repeat1 =1
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    dropout = input("Want to implement Dropout[y/n]: ")
+    #    print("String entered for dropout : " + dropout)
+    #    if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
+    #        repeat1 =1
+    dropout = "n"
 
     repeat1 = 0
     while (repeat1 ==0):
@@ -1742,7 +1755,13 @@ def NN_1_layers():
     print("Epoch value Entered : ",epoch)
     epoch = int(epoch)
 
-    print("\nModel with 1 hidden layer with 64 Neuron is under training\n")
+    print("\n        Model with 1 hidden layer with 64 Neuron is under training\n")
+
+    print("Value of hyper parameters used in the model during training")
+    print("Learning rate = 0.001 ")
+    print("Momentum parameter [beta] = 0.9 ")
+    print("Regression parameter [alpha] = 0.00001 ")
+    print("Decay rate = 0.98")
 
     a,b,c,d,e,f = Data_pre_processing(Normal)
     cost_train = []
@@ -2285,7 +2304,14 @@ def NN_0_layers():
     print("Epoch value Entered : ",epoch)
     epoch = int(epoch)
     #prob = 0.8
-    print("\nModel with 0 hidden layer is under training\n")
+    print("\n          Model with 0 hidden layer is under training\n")
+
+    print("Value of hyper parameters used in the model during training")
+
+    print("Learning rate = 0.001 ")
+    print("Momentum parameter [beta] = 0.9 ")
+    print("Regression parameter [alpha] = 0.00001 ")
+    print("Decay rate = 0.98")
 
     a,b,c,d,e,f = Data_pre_processing(Normal)
 
