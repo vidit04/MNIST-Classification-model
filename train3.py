@@ -5,9 +5,6 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import csv
 
-
-
-
 def Data_pre_processing(Normal):
 
     data_image_train = gzip.open('train-images-idx3-ubyte.gz','r')
@@ -625,26 +622,114 @@ def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_ar
         return acc #, total_loss
         
 
-def NN_2_layers_test(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,a,b):
+def NN_2_layers_test(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,a,b,activation_1,reg,decay,optimizer ):
 
     batch_size = 4
     hidden_layer_1 = 64
     hidden_layer_2 = 64
 
     #layers = input("Number of Hidden layers in Model: ")
-    activation_1 = input("Activation Function for Hidden layers: ")
+    #activation_1 = input("Activation Function for Hidden layers: ")
     #activation_2 = input("Activation Function for 2nd Hidden layer: ")
      
     #Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
     #initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
     
     num = 2
-    reg = input("Want to implement L1 Regression: ")
-    decay = input("Want to implement Decay learning rate: ")
+    #reg = input("Want to implement L1 Regression: ")
+    #decay = input("Want to implement Decay learning rate: ")
     #dropout = input("Want to implement Dropout: ")
     dropout = "n"
 
-    optimizer = input("Type of Optimizer want to use: ")
+    #optimizer = input("Type of Optimizer want to use: ")
+
+
+
+#repeat1 =0
+#    while(repeat1 ==0):
+#        Normal = input("Enter type of normalization for Data [Simple or Normal]: ")
+#        print("Normalization entered : " + Normal)
+#        if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal"):
+#           repeat1 = 1
+#    repeat1 = 0
+
+#    while(repeat1 ==0):
+#        initial = input("Enter function for Weights value initialization [Gauss or Xavier]: ")
+#        print("Weight Intialixation entered : " + initial)
+#        if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier"):
+#            repeat1 = 1
+    #repeat1 =0
+
+    #while(repeat1 ==0):
+    #    activation_1 = input("Enter Activation function for hidden layers [Relu or Sigmoid]: ")
+    #    print("Activation Function for hidden layers entered : " + activation_1)
+    #    if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid"):
+    #        repeat1 = 1
+    #    if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid") == False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    reg = input("Want to implement L1 Regression in the Model [y/n]: ")
+    #    print("String entered for L1 Regression : " + reg)
+    #    if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes"):
+    #        repeat1 =1
+    #    if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes")==False:
+    #        print("Please enter the correct input")
+
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    decay = input("Want to implement decaying learning rate [y/n]: ")
+    #    print("String entered for decaying learning rate : " + decay)
+    #    if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
+    #        repeat1 =1
+    #    if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes")==False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    dropout = input("Want to implement Dropout[y/n]: ")
+    #    print("String entered for dropout : " + dropout)
+    #    if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
+    #        repeat1 =1
+    #dropout ="n"
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    optimizer = input("Enter type of Optimizer want to use to train the model [SGD or Momentum]: ")
+    #    print("Optimizer Entered : " + optimizer)
+    #    if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ):
+    #        repeat1 =1
+   #     if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ) ==False:
+   #         print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    epoch = input("Enter Number of Epochs for training the model: ")
+    #    if( epoch.isdigit()):
+    #        print("Epoch value Entered : ",epoch)
+    #        repeat1 =1
+    #    if( epoch.isdigit())==False:
+    #        print("Please enter the correct input")
+    #    
+    #epoch = input("Enter Number of Epochs for training the model: ")
+    #print("Epoch value Entered : ",epoch)
+    #epoch = int(epoch)
+
+
+    print("\n      Model with 2 hidden layer with 10 Neuron each is under test training\n")
+    
+    print("Value of hyper parameters used in the model during training")
+    print("Epoch for selected for test run is 5.")
+    print("Batch size = 4 ")
+    print("Neurons in 1st Hidden layer = 10 ")
+    print("Neurons in 2nd Hidden layer = 10 ")
+    print("Learning rate = 0.001 ")
+    print("Momentum parameter [beta] = 0.9 ")
+    print("Regression parameter [alpha] = 0.00001 ")
+    print("Decay rate = 0.98")
+
 
     #a,b,c,d,e,f = Data_pre_processing(Normal)
     cost_train = []
@@ -1005,6 +1090,8 @@ def NN_2_layers():
         print("Normalization entered : " + Normal)
         if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal"):
             repeat1 = 1
+        if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal")== False:
+            print("Please enter the correct input.")
     repeat1 = 0
 
     while(repeat1 ==0):
@@ -1012,18 +1099,24 @@ def NN_2_layers():
         print("Weight Intialixation entered : " + initial)
         if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier"):
             repeat1 = 1
+        if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier")==False:
+            print("Please enter the correct input")
     repeat1 =0
     while(repeat1 ==0):
         activation_1 = input("Enter Activation function for hidden layers [Relu or Sigmoid]: ")
         print("Activation Function for hidden layers entered : " + activation_1)
         if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid"):
             repeat1 = 1
+        if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid")==False:
+            print("Please enter the correct input")
     repeat1 = 0
     while (repeat1 ==0):
         reg = input("Want to implement L1 Regression in the Model [y/n]: ")
         print("String entered for L1 Regression : " + reg)
         if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes"):
             repeat1 =1
+        if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes")==False:
+            print("Please enter the correct input")
 
     repeat1 = 0
     while (repeat1 ==0):
@@ -1031,6 +1124,8 @@ def NN_2_layers():
         print("String entered for decaying learning rate : " + decay)
         if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
             repeat1 =1
+        if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes")==False:
+            print("Please enter the correct input")
 
     #repeat1 = 0
     #while (repeat1 ==0):
@@ -1046,15 +1141,32 @@ def NN_2_layers():
         print("Optimizer Entered : " + optimizer)
         if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ):
             repeat1 =1
+        if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  )==False:
+            print("Please enter the correct input")
 
-    epoch = input("Enter Number of Epochs for training the model: ")
-    print("Epoch value Entered : ",epoch)
+    #epoch = input("Enter Number of Epochs for training the model: ")
+    #print("Epoch value Entered : ",epoch)
+    #epoch = int(epoch)
+    repeat1 = 0
+    while (repeat1 ==0):
+        epoch = input("Enter Number of Epochs for training the model: ")
+        if( epoch.isdigit()):
+            print("Epoch value Entered : ",epoch)
+            repeat1 =1
+        if( epoch.isdigit())==False:
+            print("Please enter the correct input")
+        
+    #epoch = input("Enter Number of Epochs for training the model: ")
+    #print("Epoch value Entered : ",epoch)
     epoch = int(epoch)
-
 
     print("\n      Model with 2 hidden layer with 64 Neuron each is under training\n")
 
+
     print("Value of hyper parameters used in the model during training")
+    print("Batch size = 4 ")
+    print("Neurons in 1st Hidden layer = 64 ")
+    print("Neurons in 2nd Hidden layer = 64 ")
     print("Learning rate = 0.001 ")
     print("Momentum parameter [beta] = 0.9 ")
     print("Regression parameter [alpha] = 0.00001 ")
@@ -1385,24 +1497,111 @@ def NN_2_layers():
     return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string, epoch 
 
 
-def NN_1_layers_test(weights_1,baises_1,weights_2,baises_2,a,b):
+def NN_1_layers_test(weights_1,baises_1,weights_2,baises_2,a,b, activation_1,reg,decay,optimizer ):
 
     batch_size = 4
     hidden_layer_1 = 64
     #hidden_layer_2 = 16
     num = 1
     #layers = input("Number of Hidden layers in Model: ")
-    activation_1 = input("Activation Function for Hidden layer: ")
+    #activation_1 = input("Activation Function for Hidden layer: ")
 
     #Normal = input("Want to implement simple normalization or Normalizied Normalization : ")
     #initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
 
-    reg = input("Want to implement L1 Regression: ")
-    decay = input("Want to implement Decay learning rate: ")
+    #reg = input("Want to implement L1 Regression: ")
+    #decay = input("Want to implement Decay learning rate: ")
     #dropout = input("Want to implement Dropout: ")
     dropout = "n"
 
-    optimizer = input("Type of Optimizer want to use: ")
+    #optimizer = input("Type of Optimizer want to use: ")
+
+
+    
+#repeat1 =0
+#    while(repeat1 ==0):
+#        Normal = input("Enter type of normalization for Data [Simple or Normal]: ")
+#        print("Normalization entered : " + Normal)
+#        if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal"):
+#           repeat1 = 1
+#    repeat1 = 0
+
+#    while(repeat1 ==0):
+#        initial = input("Enter function for Weights value initialization [Gauss or Xavier]: ")
+#        print("Weight Intialixation entered : " + initial)
+#        if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier"):
+#            repeat1 = 1
+    #repeat1 =0
+
+    #while(repeat1 ==0):
+    #    activation_1 = input("Enter Activation function for hidden layers [Relu or Sigmoid]: ")
+    #    print("Activation Function for hidden layers entered : " + activation_1)
+    #    if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid"):
+    #        repeat1 = 1
+    #    if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid") == False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    reg = input("Want to implement L1 Regression in the Model [y/n]: ")
+    #    print("String entered for L1 Regression : " + reg)
+    #    if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes"):
+    #        repeat1 =1
+    #    if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes")==False:
+    #        print("Please enter the correct input")
+
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    decay = input("Want to implement decaying learning rate [y/n]: ")
+    #    print("String entered for decaying learning rate : " + decay)
+    #    if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
+    #        repeat1 =1
+    #    if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes")==False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    dropout = input("Want to implement Dropout[y/n]: ")
+    #    print("String entered for dropout : " + dropout)
+    #    if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
+    #        repeat1 =1
+    #dropout ="n"
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    optimizer = input("Enter type of Optimizer want to use to train the model [SGD or Momentum]: ")
+    #    print("Optimizer Entered : " + optimizer)
+    #    if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ):
+    #        repeat1 =1
+    #    if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ) ==False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    epoch = input("Enter Number of Epochs for training the model: ")
+    #    if( epoch.isdigit()):
+    #        print("Epoch value Entered : ",epoch)
+    #        repeat1 =1
+    #    if( epoch.isdigit())==False:
+    #        print("Please enter the correct input")
+    #    
+    #epoch = input("Enter Number of Epochs for training the model: ")
+    #print("Epoch value Entered : ",epoch)
+    #epoch = int(epoch)
+
+
+    print("\n      Model with 1 hidden layer with 10 Neurons is under test training\n")
+    
+    print("Value of hyper parameters used in the model during training")
+    print("Epoch for selected for test run is 5.")
+    print("Batch size = 4 ")
+    print("Neurons in Hidden layer = 10 ")
+    #print("Neurons in 2nd Hidden layer = 10 ")
+    print("Learning rate = 0.001 ")
+    print("Momentum parameter [beta] = 0.9 ")
+    print("Regression parameter [alpha] = 0.00001 ")
+    print("Decay rate = 0.98")
 
     #a,b,c,d,e,f = Data_pre_processing(Normal)
     #cost_train = []
@@ -1709,25 +1908,35 @@ def NN_1_layers():
         print("Normalization entered : " + Normal)
         if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal"):
             repeat1 = 1
+        if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal") == False:
+            print("Please enter the correct input")
     repeat1 = 0
 
     while(repeat1 ==0):
         initial = input("Enter function for Weights value initialization [Gauss or Xavier]: ")
-        print("Weight Intialixation entered : " + initial)
+        print("Weight Intialization entered : " + initial)
         if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier"):
             repeat1 = 1
+        if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier")== False:
+            print("Please enter the correct input")
+
     repeat1 =0
     while(repeat1 ==0):
         activation_1 = input("Enter Activation function for hidden layers [Relu or Sigmoid]: ")
         print("Activation Function for hidden layers entered : " + activation_1)
         if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid"):
             repeat1 = 1
+        if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid")==False:
+            print("Please enter the correct input")
     repeat1 = 0
     while (repeat1 ==0):
         reg = input("Want to implement L1 Regression in the Model [y/n]: ")
         print("String entered for L1 Regression : " + reg)
         if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes"):
             repeat1 =1
+        if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes")==False:
+            print("Please enter the correct input")
+            
 
     repeat1 = 0
     while (repeat1 ==0):
@@ -1735,6 +1944,8 @@ def NN_1_layers():
         print("String entered for decaying learning rate : " + decay)
         if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
             repeat1 =1
+        if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes")==False:
+            print("Please enter the correct input")
 
     #repeat1 = 0
     #while (repeat1 ==0):
@@ -1750,14 +1961,24 @@ def NN_1_layers():
         print("Optimizer Entered : " + optimizer)
         if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ):
             repeat1 =1
+        if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  )==False:
+            print("Please enter the correct input")
 
-    epoch = input("Enter Number of Epochs for training the model: ")
-    print("Epoch value Entered : ",epoch)
+    repeat1 = 0
+    while (repeat1 ==0):
+        epoch = input("Enter Number of Epochs for training the model: ")
+        if( epoch.isdigit()):
+            print("Epoch value Entered : ",epoch)
+            repeat1 =1
+        if( epoch.isdigit())==False:
+            print("Please enter the correct input")
     epoch = int(epoch)
 
-    print("\n        Model with 1 hidden layer with 64 Neuron is under training\n")
+    print("\n         Model with 1 hidden layer with 64 Neuron is under training\n")
 
     print("Value of hyper parameters used in the model during training")
+    print("Batch size = 4 ")
+    print("Neurons in Hidden layer = 64 ")
     print("Learning rate = 0.001 ")
     print("Momentum parameter [beta] = 0.9 ")
     print("Regression parameter [alpha] = 0.00001 ")
@@ -2053,7 +2274,7 @@ def NN_1_layers():
 
     return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string,epoch
 
-def NN_0_layers_test(weights_1,baises_1,a,b):
+def NN_0_layers_test(weights_1,baises_1,a,b,activation_1,reg,decay,optimizer ):
     batch_size = 4
     #hidden_layer_1 = 64
     #hidden_layer_2 = 16
@@ -2067,12 +2288,87 @@ def NN_0_layers_test(weights_1,baises_1,a,b):
     #initial = input("Want to implement Gaussioan distribution or Xavier Initialization : ")
     num = 0
 
-    reg = input("Want to implement L1 Regression: ")
-    decay = input("Want to implement Decay learning rate: ")
+    #reg = input("Want to implement L1 Regression: ")
+    #decay = input("Want to implement Decay learning rate: ")
     #dropout = input("Want to implement Dropout: ")
     dropout = "n"
-    optimizer = input("Type of Optimizer want to use: ")
+    #optimizer = input("Type of Optimizer want to use: ")
     #prob = 0.8
+
+
+
+    #repeat1 =0
+
+    #while(repeat1 ==0):
+    #    activation_1 = input("Enter Activation function for hidden layers [Relu or Sigmoid]: ")
+    #    print("Activation Function for hidden layers entered : " + activation_1)
+    #    if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid"):
+    #        repeat1 = 1
+    #    if (activation_1 == "Relu" or activation_1 == "relu" or activation_1 == "Sigmoid" or activation_1 == "sigmoid") == False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #hile (repeat1 ==0):
+    #    reg = input("Want to implement L1 Regression in the Model [y/n]: ")
+    #    print("String entered for L1 Regression : " + reg)
+    #    if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes"):
+    #       repeat1 =1
+    #    if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes")==False:
+    #        print("Please enter the correct input")
+
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    decay = input("Want to implement decaying learning rate [y/n]: ")
+    #    print("String entered for decaying learning rate : " + decay)
+    #    if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
+    #        repeat1 =1
+    #    if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes")==False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    dropout = input("Want to implement Dropout[y/n]: ")
+    #    print("String entered for dropout : " + dropout)
+    #    if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
+    #        repeat1 =1
+    #dropout ="n"
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    optimizer = input("Enter type of Optimizer want to use to train the model [SGD or Momentum]: ")
+    #    print("Optimizer Entered : " + optimizer)
+    #    if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ):
+    #        repeat1 =1
+    #    if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ) ==False:
+    #        print("Please enter the correct input")
+
+    #repeat1 = 0
+    #while (repeat1 ==0):
+    #    epoch = input("Enter Number of Epochs for training the model: ")
+    #    if( epoch.isdigit()):
+    #        print("Epoch value Entered : ",epoch)
+    #        repeat1 =1
+    #    if( epoch.isdigit())==False:
+    #        print("Please enter the correct input")
+    #    
+    #epoch = input("Enter Number of Epochs for training the model: ")
+    #print("Epoch value Entered : ",epoch)
+    #epoch = int(epoch)
+
+
+    print("\n      Model with no hidden layer is under test training\n")
+    
+    print("Value of hyper parameters used in the model during training")
+    print("Epoch for selected for test run is 5.")
+    print("Batch size = 4 ")
+    #print("Neurons in 1st Hidden layer = 10 ")
+    #print("Neurons in 2nd Hidden layer = 10 ")
+    print("Learning rate = 0.001 ")
+    print("Momentum parameter [beta] = 0.9 ")
+    print("Regression parameter [alpha] = 0.00001 ")
+    print("Decay rate = 0.98")
+
 
     #a,b,c,d,e,f = Data_pre_processing(Normal)
 
@@ -2243,7 +2539,7 @@ def NN_0_layers():
     batch_size = 4
     #hidden_layer_1 = 64
     #hidden_layer_2 = 16
-
+    num=0
     #layers = input("Number of Hidden layers in Model: ")
     #activation_1 = input("Activation Function for 1st Hidden layer: ")
     #activation_2 = input("Activation Function for 2nd Hidden layer: ")
@@ -2254,6 +2550,8 @@ def NN_0_layers():
         print("Normalization entered : " + Normal)
         if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal"):
             repeat1 = 1
+        if (Normal=="Simple" or Normal=="simple" or Normal=="Normal" or Normal=="normal") ==False:
+            print("Please enter correct input")
     repeat1 = 0
 
     while(repeat1 ==0):
@@ -2261,6 +2559,8 @@ def NN_0_layers():
         print("Weight Intialixation entered : " + initial)
         if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier"):
             repeat1 = 1
+        if (initial == "Gauss" or initial == "gauss" or initial == "Xavier" or initial == "xavier") ==False:
+            print("Please enter correct input")
     repeat1 =0
     #while(repeat1 ==0):
     #    activation_1 = input("Enter Activation function for hidden layers [Relu or Sigmoid]: ")
@@ -2275,6 +2575,8 @@ def NN_0_layers():
         print("String entered for L1 Regression : " + reg)
         if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes"):
             repeat1 =1
+        if (reg == "Y" or reg =="N" or reg =="No" or reg =="Yes" or reg =="n" or reg =="y" or reg =="no" or reg =="yes") ==False:
+            print("Please enter correct input")
 
     repeat1 = 0
     while (repeat1 ==0):
@@ -2282,6 +2584,8 @@ def NN_0_layers():
         print("String entered for decaying learning rate : " + decay)
         if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes"):
             repeat1 =1
+        if (decay == "Y" or decay =="N" or decay =="No" or decay =="Yes" or decay =="n" or decay =="y" or decay =="no" or decay =="yes")==False:
+            print("Please enter correct input")
 
 
 
@@ -2291,7 +2595,7 @@ def NN_0_layers():
     #    print("String entered for dropout : " + dropout)
     #    if (dropout == "Y" or dropout =="N" or dropout =="No" or dropout =="Yes" or dropout =="n" or dropout =="y" or dropout =="no" or dropout =="yes"):
     #        repeat1 =1
-    dropout = "no"
+    dropout = "n"
 
     repeat1 = 0
     while (repeat1 ==0):
@@ -2299,15 +2603,26 @@ def NN_0_layers():
         print("Optimizer Entered : " + optimizer)
         if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  ):
             repeat1 =1
-
-    epoch = input("Enter Number of Epochs for training the model: ")
-    print("Epoch value Entered : ",epoch)
+        if (optimizer =="sgd" or optimizer =="SGD" or optimizer =="Momentum" or optimizer =="momentum"  )==False:
+            print("Please enter correct input")
+    repeat1 = 0
+    while (repeat1 ==0):
+        epoch = input("Enter Number of Epochs for training the model: ")
+        print("Epoch value Entered : ",epoch)
+        if (epoch.isdigit()):
+            repeat1 =1
+        if (epoch.isdigit())==False:
+            print("Please enter correct input")
+            
+        
+    
     epoch = int(epoch)
     #prob = 0.8
     print("\n          Model with 0 hidden layer is under training\n")
 
     print("Value of hyper parameters used in the model during training")
 
+    print("Batch size = 4 ")
     print("Learning rate = 0.001 ")
     print("Momentum parameter [beta] = 0.9 ")
     print("Regression parameter [alpha] = 0.00001 ")
@@ -2480,6 +2795,7 @@ def NN_0_layers():
     return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string,epoch 
 
 if __name__=='__main__':
+
     repeat =0
     while(repeat==0):
         layers = input("Enter Number of Hidden layers in Model[ 0 or 1 or 2 ]: ")
@@ -2515,6 +2831,7 @@ if __name__=='__main__':
     #plt.plot(x, y,"b", x, y1,"g", x, y2,"r")
     plt.legend()
     plt.show()
+    plt.savefig('Loss_Graph.png')
 
 
     z= acc_training
@@ -2530,6 +2847,7 @@ if __name__=='__main__':
     plt.ylabel('Accuracy')
 
     plt.title('Accuracy Graph')
+    
 
     plt.plot(x, z,"b", label='Training Accuracy')
     plt.plot(x, z1,"g", label='Validation Accuracy')
@@ -2537,6 +2855,7 @@ if __name__=='__main__':
     #plt.plot(x, z,"b", x, z1,"g", x, z2,"r")
     plt.legend()
     plt.show()
+    plt.savefig('Accuracy_Graph.png')
 
     l = learning_rate_list
 
@@ -2548,3 +2867,4 @@ if __name__=='__main__':
     plt.plot(x, l,"b", label='Learning rate')
     plt.legend()
     plt.show()
+    plt.savefig('Learning_rate_Graph.png')
