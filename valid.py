@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 
 def relu_activation_test():
 
+    print("Function relu actuvation is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet1')
     #prob = 0.8
@@ -27,6 +29,8 @@ def relu_activation_test():
     return None
 
 def relu_activation_back_test():
+
+    print("Function relu actuvation backward is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet2')
@@ -55,6 +59,8 @@ def relu_activation_back_test():
 
 def sigmoid_activation_test():
 
+    print("Function sigmoid actuvation is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet3')
     #prob = 0.8
@@ -80,6 +86,7 @@ def sigmoid_activation_test():
     return None
 
 def sigmoid_activation_back_test():
+    print("Function sigmoid actuvation backward is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet4')
@@ -116,6 +123,7 @@ def sigmoid_activation_back_test():
     return None
 
 def SGD_optimizer_test_for_2_layers():
+    print("Function Two optimizer zero hidden layer is under testing")
     learning_rate = 0.001
     num=2
 
@@ -212,6 +220,8 @@ def SGD_optimizer_test_for_2_layers():
     return None
 
 def SGD_optimizer_test_for_1_layers():
+
+    print("Function SGD optimizer one hidden layer is under testing")
     learning_rate = 0.001
     num =1
 
@@ -308,6 +318,7 @@ def SGD_optimizer_test_for_1_layers():
     return None
 
 def SGD_optimizer_test_for_0_layers():
+    print("Function SGD optimizer zero hidden layer is under testing")
     learning_rate = 0.001
     num =0
 
@@ -404,6 +415,8 @@ def SGD_optimizer_test_for_0_layers():
     return None
 
 def Momentum_optimizer_test_for_2_layers():
+
+    print("Function Momentum optimizer two hidden layer is under testing")
     learning_rate = 0.001
     beta = 0.9
     num = 2
@@ -545,6 +558,8 @@ def Momentum_optimizer_test_for_2_layers():
     return None
 
 def Momentum_optimizer_test_for_1_layers():
+
+    print("Function Momentum optimizer 1 hidden layer is under testing")
     learning_rate = 0.001
     beta = 0.9
     num = 1
@@ -686,6 +701,8 @@ def Momentum_optimizer_test_for_1_layers():
     return None
 
 def Momentum_optimizer_test_for_0_layers():
+
+    print("Function Momentum optimizer zero hidden layer is under testing")
     learning_rate = 0.001
     beta = 0.9
     num = 0
@@ -827,6 +844,8 @@ def Momentum_optimizer_test_for_0_layers():
     return None
 
 def reg_loss_test_2_layers():
+
+    print("Function reg_loss_for two hidden layer is under testing")
     num = 2
     alpha  = 0.00001
     data = xlrd.open_workbook('valid_excel.xlsx')
@@ -869,6 +888,8 @@ def reg_loss_test_2_layers():
     return None
 
 def reg_loss_test_1_layers():
+
+    print("Function reg_loss_for one hidden layer is under testing")
     num = 1
     alpha  = 0.00001
     data = xlrd.open_workbook('valid_excel.xlsx')
@@ -911,6 +932,8 @@ def reg_loss_test_1_layers():
     return None
 
 def reg_loss_test_0_layers():
+
+    print("Function reg_loss_for zero hidden layer is under testing")
     num = 0
     alpha  = 0.00001
     data = xlrd.open_workbook('valid_excel.xlsx')
@@ -953,6 +976,8 @@ def reg_loss_test_0_layers():
     return None  
 
 def learning_rate_decay_test():
+
+    print("Function learning_rate_decay is under testing")
     #learning_rate  = 0.001
     #decay = 0.95
     data = xlrd.open_workbook('valid_excel.xlsx')
@@ -974,6 +999,8 @@ def learning_rate_decay_test():
 
 
 def Normal_normalization_test():
+
+    print("Function Normal_normalization is under testing"
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet9')
@@ -1015,6 +1042,8 @@ def Normal_normalization_test():
     
 def Simple_normalization_test():
 
+    print("Function Simple_normalization is under testing"
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet10')
     #prob = 0.8
@@ -1054,6 +1083,7 @@ def Simple_normalization_test():
     return None
 
 def Gaussian_initialization_test():
+    print("Function Gaussian_initialization is under testing"
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet11')
@@ -1095,6 +1125,7 @@ def Gaussian_initialization_test():
 
 
 def Xavier_initialization_test():
+    print("Function Xavier_initialization is under testing"
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet12')
@@ -1135,6 +1166,7 @@ def Xavier_initialization_test():
     return None
 
 def dropout_forward_test():
+    print("Function dropout forward under testing"
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet13')
@@ -1159,6 +1191,8 @@ def dropout_forward_test():
     return None
 
 def Loss_function_with_reg_2_layer_test():
+
+    print("Function Loss function for 2 hidden layer with reggresion is under testing"
     num = 2
     alpha  = 0.00001
     reg = "y"
@@ -1209,6 +1243,8 @@ def Loss_function_with_reg_2_layer_test():
 
 
 def Loss_function_with_reg_1_layer_test():
+
+    print("Function Loss function for 1 hidden layer with reggresion is under testing"
 
     num = 1
     alpha  = 0.00001
@@ -1309,6 +1345,7 @@ def Loss_function_with_reg_0_layer_test():
     return None
 
 def Loss_function_with_no_reg_test():
+    print("Function Loss function with no reggresion is under testing")
     num=2
 
     alpha  = 0.00001
@@ -1359,6 +1396,8 @@ def Loss_function_with_no_reg_test():
     return None
 
 def forward_prop_for_loss_with_reg_with_relu_test():
+
+    print("Function forward_prop_for_loss for 2 hidden layer with relu activation with reggresion is under testing")
 
     num=2
     alpha = 0.00001
@@ -1431,6 +1470,8 @@ def forward_prop_for_loss_with_reg_with_relu_test():
 
 
 def forward_prop_for_loss_with_no_reg_with_relu_test():
+
+    print("Function forward_prop_for_loss for 2 hidden layer with relu activation with no reggresion is under testing")
     num =2
 
     alpha = 0.00001
@@ -1501,6 +1542,8 @@ def forward_prop_for_loss_with_no_reg_with_relu_test():
     return None
 
 def forward_prop_for_loss_with_reg_with_sigmoid_test():
+
+    print("Function forward_prop_for_loss for 2 hidden layer with sigmoid activation with reggresion is under testing")
     num=2
     alpha = 0.00001
     dropout = "n"
@@ -1570,6 +1613,9 @@ def forward_prop_for_loss_with_reg_with_sigmoid_test():
     return None
 
 def forward_prop_for_loss_with_no_reg_with_sigmoid_test():
+    
+    print("Function forward_prop_for_loss for 2 hidden layer with sigmoid activation with no reggresion is under testing")
+    
     num =2
 
     alpha = 0.00001
@@ -1641,6 +1687,8 @@ def forward_prop_for_loss_with_no_reg_with_sigmoid_test():
 
 def forward_prop_for_loss_with_reg_with_relu_layer_1_test():
 
+    print("Function forward_prop_for_loss for 1 hidden layer with relu activation with reggresion is under testing")
+
     num=1
     alpha = 0.00001
     dropout = "n"
@@ -1711,6 +1759,7 @@ def forward_prop_for_loss_with_reg_with_relu_layer_1_test():
 
 
 def forward_prop_for_loss_with_no_reg_with_relu_layer_1_test():
+    print("Function forward_prop_for_loss for 1 hidden layer with relu activation with no reggresion is under testing")
     num =1
 
     alpha = 0.00001
@@ -1781,6 +1830,7 @@ def forward_prop_for_loss_with_no_reg_with_relu_layer_1_test():
     return None
 
 def forward_prop_for_loss_with_reg_with_sigmoid_layer_1_test():
+    print("Function forward_prop_for_loss for 1 hidden layer with sigmoid activation with reggresion is under testing")
     num=1
     alpha = 0.00001
     dropout = "n"
@@ -1850,6 +1900,7 @@ def forward_prop_for_loss_with_reg_with_sigmoid_layer_1_test():
     return None
 
 def forward_prop_for_loss_with_no_reg_with_sigmoid_layer_1_test():
+    print("Function forward_prop_for_loss for 1 hidden layer with sigmoid activation with no reggresion is under testing")
     num =1
 
     alpha = 0.00001
@@ -1920,6 +1971,7 @@ def forward_prop_for_loss_with_no_reg_with_sigmoid_layer_1_test():
     return None
 
 def forward_prop_for_loss_with_reg_layer_0_test():
+    print("Function forward_prop_for_loss for zero hidden layer with reggresion is under testing")
 
     num=0
     alpha = 0.00001
@@ -1992,6 +2044,7 @@ def forward_prop_for_loss_with_reg_layer_0_test():
 
 
 def forward_prop_for_loss_with_no_reg_layer_0_test():
+    print("Function forward_prop_for_loss for zero hidden layer with no reggresion is under testing")
     num =0
 
     alpha = 0.00001
@@ -2063,6 +2116,8 @@ def forward_prop_for_loss_with_no_reg_layer_0_test():
 
 
 def Accuracy_with_relu_test():
+
+    print("Function Accuracy for 2 hidden layer and relu activation is under testing")
     num =2
 
     #alpha = 0.00001
@@ -2133,6 +2188,8 @@ def Accuracy_with_relu_test():
     return None
 
 def Accuracy_with_sigmoid_test():
+
+    print("Function Accuracy for 2 hidden layer and sigmoid activation is under testing")
     num =2
 
     #alpha = 0.00001
@@ -2204,6 +2261,8 @@ def Accuracy_with_sigmoid_test():
 
 def Accuracy_with_relu_layer_1_test():
 
+    print("Function Accuracy for 1 hidden layer and relu activation is under testing")
+
     num =1
     #alpha = 0.00001
     #dropout = "n"
@@ -2273,6 +2332,8 @@ def Accuracy_with_relu_layer_1_test():
     return None
 
 def Accuracy_with_sigmoid_layer_1_test():
+
+    print("Function Accuracy for 1 hidden layer and sigmoid activation is under testing")
     num =1
 
     #alpha = 0.00001
@@ -2342,6 +2403,8 @@ def Accuracy_with_sigmoid_layer_1_test():
         
     return None
 def Accuracy_with_layer_0_test():
+
+    print("Function Accuracy for zero hidden layer model is under testing")
     num =0
 
     #alpha = 0.00001
@@ -2412,6 +2475,8 @@ def Accuracy_with_layer_0_test():
     return None
 
 def Data_pre_processing_test():
+
+    print("Function Data pre= processing is under testing")
     #alpha = 0.00001
     #dropout = "n"
     #prob = 0.8
@@ -2449,11 +2514,17 @@ def Data_pre_processing_test():
 
 def layer_2_relu_test():
 
+    print("Function with 2 hidden layer with relu activation with SGD optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet19')
     data_sheet1 = data.sheet_by_name('Sheet23')
     data_sheet2 = data.sheet_by_name('Sheet24')
     #prob = 0.8
+    activation_1 = "relu"
+    reg = "n"
+    decay = "n"
+    optimizer = "sgd"
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
     #print(total_rows)
@@ -2509,7 +2580,7 @@ def layer_2_relu_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, activation_1,reg,decay,optimizer )
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -2544,10 +2615,16 @@ def layer_2_relu_test():
 
 def layer_1_relu_test():
 
+    print("Function with 1 hidden layer with relu activation with SGD optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet49')
     data_sheet1 = data.sheet_by_name('Sheet53')
     data_sheet2 = data.sheet_by_name('Sheet54')
+    activation_1 = "relu"
+    reg = "n"
+    decay = "n"
+    optimizer = "sgd"
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
@@ -2604,7 +2681,7 @@ def layer_1_relu_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -2639,6 +2716,8 @@ def layer_1_relu_test():
 
 def layer_0_test():
 
+    print("Function with zero hidden layer with SGD optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet79')
     data_sheet1 = data.sheet_by_name('Sheet83')
@@ -2646,6 +2725,10 @@ def layer_0_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "n"
+    reg = "n"
+    decay = "n"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -2699,7 +2782,7 @@ def layer_0_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array,activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -2735,10 +2818,16 @@ def layer_0_test():
 
 def layer_2_sigmoid_test():
 
+    print("Function with 2 hidden layer with Sigmoid activation with SGD optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet25')
     data_sheet1 = data.sheet_by_name('Sheet29')
     data_sheet2 = data.sheet_by_name('Sheet30')
+    activation_1 = "sigmoid"
+    reg = "n"
+    decay = "n"
+    optimizer = "sgd"
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
@@ -2795,7 +2884,7 @@ def layer_2_sigmoid_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -2830,6 +2919,8 @@ def layer_2_sigmoid_test():
 
 def layer_1_sigmoid_test():
 
+    print("Function with 1 hidden layer with Sigmoid activation with SGD optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet55')
     data_sheet1 = data.sheet_by_name('Sheet59')
@@ -2837,6 +2928,10 @@ def layer_1_sigmoid_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "sigmoid"
+    reg = "n"
+    decay = "n"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -2890,7 +2985,7 @@ def layer_1_sigmoid_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -2925,6 +3020,8 @@ def layer_1_sigmoid_test():
 
 def layer_2_momentum_opt_test():
 
+    print("Function with 2 hidden layer with relu activation with Momentum optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet31')
     data_sheet1 = data.sheet_by_name('Sheet35')
@@ -2932,6 +3029,10 @@ def layer_2_momentum_opt_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "relu"
+    reg = "n"
+    decay = "n"
+    optimizer = "momentum"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -2989,7 +3090,7 @@ def layer_2_momentum_opt_test():
     #print(input_baises_2)
     #print(input_baises_3)
     
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,3)
     #print(result_weights_1)
@@ -3053,6 +3154,8 @@ def layer_2_momentum_opt_test():
 
 def layer_1_momentum_opt_test():
 
+    print("Function with 1 hidden layer with relu activation with Momentum optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet61')
     data_sheet1 = data.sheet_by_name('Sheet65')
@@ -3060,6 +3163,11 @@ def layer_1_momentum_opt_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+
+    activation_1 = "relu"
+    reg = "n"
+    decay = "n"
+    optimizer = "momentum"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3113,7 +3221,7 @@ def layer_1_momentum_opt_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,3)
     output_weights_1 = np.round(output_weights_1, 3)
@@ -3148,6 +3256,8 @@ def layer_1_momentum_opt_test():
 
 def layer_0_momentum_opt_test():
 
+    print("Function with zero hidden layer with Momentum optimizer with no reggression with no decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet85')
     data_sheet1 = data.sheet_by_name('Sheet89')
@@ -3155,6 +3265,10 @@ def layer_0_momentum_opt_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "no"
+    reg = "n"
+    decay = "n"
+    optimizer = "momentum"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3208,7 +3322,7 @@ def layer_0_momentum_opt_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,3)
     output_weights_1 = np.round(output_weights_1, 3)
@@ -3243,6 +3357,8 @@ def layer_0_momentum_opt_test():
 
 def layer_2_with_learning_rate_decay_test():
 
+    print("Function with 2 hidden layer with Relu activation with SGD optimizer with no reggression with decaying learning rate is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet37')
     data_sheet1 = data.sheet_by_name('Sheet41')
@@ -3250,6 +3366,10 @@ def layer_2_with_learning_rate_decay_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "relu"
+    reg = "n"
+    decay = "y"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3303,7 +3423,7 @@ def layer_2_with_learning_rate_decay_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -3338,6 +3458,7 @@ def layer_2_with_learning_rate_decay_test():
 
 
 def layer_1_learning_rate_decay_test():
+    print("Function with 1 hidden layer with Relu activation with SGD optimizer with no reggression with decaying learning rate is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet67')
@@ -3346,6 +3467,10 @@ def layer_1_learning_rate_decay_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "relu"
+    reg = "n"
+    decay = "y"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3399,7 +3524,7 @@ def layer_1_learning_rate_decay_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -3433,6 +3558,7 @@ def layer_1_learning_rate_decay_test():
     return None
 
 def layer_0_learning_rate_decay_test():
+    print("Function with zero hidden layer with SGD optimizer with no reggression with decaying learning rate is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet91')
@@ -3441,6 +3567,10 @@ def layer_0_learning_rate_decay_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "no"
+    reg = "n"
+    decay = "y"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3494,7 +3624,7 @@ def layer_0_learning_rate_decay_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -3528,7 +3658,7 @@ def layer_0_learning_rate_decay_test():
     return None
 
 def layer_2_with_reg_test():
-
+    print("Function with 2 hidden layer relu activation with SGD optimizer with reggresion with no learning rate decay is under testing")
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet43')
     data_sheet1 = data.sheet_by_name('Sheet47')
@@ -3536,6 +3666,10 @@ def layer_2_with_reg_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "relu"
+    reg = "y"
+    decay = "n"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3589,7 +3723,7 @@ def layer_2_with_reg_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_weights_3,result_baises_3,result_loss, result_accuracy = NN_2_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2,input_weights_3,input_baises_3, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -3623,6 +3757,7 @@ def layer_2_with_reg_test():
         return None
 
 def layer_1_with_reg_test():
+    print("Function with 1 hidden layer relu activation with SGD optimizer with reggresion with no learning rate decay is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet73')
@@ -3631,6 +3766,10 @@ def layer_1_with_reg_test():
     #prob = 0.8
     total_rows = data_sheet.nrows
     total_cols = data_sheet.ncols
+    activation_1 = "relu"
+    reg = "y"
+    decay = "n"
+    optimizer = "sgd"
     #print(total_rows)
     #print(total_cols)
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
@@ -3684,7 +3823,7 @@ def layer_1_with_reg_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_weights_2,result_baises_2,result_loss, result_accuracy = NN_1_layers_test(input_weights_1,input_baises_1,input_weights_2, input_baises_2, input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -3719,6 +3858,8 @@ def layer_1_with_reg_test():
 
 def layer_0_with_reg_test():
 
+    print("Function with zero hidden layer with SGD optimizer with reggresion with no learning rate decay is under testing")
+
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet97')
     data_sheet1 = data.sheet_by_name('Sheet101')
@@ -3728,6 +3869,10 @@ def layer_0_with_reg_test():
     total_cols = data_sheet.ncols
     #print(total_rows)
     #print(total_cols)
+    activation_1 = "no"
+    reg = "y"
+    decay = "n"
+    optimizer = "sgd"
     input_weights_1 = np.zeros((10,10),dtype = np.float32)
     #input_weights_2 = np.zeros((10,10),dtype = np.float32)
     #input_weights_3 = np.zeros((10,10),dtype = np.float32)
@@ -3779,7 +3924,7 @@ def layer_0_with_reg_test():
             input_image_array[j,i] = data_sheet.cell_value(i+6,j+2)
             input_label_array[j,i] = data_sheet.cell_value(i+6,j+63)
 
-    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array)
+    result_weights_1,result_baises_1,result_loss, result_accuracy = NN_0_layers_test(input_weights_1,input_baises_1,input_image_array, input_label_array, activation_1,reg,decay,optimizer)
 
     result_weights_1 = np.round(result_weights_1 ,4)
     output_weights_1 = np.round(output_weights_1, 4)
@@ -3812,4 +3957,170 @@ def layer_0_with_reg_test():
         print("Fuction tested not okay")
     return None
 if __name__=='__main__':
-    Accuracy_with_layer_0_test()
+    repeat =0
+    while(repeat==0):
+        digit = input("Enter the digit associated with the test function ")
+        #digit = int(digit)
+        if digit=="1":
+            relu_activation_test()
+            repeat =1
+        if digit=="2":
+            relu_activation_back_test()
+            repeat =1
+        if digit=="3":
+            sigmoid_activation_test()
+            repeat =1
+        if digit=="4":
+            sigmoid_activation_back_test()
+            repeat =1
+        if digit=="5":
+            SGD_optimizer_test_for_2_layers()
+            repeat =1
+        if digit=="6":
+            SGD_optimizer_test_for_1_layers()
+            repeat =1
+        if digit=="7":
+            SGD_optimizer_test_for_0_layers()
+            repeat =1
+        if digit=="8":
+            Momentum_optimizer_test_for_2_layers()
+            repeat =1
+        if digit=="9":
+            Momentum_optimizer_test_for_1_layers()
+            repeat =1
+        if digit=="10":
+            Momentum_optimizer_test_for_0_layers()
+            repeat =1
+        if digit=="11":
+            reg_loss_test_2_layers()
+            repeat =1
+        if digit=="12":
+            reg_loss_test_1_layers()
+            repeat =1
+        if digit=="13":
+            reg_loss_test_0_layers()
+            repeat =1
+        if digit=="14":
+            learning_rate_decay_test()
+            repeat =1
+        if digit=="15":
+            Normal_normalization_test()
+            repeat =1
+        if digit=="16":
+            Simple_normalization_test()
+            repeat =1
+        if digit=="17":
+            Gaussian_initialization_test()
+            repeat =1
+        if digit=="18":
+            Xavier_initialization_test()
+            repeat =1
+        if digit=="19":
+            Dropout_forward_test()
+            repeat =1
+        if digit=="20":
+            Loss_function_with_reg_2_layer_test()
+            repeat =1
+        if digit=="21":
+            Loss_function_with_reg_1_layer_test()
+            repeat =1
+        if digit=="22":
+            Loss_function_with_reg_0_layer_test()
+            repeat =1
+        if digit=="23":
+            Loss_function_with_no_reg_test()
+            repeat =1
+        if digit=="24":
+            Forward_prop_for_loss_with_relu_test()
+            repeat =1
+        if digit=="25":
+            Forward_prop_for_loss_no_reg_with_relu_test()
+            repeat =1
+        if digit=="26":
+            Forward_prop_for_loss_with_sigmoid_test()
+            repeat =1
+        if digit=="27":
+            Forward_prop_for_loss_no_reg_with_sigmoid_test()
+            repeat =1
+        if digit=="28":
+            Forward_prop_for_loss_with_reg_with_relu_layer_1_test()
+            repeat =1
+        if digit=="29":
+            Forward_prop_for_loss_with_no_reg_with_relu_layer_1_test()
+            repeat =1
+        if digit=="30":
+            Forward_prop_for_loss_with_reg_with_sigmoid_layer_1_test()
+            repeat =1
+        if digit=="31":
+            Forward_prop_for_loss_with_no_reg_with_sigmoid_layer_1_test()
+            repeat =1
+        if digit=="32":
+            Forward_prop_for_loss_with_reg_layer_0_test()
+            repeat =1
+        if digit=="33":
+            Forward_prop_for_loss_with_no_reg_layer_0_test()
+            repeat =1
+        if digit=="34":
+            Accuracy_with_relu_test()
+            repeat =1
+        if digit=="35":
+            Accuracy_with_sigmoid_test()
+            repeat =1
+        if digit=="36":
+            Accuracy_with_relu_layer_1_test()
+            repeat =1
+        if digit=="37":
+            Accuracy_with_sigmoid_layer_1_test()
+            repeat =1
+        if digit=="38":
+            Accuracy_with_layer_0_test()
+            repeat =1
+        if digit=="39":
+            Data_pre_processing_test()
+            repeat =1
+        if digit=="40":
+            layer_2_relu_test()
+            repeat =1
+        if digit=="41":
+            layer_1_relu_test()
+            repeat =1
+        if digit=="42":
+            layer_0_test()
+            repeat =1
+        if digit=="43":
+            layer_2_sigmoid_test()
+            repeat =1
+        if digit=="44":
+            layer_1_sigmoid_test()
+            repeat =1
+        if digit=="45":
+            layer_2_momentum_opt_test()
+            repeat =1
+        if digit=="46":
+            layer_1_momentum_opt_test()
+            repeat =1
+        if digit=="47":
+            layer_0_momentum_opt_test()
+            repeat =1
+        if digit=="48":
+            layer_2_with_learning_rate_decay_test()
+            repeat =1
+        if digit=="49":
+            layer_1_learning_rate_decay_test()
+            repeat =1
+        if digit=="50":
+            layer_0_learning_rate_decay_test()
+            repeat =1
+        if digit=="51":
+            layer_2_with_reg_test()
+            repeat =1
+        if digit=="52":
+            layer_1_with_reg_test()
+            repeat =1
+        if digit=="53":
+            layer_0_with_reg_test()
+            repeat =1
+        if (int(digit)>53 or int(digit)<1):
+            print("Please enter the correct input ")
+        if (digit.isdigit())==False:
+            print("Please enter the correct input ")
