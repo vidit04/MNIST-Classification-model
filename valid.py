@@ -123,7 +123,7 @@ def sigmoid_activation_back_test():
     return None
 
 def SGD_optimizer_test_for_2_layers():
-    print("Function Two optimizer zero hidden layer is under testing")
+    print("Function SGD optimizer 2 hidden layer is under testing")
     learning_rate = 0.001
     num=2
 
@@ -1000,7 +1000,7 @@ def learning_rate_decay_test():
 
 def Normal_normalization_test():
 
-    print("Function Normal_normalization is under testing"
+    print("Function Normal_normalization is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet9')
@@ -1042,7 +1042,7 @@ def Normal_normalization_test():
     
 def Simple_normalization_test():
 
-    print("Function Simple_normalization is under testing"
+    print("Function Simple_normalization is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet10')
@@ -1083,7 +1083,7 @@ def Simple_normalization_test():
     return None
 
 def Gaussian_initialization_test():
-    print("Function Gaussian_initialization is under testing"
+    print("Function Gaussian_initialization is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet11')
@@ -1125,7 +1125,7 @@ def Gaussian_initialization_test():
 
 
 def Xavier_initialization_test():
-    print("Function Xavier_initialization is under testing"
+    print("Function Xavier_initialization is under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet12')
@@ -1166,7 +1166,7 @@ def Xavier_initialization_test():
     return None
 
 def dropout_forward_test():
-    print("Function dropout forward under testing"
+    print("Function dropout forward under testing")
 
     data = xlrd.open_workbook('valid_excel.xlsx')
     data_sheet = data.sheet_by_name('Sheet13')
@@ -1192,7 +1192,7 @@ def dropout_forward_test():
 
 def Loss_function_with_reg_2_layer_test():
 
-    print("Function Loss function for 2 hidden layer with reggresion is under testing"
+    print("Loss function for 2 hidden layer with reggresion is under testing")
     num = 2
     alpha  = 0.00001
     reg = "y"
@@ -1244,7 +1244,7 @@ def Loss_function_with_reg_2_layer_test():
 
 def Loss_function_with_reg_1_layer_test():
 
-    print("Function Loss function for 1 hidden layer with reggresion is under testing"
+    print("Loss function for 1 hidden layer with reggresion is under testing")
 
     num = 1
     alpha  = 0.00001
@@ -1296,6 +1296,8 @@ def Loss_function_with_reg_1_layer_test():
 
 def Loss_function_with_reg_0_layer_test():
 
+    print("Loss function zero layer with reggresion is under testing")
+
     num = 0
     alpha  = 0.00001
     reg = "y"
@@ -1345,7 +1347,7 @@ def Loss_function_with_reg_0_layer_test():
     return None
 
 def Loss_function_with_no_reg_test():
-    print("Function Loss function with no reggresion is under testing")
+    print("Loss function with no reggresion is under testing")
     num=2
 
     alpha  = 0.00001
