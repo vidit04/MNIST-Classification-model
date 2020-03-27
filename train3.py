@@ -1,9 +1,31 @@
+#########################################################
+########                                        ######### 
+########                                        #########
+########  Code for Personal Programmin Project  #########
+########                                        #########
+########                                        ######### 
+#########################################################
+
 import numpy as np 
 import os
 import gzip
 import matplotlib.pyplot as plt
-from tqdm import tqdm
+from tqdm import tqdm   ##### Tqdm is the library help to create a progress bar during processing
 import csv
+
+###### Data Pre processing Function
+
+##### Function reads the MNIST dataset file
+##### Convert the train image data to array of [58000, 784]
+##### Convert the validation image data to array of [6000, 784]
+##### Convert the test image data to array of [6000,784]
+##### Convert train label to one hot coded array [58000, 10]
+##### Convert Validation label to one hot coded array [6000, 10]
+##### Convert test label to one hot coded array [6000, 10]
+
+
+##### Carry out normalization to the data. 
+
 
 def Data_pre_processing(Normal):
 
@@ -56,6 +78,11 @@ def Data_pre_processing(Normal):
     label_test = label_test.reshape(10000,1)
     #label_test = label_test[9999]
 
+    #image_test1 = image_test[4000:,:]
+    #label_test1 = label_test[4000:,:]
+    
+    #image_test = image_test[:4000,:]
+    #label_test = label_test[:4000,:]
     #print(label_test)
     #cv2.imshow('window_name', image_test)
     #cv2.waitKey(0)
@@ -67,14 +94,24 @@ def Data_pre_processing(Normal):
         position_test = label_test[i,:]
         one_hot_label_test[i,position_test] = 1.0
 
+
+
     #print(one_hot_label_test[9999,:])
+
     total_image  = np.concatenate((image_train, image_test), axis=0)
     total_labels = np.concatenate((one_hot_label_train,one_hot_label_test), axis=0)
+    
+    image_test1 = total_image[64000:,:]
+    label_test1 = total_labels[64000:,:]
 
-    perm = np.arange(total_image.shape[0])
-    np.random.shuffle(perm)
-    total_image = total_image[perm]
-    total_labels = total_labels[perm]
+    total_image = total_image[:64000,:]
+    total_label = total_labels[:64000,:]
+
+
+    s = np.arange(total_image.shape[0])
+    np.random.shuffle(s)
+    total_image = total_image[s]
+    total_labels = total_labels[s]
 
     image_train = total_image[:60000,:]
     image_test = total_image[60000:,:]
@@ -105,7 +142,8 @@ def Data_pre_processing(Normal):
         print("I am in normal")
 
     #print(len(image_train))
-    image_test = image_test[4000:,:]
+    #image_test = image_test[4000:,:]
+    image_test = image_test1
     image_test = image_test.astype('float32')
 
     if (Normal == "simple" or Normal == "Simple"):
@@ -123,10 +161,16 @@ def Data_pre_processing(Normal):
     #print(len(one_hot_label_valid))
     one_hot_label_train = one_hot_label_train[:58000,:]
     #print(len(one_hot_label_train))
-    one_hot_label_test = one_hot_label_test[4000:,:]
+    #one_hot_label_test = one_hot_label_test[4000:,:]
+    one_hot_label_test = label_test1
+
     #print(len(one_hot_label_test))
 
     return image_train, one_hot_label_train, image_valid, one_hot_label_valid, image_test, one_hot_label_test
+
+
+#### Normalization Function
+#### Covert the image data to normalizaed data with mean zero and standard deviation 1
 
 def Normal_normalization(image_array):
     mean  = np.mean(image_array)
@@ -136,9 +180,15 @@ def Normal_normalization(image_array):
     image_array = (image_array - mean)/std
     return image_array
 
+##### Simple Normalization
+##### Convert the image data into 0 to 1 by dividing each pixel by its maximum value
+
 def Simple_normalization(image_array):
     image_array = image_array / 255
     return image_array
+
+####### Gaussian Initialization
+####### Initaialize weights by gaussian algorithm with standard deviation 0.01
 
 def Gaussian_initialization(weights):
     row_weights = weights.shape[0]
@@ -149,6 +199,9 @@ def Gaussian_initialization(weights):
     #weights = 0.01 * weights
     return weights
 
+##### Xavier initialization
+##### Initialize  weights through Xavier initialization
+
 def Xavier_initialization(weights):
     row_weights = weights.shape[0]
     width_weights = weights.shape[1]
@@ -158,19 +211,34 @@ def Xavier_initialization(weights):
     #weights = weights * np.sqrt(1./row_weights)
     return weights
 
+##### Learning rate decay
+##### It reduces the learning rate by factor of 0.98 in very epoch
+
 def learning_rate_decay(learning_rate, decay_rate):
     learning_rate = learning_rate * decay_rate
     return learning_rate
 
+###### Save function
+###### it save the trained weigths and biases array in the end of training into the .csv file with the string which gives individual name to the each file.
+
 def save_fun(save_array, ext):
     np.savetxt( ext + '.csv', save_array, delimiter=',')
     #return None
+
+###### Save function list
+###### it save the loss history list,accuracy history list and test history list for run of no. of epochs of the model in the end of training into the .csv file with the string which gives individual name to the each file.
 
 def save_fun_list(save_list, ext):
     with open( ext + ".csv", 'w',newline = "") as f:
          riter= csv.writer(f)
          riter.writerow(save_list)
     #return None
+
+####### Dropout forward function 
+####### Dropout forward function carries out random cancelation
+####### of neurons during the training and increase the intensity
+####### of neurons by factor of probability 
+         
 
 def dropout_forward(array_Act, prob):
 
@@ -184,6 +252,17 @@ def dropout_forward(array_Act, prob):
     array_Act = array_Act/prob
     #print("I am in dropout")
     return array_Act
+
+######### Momentum Optimizer
+######### Momentum optimizer uses the mov weights and dloss_weights to update
+######### the weights in current training. This strategy is similar to create the
+######### uphill rolling down effect for the weights by adding momentum term to it.
+######### Momentum optimizer is more likely to achieve local minima of loss function
+######### then the SGD optimizer.
+
+######### momentum parameter beta = 0.9
+######### Learning rate = 0.001
+
 
 def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,mov_weights_1,mov_baises_1,mov_weights_2,mov_baises_2,mov_weights_3,mov_baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate, beta, num):
 
@@ -236,7 +315,10 @@ def Momentum_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,
         weights_1 = weights_1- learning_rate*mov_weights_1
         baises_1 = baises_1 - learning_rate*mov_baises_1
         return weights_1,baises_1,mov_weights_1,mov_baises_1
-
+###### SGD optimizer
+###### SGD optimizer updates weights and biases by using strategy by reducing
+###### weights and biases by multiplying dloss_dweights and dloss_dbiases by learning rate
+###### and then subtracting them with current weights and biases.    
 
 def SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss_dweights_1,dloss_dbaises_1,dloss_dweights_2,dloss_dbaises_2,dloss_dweights_3, dloss_dbaises_3, learning_rate,num):
 
@@ -268,6 +350,9 @@ def SGD_optimizer(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,dloss
         baises_1 = baises_1 - learning_rate*dloss_dbaises_1
         return weights_1,baises_1
 
+####### Sigmoid Activation function
+####### function convert the Z array into a sigmoid activated array
+####### of same dim
 
 def sigmoid_activation(array_Z_sigmoid):
     array_z_row = len(array_Z_sigmoid)
@@ -279,6 +364,10 @@ def sigmoid_activation(array_Z_sigmoid):
             array_A_sig[k,l] = 1/(1+np.exp(-array_Z_sigmoid[k,l]))
             
     return array_A_sig
+
+####### Sigmoid Backpropogation
+####### function retun back Z back propogation array when dloss_dA and Z array is
+####### pass to the function
 
 def sigmoid_activation_back(array_dloss_dA_sigmoid, array_Z_sigmoid_back):
     array_dloss_dA_row = len(array_dloss_dA_sigmoid)
@@ -296,6 +385,9 @@ def sigmoid_activation_back(array_dloss_dA_sigmoid, array_Z_sigmoid_back):
 
     return array_Z_back_sig
 
+####### Relu Activation function
+####### function convert the Z array into a Relu activated array
+####### of same dim
 
 def relu_activation(array_Z):
     array_z_row = len(array_Z)
@@ -311,6 +403,10 @@ def relu_activation(array_Z):
 
     return array_A
 
+####### Relu Backpropogation
+####### function retun back Z back propogation array for bacward relu when dloss_dA and Z array is
+####### pass to the function
+
 def relu_activation_back(array_dloss_dA, array_Z_relu_back):
     array_dloss_dA_row = len(array_dloss_dA)
     array_dloss_dA_col = len(array_dloss_dA[1])
@@ -324,6 +420,11 @@ def relu_activation_back(array_dloss_dA, array_Z_relu_back):
 
     return array_Z_back
 
+########### Regression Loss Function
+########### Regression Loss function return regression loss for the model
+########### reg loss = 1/2*alpha* ( w1^2 + w2^2 + w^3 )
+########### Reg parameter alpha = 0.00001 is used
+
 
 def reg_loss(weights_1,weights_2,weights_3, alpha,num):
 
@@ -336,7 +437,12 @@ def reg_loss(weights_1,weights_2,weights_3, alpha,num):
     if num == 0:
         reg_loss_0 = 0.5 * alpha * np.sum(weights_1*weights_1)
         return reg_loss_0
-    
+
+########  Cross Entropy Loss
+########  funtion retun final loss of the model
+########  Here we use multi class cross entropy function
+########  Loss = - true_y (log(pred_y))
+
 def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg , num):
     ##############################################
     ###### Loss
@@ -361,6 +467,11 @@ def Loss_function(pred_y,true_y,weights_1,weights_2,weights_3 ,alpha, reg , num)
         total_loss = total_loss + reg_loss_
 
     return total_loss
+
+######## Forward prop for loss
+######## function create the model to determine the pred_y array at end of epoch and
+######## in end call the loss function to calculate the loss value for test set
+######## validation set and training set 
 
 def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr, alpha ,reg, prob,activation_1,dropout, num):
 
@@ -475,7 +586,11 @@ def forward_prop_for_loss(weights_1,baises_1,weights_2, baises_2,weights_3,baise
         ###### Loss
         total_loss = Loss_function(A1,labels_arr,weights_1,weights_2,weights_3, alpha, reg, num)
         return total_loss
-        
+
+######## Accuracy function
+######## function create the model to determine the pred_y array at end of epoch and
+######## in end determine the accuracy for test set
+######## validation set and training set       
     
 def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_arr, labels_arr,activation_1, num):
 
@@ -620,8 +735,21 @@ def accuracy(weights_1,baises_1,weights_2, baises_2,weights_3,baises_3, image_ar
         acc  = s/length
 
         return acc #, total_loss
-        
 
+######### NN_2_layera_test function
+######### Creates the reduced down version of 2 hidden layer neural network
+######### function create the neural network of following architecture
+#########
+######### 10 neuron in input layer
+######### 10 neuron in 1st hidden layer
+######### 10 neuron in 2nd hidden layer
+######### 10 neuron in last layer
+#########
+######### Function called by verify.py inputs pre-defined weights and biases dim [10x10] and [10x1]
+######### predeined image array and label array dim [10x4] and [10x4]
+######### train the model for 5 epochs
+######### and finally check the weights and biases with th know weights and biases.
+    
 def NN_2_layers_test(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,a,b,activation_1,reg,decay,optimizer ):
 
     batch_size = 4
@@ -1076,6 +1204,27 @@ def NN_2_layers_test(weights_1,baises_1,weights_2,baises_2,weights_3,baises_3,a,
     return weights_1,baises_1,weights_2, baises_2,weights_3,baises_3,loss_train, acc_epoch_train
 
 
+######### NN_2_layers function
+######### Creates neural network of 2 hidden layers
+######### function create the neural network of following architecture
+#########
+######### 784 neuron in input layer
+######### 64 neuron in 1st hidden layer
+######### 64 neuron in 2nd hidden layer
+######### 10 neuron in last layer
+#########
+######### Function called by main and inputs pre-defined hyper parameters
+######### batch size = 4
+######### reg parameter (alpha) = 0.00001
+######### momentum parameter (beta) = 0.9
+######### learning rate = 0.001
+######### decay = 0.98
+#########
+######### train the model for specific number of epoch
+######### displays and saves the accuracy history graph, loss  history graph and learning rate history graph
+######### Finally saves the weights and biases , accuracy , loss, learning rate data in .csv file 
+
+
 def NN_2_layers():
 
     batch_size = 4
@@ -1496,6 +1645,19 @@ def NN_2_layers():
 
     return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string, epoch 
 
+######### NN_1_layera_test function
+######### Creates the reduced down version of 1 hidden layer neural network
+######### function create the neural network of following architecture
+#########
+######### 10 neuron in input layer
+######### 10 neuron in hidden layer
+######### 10 neuron in last layer
+#########
+######### Function called by verify.py inputs pre-defined weights and biases dim [10x10] and [10x1]
+######### predeined image array and label array dim [10x4] and [10x4]
+######### train the model for 5 epochs
+######### and finally check the weights and biases with th know weights and biases.
+
 
 def NN_1_layers_test(weights_1,baises_1,weights_2,baises_2,a,b, activation_1,reg,decay,optimizer ):
 
@@ -1894,6 +2056,25 @@ def NN_1_layers_test(weights_1,baises_1,weights_2,baises_2,a,b, activation_1,reg
 
     return weights_1,baises_1,weights_2, baises_2, loss_train, acc_epoch_train
 
+######### NN_1_layers function
+######### Creates neural network of 1 hidden layers
+######### function create the neural network of following architecture
+#########
+######### 784 neurons in input layer
+######### 64 neurons in hidden layer
+######### 10 neuron in last layer
+#########
+######### Function called by main and inputs pre-defined hyper parameters
+######### batch size = 4
+######### reg parameter (alpha) = 0.00001
+######### momentum parameter (beta) = 0.9
+######### learning rate = 0.001
+######### decay = 0.98
+#########
+######### train the model for specific number of epoch
+######### displays and saves the accuracy history graph, loss  history graph and learning rate history graph
+######### Finally saves the weights and biases , accuracy , loss, learning rate data in .csv file 
+
 def NN_1_layers():
 
     batch_size = 4
@@ -2274,6 +2455,18 @@ def NN_1_layers():
 
     return cost_train, cost_valid , cost_test, acc_training,acc_validation,acc_test ,learning_rate_list,string,epoch
 
+######### NN_0_layera_test function
+######### Creates the reduced down version of 0 hidden layer neural network
+######### function create the neural network of following architecture
+#########
+######### 10 neuron in input layer
+######### 10 neuron in last layer
+#########
+######### Function called by verify.py inputs pre-defined weights and biases dim [10x10] and [10x1]
+######### predeined image array and label array dim [10x4] and [10x4]
+######### train the model for 5 epochs
+######### and finally check the weights and biases with th know weights and biases.
+
 def NN_0_layers_test(weights_1,baises_1,a,b,activation_1,reg,decay,optimizer ):
     batch_size = 4
     #hidden_layer_1 = 64
@@ -2534,6 +2727,24 @@ def NN_0_layers_test(weights_1,baises_1,a,b,activation_1,reg,decay,optimizer ):
     #save_fun( baises_3, "Baises_3" + string)
     
     return weights_1,baises_1,loss_train, acc_epoch_train
+
+######### NN_0_layers function
+######### Creates neural network of 0 hidden layers
+######### function create the neural network of following architecture
+#########
+######### 784 neuron in input layer
+######### 10 neuron in last layer
+#########
+######### Function called by main and inputs pre-defined hyper parameters
+######### batch size = 4
+######### reg parameter (alpha) = 0.00001
+######### momentum parameter (beta) = 0.9
+######### learning rate = 0.001
+######### decay = 0.98
+#########
+######### train the model for specific number of epoch
+######### displays and saves the accuracy history graph, loss  history graph and learning rate history graph
+######### Finally saves the weights and biases , accuracy , loss, learning rate data in .csv file 
 
 def NN_0_layers():
     batch_size = 4
