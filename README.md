@@ -45,9 +45,9 @@ Project code in end displays and save the results in form of accuracy history gr
 
 List of Hyper parameters kept constant in the project are
 
-   * Batch size = 4
-   * Learning rate = 0.001
-   * Learning rate decay constant= 0.98
-   * Momentum parameter = 0.9
-   * Regression parameter = 0.00001
-   * Neurons in hidden layer = 64
+    * Batch size = 4
+    * Learning rate = 0.001
+    * Learning rate decay constant= 0.98
+    * Momentum parameter = 0.9
+    * Regression parameter = 0.00001
+    * Neurons in hidden layer = 64
