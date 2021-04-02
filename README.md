@@ -11,8 +11,8 @@ In project work, I have designed the code which can create and train 3 fully con
 
 ![](Images/one_layer.png) 
 
-Example of Fully Connected Neural Network architecture with one hidden layer.
+Image above is an example of Fully Connected Neural Network architecture with one hidden layer. Image source (https://cs231n.github.io/neural-networks-1/)
 
 ![](Images/two_layer.png)
 
-Example of Fully Connected Neural Network architecture with two hidden layer.
+Image above is an example of Fully Connected Neural Network architecture with two hidden layer. Image source (https://cs231n.github.io/neural-networks-1/)
