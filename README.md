@@ -9,7 +9,9 @@ The motivation behind the project is to learn more about deep learning technique
 
 In project work, I have designed the code which can create and train 3 fully connected neural network to classify images in MNIST dataset. (One network can be trained in single run).
 
-![](Images/two_layer.png)                          ![](Images/one_layer.png)
+<p align="center">
+  <img  src="Images/two_layer.png">
+</p>
 
 Image above is an example of Fully Connected Neural Network architecture with two hidden layer. Image source (https://cs231n.github.io/neural-networks-1/)
 
@@ -27,3 +29,5 @@ Image above is an example of Fully Connected Neural Network architecture with tw
 3. Model with 0 hidden layer contains
    * 784 neurons in input layer.
    * 10 neurons in last layer.
+
+Project code allows training and testing of one single model at a time. User can be creative and train its own model on MNIST dataset by using option for other techniques like.
