@@ -139,7 +139,18 @@ predict.py file directory should contain the following MNIST dataset file. Follo
       3.  train.py
       4.  saved files folder (contain .csv for weights and biases)
 
+### Model performance Study based on the result from train.py
 
+I have carries out a comparative analysis on the basis of the accuracy of different models. Training runs are carried out for the model with 0 hidden layers, 1 hidden layer and with 2 hidden layers with different algorithm used to update weights, with different activation functions, different learning rates to find the best fit for the MNIST dataset.
+I have created the comparison graphs for accuracy and loss curve for different runs of 3 different layer models. I have divided them into 5 different categories.
 
+1.	Performance comparison of Models with Relu activation functions in the hidden layer with stochastic gradient descent optimizer.(for 3 models)
+2.	Performance comparison of Models with Sigmoid  activation function in the hidden layer with stochastic gradient descent optimizer (for 3 models)
+3.	Performance comparison of Models with Relu activation function in the hidden layer and with Momentum optimizer (for 3 models)
+4.	Performance comparison of Models with Relu activation function in the hidden layer, with decaying learning rate and with stochastic gradient descent optimizer.(for 3 models)
+5.	Performance comparison of Models with Relu activation function in the hidden layer, with L1 regression and with stochastic gradient descent optimizer.(for 3 models).
 
+#### 1.	Performance comparison of Models with ReLu activation functions in the hidden layer with Stochastic Gradient Descent optimizer.(for 3 models)
+
+![](Images/Test_accuracy_comparision.png) 
 
