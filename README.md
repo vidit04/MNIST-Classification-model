@@ -131,17 +131,13 @@ User input should be an integer which is equivalent to the number of epochs the 
 -	 In predict.py file, I have used the 1 hidden layer models with trained weights and biases. (I reason for selecting this model for prediction is, this model has better accuracy on MNIST test set than other 0 hidden layer model or 2 hidden layer model. I have shown the study of the performance of models in the later.)
 -	 predict.py file read the MNIST test dataset and feed the image array of 6000 length in the model one by one and use the model to predict the label of images.
 -	predict.py display predicted images with the predicted label of the image by model and true label of an image on the display image window title.
--	predict.py file directory should contain the following MNIST dataset file. Following file act as input to the neural network testing of MNIST images
 
-    1.  t10k-images-idx3-ubyte.gz
-    2.  t10k-labels-idx1-ubyte.gz
-    3.  train-images-idx3-ubyte.gz
-    4.  train-labels-idx1-ubyte.gz
- 
-    6.  t10k-images-idx3-ubyte.gz
-    7.  t10k-labels-idx1-ubyte.gz
-    8.  train.py
-    9.  saved files folder (contain .csv for weights and biases)
+predict.py file directory should contain the following MNIST dataset file. Following file act as input to the neural network testing of MNIST images
+
+      1.  t10k-images-idx3-ubyte.gz
+      2.  t10k-labels-idx1-ubyte.gz
+      3.  train.py
+      4.  saved files folder (contain .csv for weights and biases)
 
 
 
