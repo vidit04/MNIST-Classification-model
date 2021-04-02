@@ -135,8 +135,13 @@ User input should be an integer which is equivalent to the number of epochs the 
 
     1.  t10k-images-idx3-ubyte.gz
     2.  t10k-labels-idx1-ubyte.gz
-    3.  train.py
-    4.  saved files folder (contain .csv for weights and biases)
+    3.  train-images-idx3-ubyte.gz
+    4.  train-labels-idx1-ubyte.gz
+ 
+    6.  t10k-images-idx3-ubyte.gz
+    7.  t10k-labels-idx1-ubyte.gz
+    8.  train.py
+    9.  saved files folder (contain .csv for weights and biases)
 
 
 
