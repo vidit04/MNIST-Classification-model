@@ -14,16 +14,16 @@ In project work, I have designed the code which can create and train 3 fully con
 Image above is an example of Fully Connected Neural Network architecture with two hidden layer. Image source (https://cs231n.github.io/neural-networks-1/)
 
 1. Model with 2 hidden layer contains
-  * 784 neurons in input layer.
-  * 64 neurons in 1st hidden layer.
-  * 64 neurons in 2nd hidden layer.
-  * 10 neurons in last layer.
+   * 784 neurons in input layer.
+   * 64 neurons in 1st hidden layer.
+   * 64 neurons in 2nd hidden layer.
+   * 10 neurons in last layer.
 
 2. Model with 1 hidden layer contains
-  * 784 neurons in input layer.
-  * 64 neurons in 1st hidden layer.
-  * 10 neurons in last layer.
+   * 784 neurons in input layer.
+   * 64 neurons in 1st hidden layer.
+   * 10 neurons in last layer.
 
 3. Model with 0 hidden layer contains
-  * 784 neurons in input layer.
-  * 10 neurons in last layer.
+   * 784 neurons in input layer.
+   * 10 neurons in last layer.
