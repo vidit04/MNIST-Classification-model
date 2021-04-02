@@ -51,3 +51,11 @@ List of Hyper parameters kept constant in the project are
     * Momentum parameter = 0.9
     * Regression parameter = 0.00001
     * Neurons in hidden layer = 64
+
+MNIST dataset split used in the project and study in later part is
+    
+    * Training dataset = 58,000 images
+    * Validation dataset = 6000 images
+    * Test dataset = 6000 images
+
+### How to use the Code
