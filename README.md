@@ -7,7 +7,7 @@ The motivation behind the project is to learn more about deep learning technique
 
 ### Architecture of Neural Network models in the Project
 
-In project work, I have designed the code which can create and train 3 fully connected neural network to classify images in MNIST dataset. (One network can be trained in single run).
+In the project work, I have designed the code which can create and train 3 fully connected neural network to classify images in MNIST dataset. (One network can be trained in single run).
 
 <p align="center">
   <img  src="Images/two_layer.png">
@@ -41,7 +41,7 @@ Project code allows training and testing of one single model at a time. User can
     * Choice for implementing decaying learning rate [y / n]
     * Choice for number of epochs to train the model.
 
-Project code in end displays and save the results in form of accuracy history graph per epoch, Loss history graph per epoch and learning rate history graph per epoch and also in form of csv format. Code also saves trained weights and biases in end of training in working directory in csv format.
+Project code in the end displays and save the results in form of accuracy history graph per epoch, Loss history graph per epoch and learning rate history graph per epoch and also in form of csv format. Code also saves trained weights and biases in end of training in working directory in csv format.
 
 List of Hyper parameters kept constant in the project are
 
@@ -59,3 +59,64 @@ MNIST dataset split used in the project and study in later part is
     * Test dataset = 6000 images
 
 ### How to use the Code
+
+#### Requirements to run train.py file
+
+The cmd environment used to run train.py file should be installed with the following packages.
+    
+    1.  Python 3.6 minimum
+    2.  Numpy
+    3.  Gzip
+    4.  matplotlib.pyplot
+    5.  tqdm
+    6.  CSV
+
+train.py file directory should contain the following MNIST dataset file. Following file act as input to the neural network during the training and testing the network. 
+
+    1.  t10k-images-idx3-ubyte.gz
+    2.  t10k-labels-idx1-ubyte.gz
+    3.  train-images-idx3-ubyte.gz
+    4.  train-labels-idx1-ubyte.gz
+
+If not available then the above-mentioned files can be downloaded from the website ()
+
+#### User input required to run train.py file
+
+There are 8 user inputs required to run the train.py file. The required user input for each case is enlisted below.
+
+1.	Enter Number of Hidden layers in Model [ 0 or 1 or 2 ]:
+
+User input can be (0, zero, Zero) for zero hidden layers in a neural network or (1, one, One) for one hidden layer in a neural network with 64 neurons or (2, Two, two) for two hidden layers in a neural network with 64 neurons each.
+
+2.	Enter the type of normalization for Data [ Simple or Normal ]:
+
+User input can be (Simple, simple) for simple normalization or (Normal, normal) for normal normalization of Data set.
+
+3.	Enter function for Weights value initialization [ Gauss or Xavier ]:
+
+User input can be (Gauss, gauss) for Gaussian initialization or (Xavier, xavier) for the Xavier initialization of weights in the neural network.
+
+4.	Enter Activation function for hidden layers [ Relu or Sigmoid ]:
+
+User input can be (Relu, relu) for rectified linear activation function or (Sigmoid, sigmoid) for the sigmoid activation function for the hidden layers.
+
+5.	Want to implement L1 Regression in the Model [ y / n ]:
+
+User input can be (Y, y) for implementing L1 regression or (N,n) for not implementing L1 regression during training the model.
+
+6.	Want to implement the decaying learning rate [ y / n ]:
+
+User input can be (Y, y) for implementing the decaying learning rate or (N,n) for not implementing the decaying learning rate during training the model.
+
+7.	Enter type of Optimizer want to use to train the model [SGD or Momentum]:
+
+User input can be (sgd, SGD) for implementing stochastic gradient descent or (momentum, Momentum) for implementing momentum optimizer during training the model.
+
+8.	Enter Number of Epochs for training the model:
+
+User input should be an integer which is equivalent to the number of epochs the user wants to train the selected neural network.
+
+
+
+
+
