@@ -133,10 +133,10 @@ User input should be an integer which is equivalent to the number of epochs the 
 -	predict.py display predicted images with the predicted label of the image by model and true label of an image on the display image window title.
 -	predict.py file directory should contain the following MNIST dataset file. Following file act as input to the neural network testing of MNIST images
 
-      1.  t10k-images-idx3-ubyte.gz
-      2.  t10k-labels-idx1-ubyte.gz
-      3.  train.py
-      4.  saved files folder (contain .csv for weights and biases)
+    1.  t10k-images-idx3-ubyte.gz
+    2.  t10k-labels-idx1-ubyte.gz
+    3.  train.py
+    4.  saved files folder (contain .csv for weights and biases)
 
 
 
