@@ -31,3 +31,12 @@ Image above is an example of Fully Connected Neural Network architecture with tw
    * 10 neurons in last layer.
 
 Project code allows training and testing of one single model at a time. User can be creative and train its own model on MNIST dataset by using option for other techniques like.
+
+    * Choice for number of layer in neural Network [0 or 1 or 2]
+    * Choice for optimizer [SGD or Momentum]
+    * Choice for activation function inn hidden layers [Relu or sigmoid ]
+    * Choice for data normalization algorithm [Simple or Normal]
+    * Choice for weights initialization algorithm [Gaussian or Xavier initialization]
+    * Choice for implementing L1 regression Loss [y / n]
+    * Choice for implementing decaying learning rate [y / n]
+    * Choice for number of epochs to train the model.
