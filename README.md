@@ -58,9 +58,18 @@ MNIST dataset split used in the project and study in later part is
     * Validation dataset = 6000 images
     * Test dataset = 6000 images
 
-### How to use the Code
+### 3. How to use the Code
 
-#### Requirements to run train.py file
+#### 3.1 Usage Manual for train.py
+
+train.py in a single run
+-	Creates the neural network of 2 hidden layers or 1 hidden layer or 0 hidden layer
+-	Reads the MNIST data 
+-	Initialize the weights and biases for the network
+-	Train the network for a given number of epochs.
+-	Display the results of accuracy and loss of network in the form of graphs.
+-	Save the trained weights, biases, loss history, accuracy history and learning rate history after each run.
+
 
 The cmd environment used to run train.py file should be installed with the following packages.
     
@@ -80,7 +89,7 @@ train.py file directory should contain the following MNIST dataset file. Followi
 
 If not available then the above-mentioned files can be downloaded from the website ()
 
-#### User input required to run train.py file
+##### User input required to run train.py file
 
 There are 8 user inputs required to run the train.py file. The required user input for each case is enlisted below.
 
@@ -115,6 +124,19 @@ User input can be (sgd, SGD) for implementing stochastic gradient descent or (mo
 **8.	Enter Number of Epochs for training the model:**
 
 User input should be an integer which is equivalent to the number of epochs the user wants to train the selected neural network.
+
+#### 3.2 Usage Manual for predict.py
+
+-	Predict.py file uses the trained weights and biases (which is output on train.py file) to predict the test dataset MNIST images.
+-	 In predict.py file, I have used the 1 hidden layer models with trained weights and biases. (I reason for selecting this model for prediction is, this model has better accuracy on MNIST test set than other 0 hidden layer model or 2 hidden layer model. I have shown the study of the performance of models in the later.)
+-	 predict.py file read the MNIST test dataset and feed the image array of 6000 length in the model one by one and use the model to predict the label of images.
+-	predict.py display predicted images with the predicted label of the image by model and true label of an image on the display image window title.
+-	predict.py file directory should contain the following MNIST dataset file. Following file act as input to the neural network testing of MNIST images
+
+      1.  t10k-images-idx3-ubyte.gz
+      2.  t10k-labels-idx1-ubyte.gz
+      3.  train.py
+      4.  saved files folder (contain .csv for weights and biases)
 
 
 
