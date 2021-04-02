@@ -16,19 +16,19 @@ In project work, I have designed the code which can create and train 3 fully con
 Image above is an example of Fully Connected Neural Network architecture with two hidden layer. Image source (https://cs231n.github.io/neural-networks-1/)
 
 1. Model with 2 hidden layer contains
-   * 784 neurons in input layer.
-   * 64 neurons in 1st hidden layer.
-   * 64 neurons in 2nd hidden layer.
-   * 10 neurons in last layer.
+    * 784 neurons in input layer.
+    * 64 neurons in 1st hidden layer.
+    * 64 neurons in 2nd hidden layer.
+    * 10 neurons in last layer.
 
 2. Model with 1 hidden layer contains
-   * 784 neurons in input layer.
-   * 64 neurons in 1st hidden layer.
-   * 10 neurons in last layer.
+    * 784 neurons in input layer.
+    * 64 neurons in 1st hidden layer.
+    * 10 neurons in last layer.
 
 3. Model with 0 hidden layer contains
-   * 784 neurons in input layer.
-   * 10 neurons in last layer.
+    * 784 neurons in input layer.
+    * 10 neurons in last layer.
 
 Project code allows training and testing of one single model at a time. User can be creative and train its own model on MNIST dataset by using option for other techniques like.
 
@@ -40,3 +40,14 @@ Project code allows training and testing of one single model at a time. User can
     * Choice for implementing L1 regression Loss [y / n]
     * Choice for implementing decaying learning rate [y / n]
     * Choice for number of epochs to train the model.
+
+Project code in end displays and save the results in form of accuracy history graph per epoch, Loss history graph per epoch and learning rate history graph per epoch and also in form of csv format. Code also saves trained weights and biases in end of training in working directory in csv format.
+
+List of Hyper parameters kept constant in the project are
+
+   * Batch size = 4
+   * Learning rate = 0.001
+   * Learning rate decay constant= 0.98
+   * Momentum parameter = 0.9
+   * Regression parameter = 0.00001
+   * Neurons in hidden layer = 64
