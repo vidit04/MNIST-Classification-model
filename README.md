@@ -9,4 +9,10 @@ The motivation behind the project is to learn more about deep learning technique
 
 In project work, I have designed the code which can create and train 3 fully connected neural network to classify images in MNIST dataset. (One network can be trained in single run).
 
-![](Images/one_layer.png) ![](Images/two_layer.png)
+![](Images/one_layer.png) 
+
+Example of Fully Connected Neural Network architecture with one hidden layer.
+
+![](Images/two_layer.png)
+
+Example of Fully Connected Neural Network architecture with two hidden layer.
