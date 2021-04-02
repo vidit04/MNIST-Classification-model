@@ -84,35 +84,35 @@ If not available then the above-mentioned files can be downloaded from the websi
 
 There are 8 user inputs required to run the train.py file. The required user input for each case is enlisted below.
 
-1.	Enter Number of Hidden layers in Model [ 0 or 1 or 2 ]:
+**1.	Enter Number of Hidden layers in Model [ 0 or 1 or 2 ]:**
 
 User input can be (0, zero, Zero) for zero hidden layers in a neural network or (1, one, One) for one hidden layer in a neural network with 64 neurons or (2, Two, two) for two hidden layers in a neural network with 64 neurons each.
 
-2.	Enter the type of normalization for Data [ Simple or Normal ]:
+**2.	Enter the type of normalization for Data [ Simple or Normal ]:**
 
 User input can be (Simple, simple) for simple normalization or (Normal, normal) for normal normalization of Data set.
 
-3.	Enter function for Weights value initialization [ Gauss or Xavier ]:
+**3.	Enter function for Weights value initialization [ Gauss or Xavier ]:**
 
 User input can be (Gauss, gauss) for Gaussian initialization or (Xavier, xavier) for the Xavier initialization of weights in the neural network.
 
-4.	Enter Activation function for hidden layers [ Relu or Sigmoid ]:
+**4.	Enter Activation function for hidden layers [ Relu or Sigmoid ]:**
 
 User input can be (Relu, relu) for rectified linear activation function or (Sigmoid, sigmoid) for the sigmoid activation function for the hidden layers.
 
-5.	Want to implement L1 Regression in the Model [ y / n ]:
+**5.	Want to implement L1 Regression in the Model [ y / n ]:**
 
 User input can be (Y, y) for implementing L1 regression or (N,n) for not implementing L1 regression during training the model.
 
-6.	Want to implement the decaying learning rate [ y / n ]:
+**6.	Want to implement the decaying learning rate [ y / n ]:**
 
 User input can be (Y, y) for implementing the decaying learning rate or (N,n) for not implementing the decaying learning rate during training the model.
 
-7.	Enter type of Optimizer want to use to train the model [SGD or Momentum]:
+**7.	Enter type of Optimizer want to use to train the model [SGD or Momentum]:**
 
 User input can be (sgd, SGD) for implementing stochastic gradient descent or (momentum, Momentum) for implementing momentum optimizer during training the model.
 
-8.	Enter Number of Epochs for training the model:
+**8.	Enter Number of Epochs for training the model:**
 
 User input should be an integer which is equivalent to the number of epochs the user wants to train the selected neural network.
 
