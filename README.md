@@ -160,6 +160,6 @@ In this case, models are trained with Stochastic Gradient Decent optimizer and R
 
 In this case, models are trained with Stochastic Gradient Decent optimizer and sigmoid activation function in their hidden layer.In the graph below, we see that the model with 1 hidden layer (with 64 neurons) with sigmoid activation function performs better than the model with 2 hidden layers (with 64 neurons in each layer) with sigmoid activation function.
 
-![](Images/Test_accuracy_comparision.png) 
+![](Images/com_acc.png) 
 
 
