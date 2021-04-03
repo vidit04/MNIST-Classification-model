@@ -169,4 +169,6 @@ And if we compare case 1 with case 2 for model with 1 hidden layer, we can obser
 #### 3.	Models with Relu activation function in the hidden layer and with Momentum optimizer.
 In this case, models are trained with Momentum optimizer and ReLu activation function in their hidden layer.
 
+![] (Images/com_acc_3.png)
+
 
