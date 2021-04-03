@@ -13,7 +13,7 @@ In the project work, I have designed the code which can create and train 3 fully
   <img  src="Images/two_layer.png">
 </p>
 
-Image above is an example of Fully Connected Neural Network architecture with two hidden layer. Image source (https://cs231n.github.io/neural-networks-1/)
+Image above is an example of Fully Connected Neural Network architecture with two hidden layer. [Image source](https://cs231n.github.io/neural-networks-1/)
 
 1. Model with 2 hidden layer contains
     * 784 neurons in input layer.
@@ -87,7 +87,7 @@ train.py file directory should contain the following MNIST dataset file. Followi
     3.  train-images-idx3-ubyte.gz
     4.  train-labels-idx1-ubyte.gz
 
-If not available then the above-mentioned files can be downloaded from the website ()
+If not available then the above-mentioned files can be downloaded from the website [here](http://yann.lecun.com/exdb/mnist/)
 
 ##### User input required to run train.py file
 
