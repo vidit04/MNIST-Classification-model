@@ -13,7 +13,7 @@ In the project work, I have designed the code which can create and train 3 fully
   <img  src="Images/two_layer.png">
 </p>
 
-Image above is an example of Fully Connected Neural Network architecture with two hidden layer. [Image source](https://cs231n.github.io/neural-networks-1/)
+Image above is an example of Fully Connected Neural Network architecture with two hidden layer. ([Image source link](https://cs231n.github.io/neural-networks-1/))
 
 1. Model with 2 hidden layer contains
     * 784 neurons in input layer.
@@ -87,7 +87,7 @@ train.py file directory should contain the following MNIST dataset file. Followi
     3.  train-images-idx3-ubyte.gz
     4.  train-labels-idx1-ubyte.gz
 
-If not available then the above-mentioned files can be downloaded from the website [here](http://yann.lecun.com/exdb/mnist/)
+If not available then the above-mentioned files can be downloaded from the website [here](http://yann.lecun.com/exdb/mnist/).
 
 ##### User input required to run train.py file
 
@@ -152,27 +152,44 @@ I have created the comparison graphs for accuracy curve for different runs of 3 
 
 In this case, models are trained with Stochastic Gradient Decent optimizer and ReLu activation function in their hidden layer. From the graphs below we can observe that the model with 1 hidden layer (64 neurons in the hidden layer) is a better performing model than models with 2 hidden layers (with 64 neurons in each layer) and the model with 0 hidden layers. 
 
-![](Images/Test_accuracy_comparision.png) 
+<p align="center">
+  <img  src="Images/Test_accuracy_comparision.png">
+</p>
 
 #### 2.	Result of Models with Sigmoid activation function in the hidden layer with Stochastic Gradient Descent optimizer.
 
 In this case, models are trained with Stochastic Gradient Decent optimizer and sigmoid activation function in their hidden layer.In the graph below, we see that the model with 1 hidden layer (with 64 neurons) with sigmoid activation function performs better than the model with 2 hidden layers (with 64 neurons in each layer) with sigmoid activation function.
 
-![](Images/com_acc.png) 
+
+<p align="center">
+  <img  src="Images/com_acc.png">
+</p>
+
 
 And if we compare case 1 with case 2 for model with 1 hidden layer, we can observe that the model with 1 hidden layer (64 neurons) with relu activation function perform better than the model with 1 hidden layer (64 neurons) with sigmoid activation, shown the graph below
 
-![](Images/layer1_acc_com.png) 
+<p align="center">
+  <img  src="Images/layer1_acc_com.png">
+</p>
 
 #### 3.	Models with Relu activation function in the hidden layer and with Momentum optimizer.
 In this case, models are trained with Momentum optimizer and ReLu activation function in their hidden layer.
 
-![](Images/com_acc_3.png)
+<p align="center">
+  <img  src="Images/com_acc_3.png">
+</p>
+
 
 In the above accuracy graph we can see the test accuracy curve for 1 hidden layer model and 2 hidden layer model is pretty close. In other graphs below I compare the model with 2 hidden layer for case 1 and case 3 (i.e. with relu activation function SGD vs Momentum) . 
 
-![](Images/com_acc_layer2.png)
+<p align="center">
+  <img  src="Images/com_acc_layer2.png">
+</p>
+
 
 And in the graph below we can see with the use of momentum optimizer test accuracy of 2 hidden layer model become comparable to the original 1 hidden layer model (best performing model in above cases) 
 
-![](Images/com_acc_best.png)
+<p align="center">
+  <img  src="Images/com_acc_best.png">
+</p>
+
