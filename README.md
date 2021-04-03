@@ -162,6 +162,6 @@ In this case, models are trained with Stochastic Gradient Decent optimizer and s
 
 ![](Images/com_acc.png) 
 
-And if we compare case 1 with case 2 for network with 1 hidden layer, we can observe that the model with 1 hidden layer (64 neurons) with relu activation function perform better than the model with 1 hidden layer (64 neurons) with sigmoid activation, shown the graph below
+And if we compare case 1 with case 2 for model with 1 hidden layer, we can observe that the model with 1 hidden layer (64 neurons) with relu activation function perform better than the model with 1 hidden layer (64 neurons) with sigmoid activation, shown the graph below
 
 ![](Images/layer1_acc_com.png) 
