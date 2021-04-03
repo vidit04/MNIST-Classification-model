@@ -8,7 +8,7 @@ Table of Contents
 4. Model performance Study based on the result from train.py    
     * Results for Models with Relu activation functions in the hidden layer with stochastic gradient descent optimizer.
     * Result of Models with Sigmoid activation function in the hidden layer with stochastic gradient descent optimizer.
-    * Models with Relu activation function in the hidden layer and with Momentum optimizer.
+    * Results of Models with Relu activation function in the hidden layer and with Momentum optimizer.
 
 ### 1. Introduction
 The objective of programming project is to create neural network models for the classification of MNIST hand written digit image dataset in Python from scratch. (Not using any high-level machine learning library). The task of the project includes designing Fully Connected Neural Network architecture for classification with 0 hidden layers,1 hidden layer, and 2 hidden layers and comparing them based on their performance .i.e. the accuracy on the test dataset.
