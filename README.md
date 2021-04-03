@@ -1,13 +1,23 @@
 # Neural Network Classifiers in Python from scratch- MNIST-Classification-models
+Table of Contents
+1. Introductions
+2. Architecture of Neural Network models in the Project
+3. How to use the code
+  3.1 Usage Manual for train.py
+  3.2 Usage Manual for predict.py
+4. Model performance Study based on the result from train.py
+  4.1 Results for Models with Relu activation functions in the hidden layer with stochastic gradient descent optimizer.
+  4.2 Result of Models with Sigmoid activation function in the hidden layer with stochastic gradient descent optimizer.
+  4.3 Models with Relu activation function in the hidden layer and with Momentum optimizer.
 
-### Introduction
-The objective of programming project is to create neural network models for the classification of MNIST image dataset in Python from scratch. (Not using any high-level machine learning library). The task of the project includes designing Fully Connected Neural Network architecture for classification with 0 hidden layers,1 hidden layer, and 2 hidden layers and comparing them based on their performance .i.e. the accuracy of the test dataset and selecting the best performing model.
+### 1. Introduction
+The objective of programming project is to create neural network models for the classification of MNIST hand written digit image dataset in Python from scratch. (Not using any high-level machine learning library). The task of the project includes designing Fully Connected Neural Network architecture for classification with 0 hidden layers,1 hidden layer, and 2 hidden layers and comparing them based on their performance .i.e. the accuracy on the test dataset.
 
 The motivation behind the project is to learn more about deep learning techniques used for classification.  Neural Networks performs pretty well on data classification tasks especially images. The same technique can also be implemented to other data related to materials science as well. Knowledge of the functioning of the neural networks is pretty general can be implemented in different fields. 
 
-### Architecture of Neural Network models in the Project
+### 2. Architecture of Neural Network models in the Project
 
-In the project work, I have designed the code which can create and train 3 fully connected neural network to classify images in MNIST dataset. (One network can be trained in single run).
+In the project work, I have designed the code which can create and train 3 fully connected neural network to classify images in MNIST hand written image dataset. (One network can be trained in single run).
 
 <p align="center">
   <img  src="Images/two_layer.png">
@@ -139,7 +149,7 @@ predict.py file directory should contain the following MNIST dataset file. Follo
       3.  train.py
       4.  saved files folder (contain .csv for weights and biases)
 
-### Model performance Study based on the result from train.py
+### 4. Model performance Study based on the result from train.py
 
 I have carries out a comparative analysis on the basis of the accuracy of different models. Training runs are carried out for the model with 0 hidden layers, 1 hidden layer and with 2 hidden layers with different algorithm used to update weights, with different activation functions to find the best fit for the MNIST dataset.
 I have created the comparison graphs for accuracy curve for different runs of 3 different layer models. I have divided them into 3 different categories.
@@ -148,7 +158,7 @@ I have created the comparison graphs for accuracy curve for different runs of 3 
 2.	Performance comparison of Models with Sigmoid  activation function in the hidden layer with stochastic gradient descent optimizer (for 3 models)
 3.	Performance comparison of Models with Relu activation function in the hidden layer and with Momentum optimizer (for 3 models)
 
-#### 1.	Performance comparison of Models with ReLu activation functions in the hidden layer with Stochastic Gradient Descent optimizer.(for 3 models)
+#### 4.1	Performance comparison of Models with ReLu activation functions in the hidden layer with Stochastic Gradient Descent optimizer.(for 3 models)
 
 In this case, models are trained with Stochastic Gradient Decent optimizer and ReLu activation function in their hidden layer. From the graphs below we can observe that the model with 1 hidden layer (64 neurons in the hidden layer) is a better performing model than models with 2 hidden layers (with 64 neurons in each layer) and the model with 0 hidden layers. 
 
@@ -156,7 +166,7 @@ In this case, models are trained with Stochastic Gradient Decent optimizer and R
   <img  src="Images/Test_accuracy_comparision.png">
 </p>
 
-#### 2.	Result of Models with Sigmoid activation function in the hidden layer with Stochastic Gradient Descent optimizer.
+#### 4.2	Result of Models with Sigmoid activation function in the hidden layer with Stochastic Gradient Descent optimizer.
 
 In this case, models are trained with Stochastic Gradient Decent optimizer and sigmoid activation function in their hidden layer.In the graph below, we see that the model with 1 hidden layer (with 64 neurons) with sigmoid activation function performs better than the model with 2 hidden layers (with 64 neurons in each layer) with sigmoid activation function.
 
@@ -172,7 +182,7 @@ And if we compare case 1 with case 2 for model with 1 hidden layer, we can obser
   <img  src="Images/layer1_acc_com.png">
 </p>
 
-#### 3.	Models with Relu activation function in the hidden layer and with Momentum optimizer.
+#### 4.3	Models with Relu activation function in the hidden layer and with Momentum optimizer.
 In this case, models are trained with Momentum optimizer and ReLu activation function in their hidden layer.
 
 <p align="center">
