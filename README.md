@@ -1,4 +1,4 @@
-# MNIST-Classification-model
+# Neural Network Classifiers in Python from scratch- MNIST-Classification-models
 
 ### Introduction
 The objective of programming project is to create neural network models for the classification of MNIST image dataset in Python from scratch. (Not using any high-level machine learning library). The task of the project includes designing Fully Connected Neural Network architecture for classification with 0 hidden layers,1 hidden layer, and 2 hidden layers and comparing them based on their performance .i.e. the accuracy of the test dataset and selecting the best performing model.
