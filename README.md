@@ -171,4 +171,10 @@ In this case, models are trained with Momentum optimizer and ReLu activation fun
 
 ![](Images/com_acc_3.png)
 
+In the above accuracy graph we can see the test accuracy curve for 1 hidden layer model and 2 hidden layer model is pretty close. In other graphs below I compare the model with 2 hidden layer for case 1 and case 3 (i.e. with relu activation function SGD vs Momentum) . 
 
+![](Images/com_acc_layer2.png)
+
+And in the graph below we can see with the use of momentum optimizer test accuracy of 2 hidden layer model become comparable to the original 1 hidden layer model (best performing model in above cases) 
+
+![](Images/com_acc_best.png)
