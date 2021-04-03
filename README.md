@@ -99,7 +99,7 @@ train.py file directory should contain the following MNIST dataset file. Followi
 
 If not available then the above-mentioned files can be downloaded from the website [here](http://yann.lecun.com/exdb/mnist/).
 
-##### User input required to run train.py file
+#### User input required to run train.py file
 
 There are 8 user inputs required to run the train.py file. The required user input for each case is enlisted below.
 
