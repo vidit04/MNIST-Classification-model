@@ -156,7 +156,7 @@ In this case, models are trained with Stochastic Gradient Decent optimizer and R
 
 ![](Images/Test_accuracy_comparision.png) 
 
-2.	Result of Models with Sigmoid activation function in the hidden layer with Stochastic Gradient Descent optimizer.
+#### 2.	Result of Models with Sigmoid activation function in the hidden layer with Stochastic Gradient Descent optimizer.
 
 In this case, models are trained with Stochastic Gradient Decent optimizer and sigmoid activation function in their hidden layer.In the graph below, we see that the model with 1 hidden layer (with 64 neurons) with sigmoid activation function performs better than the model with 2 hidden layers (with 64 neurons in each layer) with sigmoid activation function.
 
@@ -165,3 +165,8 @@ In this case, models are trained with Stochastic Gradient Decent optimizer and s
 And if we compare case 1 with case 2 for model with 1 hidden layer, we can observe that the model with 1 hidden layer (64 neurons) with relu activation function perform better than the model with 1 hidden layer (64 neurons) with sigmoid activation, shown the graph below
 
 ![](Images/layer1_acc_com.png) 
+
+#### 3.	Models with Relu activation function in the hidden layer and with Momentum optimizer.
+In this case, models are trained with Momentum optimizer and ReLu activation function in their hidden layer.
+
+
