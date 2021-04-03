@@ -152,5 +152,14 @@ I have created the comparison graphs for accuracy and loss curve for different r
 
 #### 1.	Performance comparison of Models with ReLu activation functions in the hidden layer with Stochastic Gradient Descent optimizer.(for 3 models)
 
+In this case, models are trained with Stochastic Gradient Decent optimizer and ReLu activation function in their hidden layer. From the graphs below we can observe that the model with 1 hidden layer (64 neurons in the hidden layer) is a better performing model than models with 2 hidden layers (with 64 neurons in each layer) and the model with 0 hidden layers. 
+
 ![](Images/Test_accuracy_comparision.png) 
+
+2.	Result of Models with Sigmoid activation function in the hidden layer with Stochastic Gradient Descent optimizer.
+
+In this case, models are trained with Stochastic Gradient Decent optimizer and sigmoid activation function in their hidden layer.In the graph below, we see that the model with 1 hidden layer (with 64 neurons) with sigmoid activation function performs better than the model with 2 hidden layers (with 64 neurons in each layer) with sigmoid activation function.
+
+![](Images/Test_accuracy_comparision.png) 
+
 
